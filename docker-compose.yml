@@ -1,0 +1,62 @@
+services:
+  # MySQL Service
+  mysql:
+    image: mariadb:latest
+    container_name: mariadb_db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MYSQL_DATABASE}
+      MARIADB_USER: ${MYSQL_USER}
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "6969:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - app_network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # phpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - app_network
+
+  # PHP Web Server
+  php-app:
+    image: php:8.0-apache
+    container_name: php_app
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./app:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - app_network
+    # Install mysqli extension for PHP
+    command: >
+      bash -c "docker-php-ext-install mysqli && apache2-foreground"
+
+# Networks
+networks:
+  app_network:
+    driver: bridge
+
+# Volumes for data persistence
+volumes:
+  mariadb_data:
+    driver: local
