@@ -40,14 +40,13 @@ services:
     env_file:
       - .env
     volumes:
-      - ./app:/var/www/html
+      - ./server:/var/www/html
     ports:
       - "8080:80"
     depends_on:
       - mysql
     networks:
       - app_network
-    # Install mysqli extension for PHP
     command: >
       bash -c "docker-php-ext-install mysqli && apache2-foreground"
 
