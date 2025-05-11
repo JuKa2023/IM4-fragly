@@ -1,8 +1,8 @@
 # Development
 
-/8000 -> php backend
+/8080 -> php backend
 
-/5143 -> vite dev server
+/5173 -> vite dev server
 
 e.g.
 
