@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-orange-300 h-16 flex items-center justify-between px-6 shadow-md relative">
+    <header class="bg-orange-300 h-16 w-full flex items-center justify-between px-6 shadow-md">
       <a href="#">
         <img alt="Home" src="" />
       </a>
