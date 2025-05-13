@@ -56,7 +56,7 @@ const login = () => {
           />
   
           <button type="submit" class="btn btn-lg btn-primary">
-            Einloggen
+            Konto erstellen
           </button>
         </form>
       </div>

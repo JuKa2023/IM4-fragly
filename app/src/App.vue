@@ -5,6 +5,7 @@ import Header from './components/Header.vue'
 import Login from './components/Register.vue'
 
 import UpdateUsernmae from './components/Updateuserdata.vue'
+import LandingPage from './components/LandingPage.vue'
 
 
 interface User {
@@ -30,6 +31,8 @@ onMounted(async () => {
     <Login />
 
     <UpdateUsernmae />
+
+    <LandingPage />
   
   <div class="users">
     <h2>Users</h2>
