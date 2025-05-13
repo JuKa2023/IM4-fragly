@@ -80,36 +80,19 @@ onMounted(async () => {
     <main>
       <router-view></router-view>
     </main>
-  
-  <div class="users">
-    <h2>Users</h2>
-    <ul>
-      <li v-for="user in users" :key="user.id">
-        {{ user.name }} ({{ user.email }})
-      </li>
-    </ul>
+
+
+<footer class="bg-orange-300 h-16 w-full px-6 shadow-inner">
+  <div class="mx-auto max-w-xl h-full flex items-center justify-center">
+  <p class="text-brown text-sm">
+   © 2025 Gemeinsam Erfahren
+  </p>
   </div>
+</footer>
 </template>
 
+
 <style scoped>
-
-.users {
-  margin-top: 2em;
-  padding: 1em;
-}
-
-.users ul {
-  list-style: none;
-  padding: 0;
-}
-
-.users li {
-  padding: 0.5em;
-  margin: 0.5em 0;
-  background: #f5f5f5;
-  border-radius: 4px;
-}
-
 .iconHeader {
 	padding-bottom: 10px;
 	transition: transform 0.6s ease;
