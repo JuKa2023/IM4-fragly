@@ -52,6 +52,10 @@ h1 {
   margin: 0 auto;
   padding: 0;
   text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 /* Custom button styles */
