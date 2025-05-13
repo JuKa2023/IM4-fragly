@@ -18,8 +18,8 @@ const login = () => {
 </script>
 
 <template>
-    <div class="min-h-screen flex items-center justify-center">
-      <div class="p-8 w-full max-w-md">
+    <div class="min-h-screen flex items-center justify-center w-md">
+      <div class="p-8 w-full">
         <h1 class=" font-bold text-[#472402] mb-6">Registrieren</h1>
   
         <form @submit.prevent="login">

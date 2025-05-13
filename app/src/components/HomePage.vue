@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-[#ffebd2] min-h-screen p-6 flex flex-col justify-between rounded-3xl max-w-md mx-auto">
+    <div class="bg-[#ffebd2] min-h-screen p-6 flex flex-col justify-between rounded-3xl w-md m-2">
       <div class="flex justify-between space-x-4 mb-8">
         <button class="btn btn-sm btn-primary">Meine Gruppen</button>
         <button class="btn btn-sm btn-secondary">Mein Steckbrief</button>

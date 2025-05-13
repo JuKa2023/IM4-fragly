@@ -88,15 +88,3 @@ p {
   @apply bg-[#FFE2EF] text-[#231201] hover:shadow-none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
