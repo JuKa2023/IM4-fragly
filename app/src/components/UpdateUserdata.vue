@@ -28,8 +28,8 @@ const cancelUpdate = () => {
 
 <template>
     <div class="min-h-screen flex items-center justify-center">
-      <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-        <h2 class="text-2xl font-bold text-[#472402] mb-6">Nutzerdaten bearbeiten</h2>
+      <div class="p-8 rounded-2xl w-full max-w-md">
+        <h1 class="font-bold text-[#472402] mb-6">Nutzerdaten bearbeiten</h1>
   
         <form @submit.prevent="updateUserData">
           <BaseInput

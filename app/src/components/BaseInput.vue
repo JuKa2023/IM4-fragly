@@ -7,7 +7,7 @@
         :placeholder="placeholder"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FCC1DB]"
+        class="bg-white w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FCC1DB] custom-placeholder"
       />
     </div>
   </template>
@@ -22,3 +22,10 @@
   }>()
   defineEmits(['update:modelValue'])
   </script>
+
+<style scoped>
+.custom-placeholder::placeholder {
+  color: #B3C7CA;
+  opacity: 1; /* Ensures full color */
+}
+</style>
