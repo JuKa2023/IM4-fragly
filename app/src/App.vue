@@ -2,7 +2,9 @@
 import HelloWorld from './components/HelloWorld.vue'
 import { ref, onMounted } from 'vue'
 import Header from './components/Header.vue'
-import Login from './components/Login.vue'
+import Login from './components/Register.vue'
+
+import UpdateUsernmae from './components/Updateuserdata.vue'
 
 
 interface User {
@@ -26,6 +28,8 @@ onMounted(async () => {
 <template>
     <Header />
     <Login />
+
+    <UpdateUsernmae />
   
   <div class="users">
     <h2>Users</h2>
