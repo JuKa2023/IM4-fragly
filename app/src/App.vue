@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import Login from './components/Register.vue'
-
 import LandingPage from './components/LandingPage.vue'
+import HomePage from './components/HomePage.vue'
+
 import logo from './assets/logo.svg'
 import gruppeicon from './assets/gruppeicon.svg'
 
@@ -70,6 +71,8 @@ onMounted(async () => {
     <UpdateUsernmae />
 
     <LandingPage />
+
+    <HomePage />
 
     <main>
       <router-view></router-view>

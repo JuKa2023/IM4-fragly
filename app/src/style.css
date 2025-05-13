@@ -12,7 +12,7 @@
 
   color-scheme: light dark;
   color: #231201;
-  background-color: #ffebd2;
+  background-color: #FFF6EB;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -42,6 +42,15 @@ h1 {
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  color: #472402;
+}
+
+h2 {
+  color: #472402;
+}
+
+p {
+  color: #472402;
 }
 
 .card {
@@ -64,11 +73,11 @@ h1 {
 }
 
 .btn-sm {
-  @apply px-3 py-1 text-sm cursor-pointer;
+  @apply px-6 py-3 text-base;
 }
 
 .btn-lg {
-  @apply px-6 py-3 text-base;
+  @apply px-6 py-3 text-2xl;
 }
 
 .btn-primary {
