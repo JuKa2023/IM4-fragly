@@ -7,13 +7,37 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
-const login = () => {
-  console.log('Login attempt:', {
-    username: username.value,
-    email: email.value,
-    password: password.value,
-    confirmPassword: confirmPassword.value
-  })
+const register = async () => {
+  // Validation
+  if (!username.value || !email.value || !password.value) {
+    alert("Bitte fülle alle Felder aus")
+    return
+  }
+  if (password.value.length < 8) {
+    alert("Passwort muss mindestens 8 Zeichen lang sein")
+    return
+  }
+  if (password.value !== confirmPassword.value) {
+    alert("Passwörter stimmen nicht überein")
+    return
+  }
+
+  // Prepare FormData
+  const formData = new FormData()
+  formData.append("username", username.value)
+  formData.append("email", email.value)
+  formData.append("password", password.value)
+
+  try {
+    const res = await fetch("/api/register.php", {
+      method: "POST",
+      body: formData,
+    })
+    const reply = await res.text()
+    alert(reply)
+  } catch (err) {
+    alert("Fehler beim Senden: " + err)
+  }
 }
 </script>
 
@@ -22,7 +46,7 @@ const login = () => {
       <div class="p-8 w-full">
         <h1 class=" font-bold text-[#472402] mb-6">Registrieren</h1>
   
-        <form @submit.prevent="login">
+        <form @submit.prevent="register" id="registerForm">
           <BaseInput
             label="Benutzername"
             v-model="username"

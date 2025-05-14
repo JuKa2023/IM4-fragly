@@ -1,8 +1,8 @@
 <template>
     <div class="bg-[#ffebd2] min-h-screen p-6 flex flex-col justify-between rounded-3xl w-md m-2">
       <div class="flex justify-between space-x-4 mb-8">
-        <button class="btn btn-sm btn-primary">Meine Gruppen</button>
-        <button class="btn btn-sm btn-secondary">Mein Steckbrief</button>
+        <router-link class="btn btn-sm btn-primary" to="/meinegruppen" >Meine Gruppen</router-link>
+        <router-link class="btn btn-sm btn-secondary" to="/meinsteckbrief">Mein Steckbrief</router-link>
       </div>
   
       <div class="text-center space-y-6">
@@ -21,7 +21,7 @@
       </div>
   
       <div class="mt-8 text-center">
-        <button class="btn btn-sm btn-primary">Gruppe erstellen</button>
+        <RouterLink class="btn btn-sm btn-primary" to="/gruppeerstellen">Gruppe erstellen</RouterLink>
       </div>
     </div>
   </template>
