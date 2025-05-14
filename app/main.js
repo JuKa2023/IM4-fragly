@@ -3,7 +3,7 @@ import LandingPage from '@/src/components/LandingPage.vue'
 import HomePage from '@/src/components/HomePage.vue'
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(//localhost:5173),
     routes: [
         {
             { path: '/homepage', component: HomePage,},

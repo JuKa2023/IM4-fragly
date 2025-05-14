@@ -89,7 +89,7 @@ onMounted(async () => {
 <footer class="bg-orange-300 h-16 w-full px-6 shadow-inner">
   <div class="mx-auto max-w-xl h-full flex items-center justify-center">
   <p class="text-brown text-sm">
-   © 2025 Gemeinsam Erfahren
+   © 2025 Fragly
   </p>
   </div>
 </footer>
