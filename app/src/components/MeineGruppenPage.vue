@@ -1,7 +1,9 @@
 <template>
-        <button class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center">
-        ×
-      </button>
+
+  <div>
+    <button class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center">
+      ×
+    </button>
     <div class="bg-[#ffebd2] min-h-screen p-6 flex flex-col justify-between rounded-3xl w-max-md m-2">  
       <!-- Titel -->
       <h2 class="text-2xl font-bold text-brown mb-6">Deine Gruppen</h2>
@@ -19,6 +21,7 @@
         <button class="btn btn-sm btn-primary">Gruppe beitreten</button>
       </div>
     </div>
+  </div>
   </template>
   
   <script setup>
