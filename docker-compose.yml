@@ -40,7 +40,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./server:/var/www/html
+      - ./api:/var/www/html
     ports:
       - "8080:80"
     depends_on:
@@ -48,7 +48,7 @@ services:
     networks:
       - app_network
     command: >
-      bash -c "docker-php-ext-install mysqli && apache2-foreground"
+      bash -c "docker-php-ext-install mysqli pdo pdo_mysql && apache2-foreground"
 
 # Networks
 networks:
