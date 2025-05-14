@@ -67,22 +67,10 @@ onMounted(async () => {
       </nav>
     </div>
   </header>
-
-    <Login />
-
-    <UpdateUsernmae />
-
-    <LandingPage />
-
-    <HomePage />
-
-    <MeineGruppen />
-
-    <LoginPage />
-
-
     <main>
-      <router-view></router-view>
+      <router-view>
+        
+      </router-view>
     </main>
 
 

@@ -1,6 +1,5 @@
 <?php
-// Include your database configuration (adjust the path if needed)
-require_once('../.env');
+require_once('.env');
 
 header('Content-Type: text/plain; charset=UTF-8');
 
