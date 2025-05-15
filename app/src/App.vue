@@ -40,6 +40,28 @@ const handleClickOutside = (event: MouseEvent) => {
     dropdownOpen.value = false;
   }
 };
+
+const logout = async () => {
+  try {
+    const response = await fetch("api/logout.php", {
+      method: "GET",
+      credentials: "include", // Important for cookie-based sessions
+    });
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+      // Redirect to login page after logout
+      window.location.href = "login.html";
+    } else {
+      console.error("Logout failed");
+      alert("Logout failed. Please try again.");
+    }
+  } catch (error) {
+    console.error("Logout error:", error);
+    alert("Something went wrong during logout!");
+  }
+};
 </script>
 
 <template>
@@ -73,6 +95,7 @@ const handleClickOutside = (event: MouseEvent) => {
               </a>
               <a
                   href="#"
+                  @click.prevent="logout"
                   class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
               >
                 Logout
