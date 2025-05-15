@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import BaseInput from './BaseInput.vue'
+import { useRouter } from 'vue-router'
 
 const username = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+
+const router = useRouter()
 
 const register = async () => {
   // Validation
@@ -35,6 +38,10 @@ const register = async () => {
     })
     const reply = await res.text()
     alert(reply)
+
+    if (reply === "Registrierung erfolgreich") {
+      router.push("/home")
+    }
   } catch (err) {
     alert("Fehler beim Senden: " + err)
   }

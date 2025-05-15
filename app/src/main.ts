@@ -12,7 +12,7 @@ import LoginPage from "./components/LoginPage.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-      { path: "/homepage", component: HomePage },
+      { path: "/home", component: HomePage },
       { path: "/registrieren", component: Register },
       { path: "/gruppen", component: MeineGruppenPage },
       { path: "/login", component: LoginPage },
