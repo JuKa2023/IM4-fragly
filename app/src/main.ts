@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "./components/HomePage.vue";
 import Register from "./components/Register.vue";
 import MeineGruppenPage from "./components/MeineGruppenPage.vue";
+import LoginPage from "./components/LoginPage.vue";
 
 
 
@@ -14,6 +15,7 @@ const router = createRouter({
       { path: "/homepage", component: HomePage },
       { path: "/registrieren", component: Register },
       { path: "/gruppen", component: MeineGruppenPage },
+      { path: "/login", component: LoginPage },
   ],
 });
 
