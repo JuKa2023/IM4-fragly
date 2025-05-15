@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import logo from './assets/logo.svg'
 import gruppeicon from './assets/gruppeicon.svg'
 
@@ -10,6 +10,8 @@ interface User {
 }
 
 const users = ref<User[]>([]);
+const dropdownOpen = ref(false);
+const dropdownRef = ref<HTMLElement | null>(null);
 
 onMounted(async () => {
   try {
@@ -18,52 +20,72 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error fetching users:', error);
   }
+
+  document.addEventListener('click', handleClickOutside);
 });
 
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+}
+
+const handleClickOutside = (event: MouseEvent) => {
+  if (
+      dropdownRef.value &&
+      !dropdownRef.value.contains(event.target as Node)
+  ) {
+    dropdownOpen.value = false;
+  }
+};
 </script>
 
 <template>
-  <header class="bg-orange-300 h-16 w-full px-6 shadow-md">
+  <header class="bg-orange-300 h-16 w-full px-6 shadow-md z-20">
     <div class="mx-auto max-w-xl h-full flex items-center">
       <nav class="flex items-center justify-between w-full h-full">
         <a href="#" class="p-2 cursor-pointer iconHeader w-auto h-full">
           <img :src="logo" alt="Logo" class="h-full"/>
         </a>
-    
+
         <!-- Right User Dropdown -->
-        <div class="relative">
+        <div class="relative" ref="dropdownRef">
           <div
-            @click="toggleDropdown"
-            class="p-2 h-full w-auto cursor-pointer iconHeader"
+              @click="toggleDropdown"
+              class="p-2 h-full w-auto cursor-pointer iconHeader"
           >
-            <!-- Replace this with your own SVG if needed -->
-              <img :src="gruppeicon" alt="Nutzer" class=" cursor-pointer iconHeader" />
+            <img :src="gruppeicon" alt="Nutzer" class="cursor-pointer iconHeader" />
           </div>
-    
-          <div
-            v-if="dropdownOpen"
-            class="absolute right-0 mt-2 w-56 bg-orange-300 shadow-lg z-20"
-          >
-            <a
-              href="#"
-              class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
+
+          <!-- Dropdown Menu with transition -->
+          <transition name="dropdown">
+            <div
+                v-show="dropdownOpen"
+                class="absolute right-0 w-56 bg-orange-300 shadow-md overflow-hidden z-30"
             >
-              Benutzerdaten bearbeiten
-            </a>
-            <a
-              href="#"
-              class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
-            >
-              Logout
-            </a>
+              <a
+                  href="#"
+                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
+              >
+                Benutzerdaten bearbeiten
+              </a>
+              <a
+                  href="#"
+                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
+              >
+                Logout
+              </a>
             </div>
-          </div>
+          </transition>
+        </div>
       </nav>
     </div>
   </header>
     <main>
       <router-view>
-        
+
       </router-view>
     </main>
 
@@ -76,11 +98,3 @@ onMounted(async () => {
   </div>
 </footer>
 </template>
-
-
-<style scoped>
-.iconHeader {
-	transition: transform 0.6s ease;
-	transform-origin: center;
-}
-</style>

@@ -30,7 +30,7 @@ const login = async () => {
     alert(reply);
 
     if (reply === "Login erfolgreich") {
-      await router.push("/home");
+      router.push("/home");
     }
   } catch (err) {
     console.error("Fehler beim Senden:", err);

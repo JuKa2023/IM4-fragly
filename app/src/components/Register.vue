@@ -40,12 +40,14 @@ const register = async () => {
     alert(reply)
 
     if (reply === "Registrierung erfolgreich") {
-      await router.push("/home")
+      router.push("/home")
     }
   } catch (err) {
     alert("Fehler beim Senden: " + err)
   }
 }
+
+
 </script>
 
 <template>

@@ -88,3 +88,23 @@ p {
   @apply bg-[#FFE2EF] text-[#231201] hover:shadow-none;
 }
 
+/*Header*/
+.iconHeader {
+  transition: transform 0.6s ease;
+  transform-origin: center;
+}
+
+/* Transition classes for dropdown */
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: 500px;
+  opacity: 1;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
+
