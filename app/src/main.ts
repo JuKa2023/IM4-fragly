@@ -1,11 +1,13 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from 'vue';
+import './style.css';
+import App from './App.vue';
 import { createRouter, createWebHistory } from "vue-router";
+
 import HomePage from "./components/HomePage.vue";
 import Register from "./components/Register.vue";
-import MeineGruppenPage from "./components/MeineGruppenPage.vue";
 import LoginPage from "./components/LoginPage.vue";
+import MeineGruppenPage from "./components/MeineGruppenPage.vue";
+
 
 
 

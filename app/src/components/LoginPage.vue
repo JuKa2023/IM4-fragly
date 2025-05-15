@@ -7,6 +7,8 @@ import { useRouter } from 'vue-router'
 const username = ref('')
 const password = ref('')
 
+const router = useRouter()
+
 // Login function
 const login = async () => {
   if (!username.value || !password.value) {
@@ -28,7 +30,7 @@ const login = async () => {
     alert(reply);
 
     if (reply === "Login erfolgreich") {
-      router.push("/home");
+      await router.push("/home");
     }
   } catch (err) {
     console.error("Fehler beim Senden:", err);

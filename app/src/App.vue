@@ -34,10 +34,10 @@ onMounted(async () => {
         <div class="relative">
           <div
             @click="toggleDropdown"
-            class="p-2 cursor-pointer iconHeader"
+            class="p-2 h-full w-auto cursor-pointer iconHeader"
           >
             <!-- Replace this with your own SVG if needed -->
-              <img :src="gruppeicon" alt="Nutzer" class="p-2 cursor-pointer iconHeader" />
+              <img :src="gruppeicon" alt="Nutzer" class=" cursor-pointer iconHeader" />
           </div>
     
           <div
@@ -80,7 +80,6 @@ onMounted(async () => {
 
 <style scoped>
 .iconHeader {
-	padding-bottom: 10px;
 	transition: transform 0.6s ease;
 	transform-origin: center;
 }
