@@ -7,7 +7,7 @@ import HomePage from "./components/HomePage.vue";
 import Register from "./components/Register.vue";
 import LoginPage from "./components/LoginPage.vue";
 import MeineGruppenPage from "./components/MeineGruppenPage.vue";
-
+import UpdateUserdata from "./components/UpdateUserdata.vue";
 
 
 
@@ -18,6 +18,7 @@ const router = createRouter({
       { path: "/registrieren", component: Register },
       { path: "/gruppen", component: MeineGruppenPage },
       { path: "/login", component: LoginPage },
+      { path: "/benutzerdatenbearbeiten", component: UpdateUserdata },
   ],
 });
 

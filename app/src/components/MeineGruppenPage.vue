@@ -18,7 +18,7 @@
   
       <!-- Button unten -->
       <div class="mt-8 text-center">
-        <button class="btn btn-sm btn-primary">Gruppe beitreten</button>
+        <RouterLink class="btn btn-sm btn-primary" to="/gruppebeitreten">Gruppe beitreten</RouterLink>
       </div>
     </div>
   </div>

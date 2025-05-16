@@ -2,6 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import logo from './assets/logo.svg'
 import gruppeicon from './assets/gruppeicon.svg'
+import { useRouter } from 'vue-router'
 
 interface User {
   id: number;
@@ -41,6 +42,10 @@ const handleClickOutside = (event: MouseEvent) => {
   }
 };
 
+// Logout function
+
+const router = useRouter();
+
 const logout = async () => {
   try {
     const response = await fetch("api/logout.php", {
@@ -52,7 +57,7 @@ const logout = async () => {
 
     if (result.status === "success") {
       // Redirect to login page after logout
-      window.location.href = "login.html";
+      router.push("/landingpage");
     } else {
       console.error("Logout failed");
       alert("Logout failed. Please try again.");
@@ -87,19 +92,9 @@ const logout = async () => {
                 v-show="dropdownOpen"
                 class="absolute right-0 w-56 bg-orange-300 shadow-md overflow-hidden z-30"
             >
-              <a
-                  href="#"
-                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
-              >
-                Benutzerdaten bearbeiten
-              </a>
-              <a
-                  href="#"
-                  @click.prevent="logout"
-                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
-              >
-                Logout
-              </a>
+              <RouterLink class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors" to="/benutzerdatenbearbeiten">Benutzerdaten bearbeiten</RouterLink>
+
+              <RouterLink class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors" to="/landingpage" @click.prevent="logout">Abmelden</RouterLink>
             </div>
           </transition>
         </div>
