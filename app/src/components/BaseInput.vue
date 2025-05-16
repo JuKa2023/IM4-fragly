@@ -33,8 +33,8 @@
 import { ref } from 'vue'
 
 // ✅ Correct path using alias
-import sichtbaricon from '@/assets/sichtbaricon.svg'
-import unsichtbaricon from '@/assets/unsichtbaricon.svg'
+import sichtbaricon from '../assets/sichtbaricon.svg'
+import unsichtbaricon from '../assets/unsichtbaricon.svg'
 
 const props = defineProps<{
   label: string
