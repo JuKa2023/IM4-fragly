@@ -22,7 +22,7 @@ if ($user) {
         // session starten
         session_start();
         $_SESSION['user'] = $user['Nutzer'];
-        $_Session['ID'] = $user['User_ID'];
+        $_SESSION['ID'] = $user['User_ID'];
 
         echo "Login erfolgreich";
 
