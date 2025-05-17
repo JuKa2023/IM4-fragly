@@ -15,12 +15,6 @@ const dropdownOpen = ref(false);
 const dropdownRef = ref<HTMLElement | null>(null);
 
 onMounted(async () => {
-  try {
-    const response = await fetch("/api?resource=users");
-    users.value = await response.json();
-  } catch (error) {
-    console.error('Error fetching users:', error);
-  }
 
   document.addEventListener('click', handleClickOutside);
 });

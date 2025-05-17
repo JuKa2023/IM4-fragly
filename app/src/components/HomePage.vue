@@ -1,7 +1,7 @@
 <template>
     <div class="bg-[#ffebd2] min-h-screen p-6 flex flex-col justify-between rounded-3xl w-max-md m-2">
       <div class="flex justify-between space-x-4 mb-8">
-        <router-link class="btn btn-sm btn-primary" to="/meinegruppen" >Meine Gruppen</router-link>
+        <router-link class="btn btn-sm btn-primary" to="/gruppen" >Meine Gruppen</router-link>
         <router-link class="btn btn-sm btn-secondary" to="/meinsteckbrief">Mein Steckbrief</router-link>
       </div>
   
@@ -27,5 +27,6 @@
   </template>
   
   <script setup>
-  // Keine Logik notwendig für dieses statische Layout
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
   </script>
