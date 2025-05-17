@@ -4,13 +4,6 @@ import logo from './assets/logo.svg'
 import gruppeicon from './assets/gruppeicon.svg'
 import { useRouter } from 'vue-router'
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
-const users = ref<User[]>([]);
 const dropdownOpen = ref(false);
 const dropdownRef = ref<HTMLElement | null>(null);
 
@@ -51,7 +44,7 @@ const logout = async () => {
 
     if (result.status === "success") {
       // Redirect to login page after logout
-      router.push("/landingpage");
+      router.push("/");
     } else {
       console.error("Logout failed");
       alert("Logout failed. Please try again.");
@@ -88,7 +81,7 @@ const logout = async () => {
             >
               <RouterLink class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors" to="/benutzerdatenbearbeiten">Benutzerdaten bearbeiten</RouterLink>
 
-              <RouterLink class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors" to="/landingpage" @click.prevent="logout">Abmelden</RouterLink>
+              <RouterLink class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors" to="/" @click.prevent="logout">Abmelden</RouterLink>
             </div>
           </transition>
         </div>

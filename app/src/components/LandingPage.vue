@@ -9,8 +9,9 @@
       <h1 class="text-5xl md:text-6xl font-bold text-[#537178]">Fragly</h1>
     </div>
     <div class="flex flex-col items-center gap-6 w-full max-w-xs">
-      <button class="btn btn-lg btn-primary">Anmelden</button>
-      <button class="btn btn-lg btn-secondary">Registrieren</button>
+
+      <RouterLink class="btn btn-lg btn-primary" to="/anmelden">Anmelden</RouterLink>
+      <RouterLink to="/registrieren" class="btn btn-lg btn-secondary">Registrieren</RouterLink>
     </div>
   </div>
 </template>

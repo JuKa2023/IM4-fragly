@@ -8,15 +8,19 @@ import Register from "./components/Register.vue";
 import LoginPage from "./components/LoginPage.vue";
 import MeineGruppenPage from "./components/MeineGruppenPage.vue";
 import UpdateUserdata from "./components/UpdateUserdata.vue";
+import LandingPage from "./components/LandingPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: "/home", component: HomePage },
+        { path: "/home", component: HomePage, meta: { requiresAuth: true } },
         { path: "/registrieren", component: Register },
         { path: "/gruppen", component: MeineGruppenPage, meta: { requiresAuth: true } },
-        { path: "/login", component: LoginPage },
+        { path: "/anmelden", component: LoginPage },
         { path: "/benutzerdatenbearbeiten", component: UpdateUserdata, meta: { requiresAuth: true } },
+        { path: '/', component: LandingPage, name: 'landing' },
+
+
     ],
 });
 
@@ -24,15 +28,15 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth) {
         try {
-            const res = await fetch('/backend/session_check.php');
+            const res = await fetch('/api/session_check.php');
             if (res.ok) {
-                next(); // User is logged in, allow access
+                next(); // user is logged in
             } else {
-                next('/landing'); // Redirect to login
+                next('/'); // or wherever your login/landing page is
             }
         } catch (error) {
             console.error('Session check failed:', error);
-            next('/login');
+            next('/anmelden');
         }
     } else {
         next(); // No auth required
