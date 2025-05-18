@@ -6,11 +6,13 @@ const groupName = ref('');
 const loeschdatum = ref('');
 const message = ref('');
 const success = ref(false);
+const kuerzel = ref('');
+const gruppeLink = ref('');
+const copied = ref<null | 'link' | 'kuerzel'>(null);
 
 async function submitGroup() {
   message.value = '';
 
-  // Use FormData instead of JSON
   const formData = new FormData();
   formData.append('Gruppe_Name', groupName.value);
   formData.append('Loeschdatum', loeschdatum.value || '');
@@ -24,20 +26,68 @@ async function submitGroup() {
 
     const reply = await res.text();
     message.value = reply;
-    success.value = reply.toLowerCase().includes('erfolgreich');
+
+    if (reply.toLowerCase().includes('erfolgreich')) {
+      success.value = true;
+
+      // Simulate Kürzel + Link for now (your PHP needs to return this later!)
+      kuerzel.value = generateFakeKuerzel(); // placeholder
+      gruppeLink.value = `https://example.com/${kuerzel.value}`;
+    }
   } catch (err) {
     message.value = 'Verbindungsfehler.';
     success.value = false;
   }
 }
+
+// You can replace this with a real value from PHP later
+function generateFakeKuerzel() {
+  return Math.random().toString(36).substring(2, 8).toUpperCase() + '#JK';
+}
+
+function copyToClipboard(text: string, type: 'link' | 'kuerzel') {
+  navigator.clipboard.writeText(text).then(() => {
+    copied.value = type;
+    setTimeout(() => copied.value = null, 2000);
+  });
+}
 </script>
 
 <template>
-  <div class="p-8 w-full">
-    <h2 class="text-2xl font-bold text-brown text-center mb-6">Gebe folgende Angaben an</h2>
+  <div class="p-8 w-full text-brown">
+    <h2 class="text-2xl font-bold text-center mb-6">
+      {{ success ? 'Hier dein Link und Kürzel' : 'Gebe folgende Angaben an' }}
+    </h2>
 
-    <form @submit.prevent="submitGroup">
-      <!-- Gruppenbezeichnung -->
+    <!-- Success View -->
+    <div v-if="success" class="text-center space-y-6">
+      <!-- Link -->
+      <div
+          class="flex items-center justify-center gap-2 cursor-pointer group"
+          @click="copyToClipboard(gruppeLink, 'link')"
+      >
+        <span class="text-2xl">🔗</span>
+        <a :href="gruppeLink" target="_blank" class="text-xl underline font-bold group-hover:text-pink-600">
+          {{ gruppeLink }}
+        </a>
+      </div>
+      <p v-if="copied === 'link'" class="text-green-600 text-sm">Link kopiert!</p>
+
+      <!-- Kürzel -->
+      <div
+          class="flex items-center justify-center gap-2 cursor-pointer group"
+          @click="copyToClipboard(kuerzel, 'kuerzel')"
+      >
+        <span class="text-2xl">🔗</span>
+        <span class="text-xl underline font-bold group-hover:text-pink-600">
+          {{ kuerzel }}
+        </span>
+      </div>
+      <p v-if="copied === 'kuerzel'" class="text-green-600 text-sm">Kürzel kopiert!</p>
+    </div>
+
+    <!-- Form View -->
+    <form v-else @submit.prevent="submitGroup">
       <BaseInput
           id="gruppe-name"
           label="*Gruppenbezeichnung"
@@ -53,11 +103,7 @@ async function submitGroup() {
           type="date"
       />
 
-      <!-- Submit Button -->
-      <button
-          type="submit"
-          class="btn btn-lg btn-primary"
-      >
+      <button type="submit" class="btn btn-lg btn-primary w-full mt-6">
         Gruppe erstellen
       </button>
     </form>
