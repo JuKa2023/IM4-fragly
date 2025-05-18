@@ -5,14 +5,14 @@
     <div class="relative">
       <input
           :id="id"
-          :type="showPassword ? 'text' : type"
+          :type="type === 'password' && showPassword ? 'text' : type"
           :placeholder="placeholder"
           :value="modelValue"
           @input="$emit('update:modelValue', $event.target.value)"
           class="bg-white w-full px-4 py-2 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FCC1DB] custom-placeholder"
       />
 
-      <!-- Toggle Button Inside Input -->
+      <!-- Toggle Button for Password -->
       <button
           v-if="type === 'password'"
           type="button"
@@ -30,27 +30,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-// ✅ Correct path using alias
-import sichtbaricon from '../assets/sichtbaricon.svg'
-import unsichtbaricon from '../assets/unsichtbaricon.svg'
+import sichtbaricon from '../assets/sichtbaricon.svg';
+import unsichtbaricon from '../assets/unsichtbaricon.svg';
 
 const props = defineProps<{
-  label: string
-  modelValue: string
-  id: string
-  type?: string
-  placeholder?: string
-}>()
+  label: string;
+  modelValue: string;
+  id: string;
+  type?: string;
+  placeholder?: string;
+}>();
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
-const showPassword = ref(false)
+const showPassword = ref(false);
 
 const togglePassword = () => {
-  showPassword.value = !showPassword.value
-}
+  showPassword.value = !showPassword.value;
+};
 </script>
 
 <style scoped>

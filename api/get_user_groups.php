@@ -3,13 +3,9 @@ require_once('db.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-header('Content-Type: application/json; charset=UTF-8');
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Credentials: true");
-
 session_start();
 
-// 🚫 Not logged in
+// Not logged in
 if (!isset($_SESSION['ID'])) {
     http_response_code(401); // Unauthorized
     echo json_encode([

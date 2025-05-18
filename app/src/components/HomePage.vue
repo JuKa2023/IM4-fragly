@@ -1,3 +1,8 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+</script>
+
 <template>
     <div class="bg-[#ffebd2] min-h-screen p-6 flex flex-col justify-between rounded-3xl w-max-md m-2">
       <div class="flex justify-between space-x-4 mb-8">
@@ -25,8 +30,3 @@
       </div>
     </div>
   </template>
-  
-  <script setup>
-  import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  </script>

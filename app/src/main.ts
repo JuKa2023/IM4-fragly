@@ -9,16 +9,19 @@ import LoginPage from "./components/LoginPage.vue";
 import MeineGruppenPage from "./components/MeineGruppenPage.vue";
 import UpdateUserdata from "./components/UpdateUserdata.vue";
 import LandingPage from "./components/LandingPage.vue";
+import GruppeErstellen from "./components/GruppeErstellenPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        { path: '/', component: LandingPage, name: 'landing' },
         { path: "/home", component: HomePage, meta: { requiresAuth: true } },
         { path: "/registrieren", component: Register },
         { path: "/gruppen", component: MeineGruppenPage, meta: { requiresAuth: true } },
         { path: "/anmelden", component: LoginPage },
         { path: "/benutzerdatenbearbeiten", component: UpdateUserdata, meta: { requiresAuth: true } },
-        { path: '/', component: LandingPage, name: 'landing' },
+        { path: "/gruppeerstellen", component: GruppeErstellen, meta: { requiresAuth: true } },
+
 
 
     ],
