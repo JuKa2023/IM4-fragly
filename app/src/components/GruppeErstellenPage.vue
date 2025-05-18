@@ -83,7 +83,10 @@ function copyToClipboard(text: string, type: 'link' | 'kuerzel') {
           {{ kuerzel }}
         </span>
       </div>
-      <p v-if="copied === 'kuerzel'" class="text-green-600 text-sm">Kürzel kopiert!</p>
+
+      <RouterLink to="/gruppen" class="btn btn-lg btn-primary mt-6">
+        meine Gruppen
+      </RouterLink>
     </div>
 
     <!-- Form View -->

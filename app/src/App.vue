@@ -57,7 +57,7 @@ const logout = async () => {
 </script>
 
 <template>
-  <header class="bg-orange-300 h-16 w-full px-6 shadow-md z-20">
+  <header class="bg-orange-300 h-16 w-full px-6 shadow-md z-20 sticky top-0">
     <div class="mx-auto max-w-xl h-full flex items-center">
       <nav class="flex items-center justify-between w-full h-full">
         <a href="#" class="p-2 cursor-pointer iconHeader w-auto h-full">
@@ -95,7 +95,7 @@ const logout = async () => {
     </main>
 
 
-<footer class="bg-orange-300 h-16 w-full px-6 shadow-inner">
+<footer class="bg-orange-300 h-16 w-full px-6 shadow-inner sticky bottom-0">
   <div class="mx-auto max-w-xl h-full flex items-center justify-center">
   <p class="text-brown text-sm">
    © 2025 Fragly
