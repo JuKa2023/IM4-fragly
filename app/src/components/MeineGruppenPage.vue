@@ -11,7 +11,8 @@ const noGroups = ref(false);
 
 onMounted(async () => {
   try {
-    const res = await fetch('api/get_user_groups.php', {
+    const res = await fetch("api/get_user_groups.php", {
+      method: 'POST',
       credentials: 'include',
     });
 
@@ -29,8 +30,6 @@ onMounted(async () => {
       }
     } else if (res.status === 401) {
       console.warn('Nicht eingeloggt. Weiterleitung zur Anmeldung empfohlen.');
-    } else {
-      console.error('Unbekannter Fehler:', res.status);
     }
   } catch (error) {
     console.error('Verbindungsfehler:', error);

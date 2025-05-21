@@ -1,13 +1,8 @@
 <?php
-error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json; charset=utf-8');
 
 session_start();
-if (isset($_SESSION['ID'])) {
-    http_response_code(200);
-} else {
-    http_response_code(401);
-    session_destroy();
-}
+// Don't send any response code here, let the main script handle it
