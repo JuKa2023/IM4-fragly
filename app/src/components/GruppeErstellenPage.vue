@@ -94,17 +94,26 @@ async function submitGroup() {
       body: formData,
     });
 
+    // Check if the response is JSON
+    const contentType = res.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('Keine gültige JSON-Antwort vom Server');
+    }
+
     const data = await res.json();
+
     message.value = data.message;
 
     if (res.ok && data.success) {
       success.value = true;
       kuerzel.value = data.kuerzel;
       gruppeLink.value = data.link;
+    } else {
+      success.value = false;
     }
   } catch (err) {
-    console.error(err);
     message.value = 'Verbindungsfehler.';
+    success.value = false;
   }
 }
 
