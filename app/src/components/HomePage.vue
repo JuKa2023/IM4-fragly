@@ -6,8 +6,8 @@ import { useRouter } from 'vue-router'
 <template>
     <div class="bg-[#ffebd2] min-h-screen p-6 flex flex-col justify-between rounded-3xl w-max-md m-2">
       <div class="flex justify-between space-x-4 mb-8">
-        <router-link class="btn btn-sm btn-primary" to="/gruppen" >Meine Gruppen</router-link>
-        <router-link class="btn btn-sm btn-secondary" to="/meinsteckbrief">Mein Steckbrief</router-link>
+        <RouterLink class="btn btn-sm btn-primary" to="/gruppen" >Meine Gruppen</RouterLink>
+        <RouterLink class="btn btn-sm btn-secondary" to="/meinsteckbrief">Mein Steckbrief</RouterLink>
       </div>
   
       <div class="text-center space-y-6">

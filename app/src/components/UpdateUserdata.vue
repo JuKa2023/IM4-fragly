@@ -68,7 +68,7 @@ const cancelUpdate = () => {
             <button type="submit" class="btn btn-lg btn-primary flex-1">
               Speichern
             </button>
-            <button type="button" @click="cancelUpdate" class="btn btn-lg btn-secondary flex-1">
+            <button type="reset" @click="cancelUpdate" class="btn btn-lg btn-secondary flex-1">
               Abbrechen
             </button>
           </div>
