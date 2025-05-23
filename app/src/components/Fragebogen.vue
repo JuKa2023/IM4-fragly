@@ -29,12 +29,14 @@
         <button
             type="button"
             @click="onCancel"
-            class="btn btn-sm btn-secondary"        >
+            class="btn btn-sm btn-secondary"
+        >
           Abbrechen
         </button>
         <button
             type="submit"
-            class="btn btn-sm btn-primary">
+            class="btn btn-sm btn-primary"
+        >
           Speichern
         </button>
       </div>
@@ -44,14 +46,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
-// OPTION A: use the browser history API directly
-// const goBack = () => window.history.back();
-
-// OPTION B: use Vue Router
 import { useRouter } from 'vue-router';
-const router = useRouter();
-const goBack = () => router.back();
-
 import BaseInput from './BaseInput.vue';
 
 interface FrageRow {
@@ -61,11 +56,15 @@ interface FrageRow {
   antwort: string | null;
 }
 
+const router = useRouter();
+const goBack = () => router.back();
+
 const loading = ref(true);
 const questions = ref<FrageRow[]>([]);
 const answers = reactive<Record<number, string>>({});
 let originalAnswers: Record<number, string> = {};
 
+// initial load
 async function loadQuestions() {
   loading.value = true;
   try {
@@ -86,37 +85,66 @@ async function loadQuestions() {
   }
 }
 
+// Abbrechen: zurück zur vorherigen Seite
 function onCancel() {
-  // reset local answers (if you still want that), then go back
+  // Antworten zurücksetzen (optional) …
   Object.keys(answers).forEach(key => {
     answers[+key] = originalAnswers[+key] || '';
   });
   goBack();
 }
 
+// Speichern: nur tatsächliche Änderungen schicken
 async function onSave() {
-  const payload = questions.value.map(q => ({
-    frage_id: q.frage_id,
-    antwort: answers[q.frage_id].trim()
-  }));
+  // 1) Diff zwischen originalAnswers und aktuellem answers
+  const diff = questions.value
+      .map(q => {
+        const neu = answers[q.frage_id].trim();
+        const alt = originalAnswers[q.frage_id] ?? '';
+        return { frage_id: q.frage_id, neu, alt };
+      })
+      .filter(item => item.neu !== item.alt);
+
+  // 2) Nichts geändert? sofort zurück
+  if (diff.length === 0) {
+    return goBack();
+  }
+
+  // 3) Trennen in Updates vs. Deletes
+  const toUpdate = diff
+      .filter(d => d.neu !== '')
+      .map(d => ({ frage_id: d.frage_id, antwort: d.neu }));
+
+  const toDelete = diff
+      .filter(d => d.neu === '')
+      .map(d => d.frage_id);
+
+  // 4) Absenden
   try {
     const res = await fetch('/api/save_answers.php', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ answers: payload })
+      body: JSON.stringify({ update: toUpdate, delete: toDelete })
     });
     const result = await res.json();
-    if (res.ok) {
-      originalAnswers = { ...answers };
-      alert('Deine Antworten wurden gespeichert.');
-      goBack();
-    } else {
-      alert('Fehler beim Speichern: ' + (result.error || res.statusText));
-    }
-  } catch (err) {
+    if (!res.ok) throw new Error(result.error || res.statusText);
+
+    // 5) Lokaler State aktualisieren
+    toUpdate.forEach(u => {
+      originalAnswers[u.frage_id] = u.antwort;
+    });
+    toDelete.forEach(id => {
+      delete originalAnswers[id];
+      answers[id] = '';
+    });
+
+    alert('Deine Antworten wurden gespeichert.');
+    goBack();
+
+  } catch (err: any) {
     console.error('Save-Error:', err);
-    alert('Netzwerkfehler beim Speichern.');
+    alert('Fehler beim Speichern: ' + err.message);
   }
 }
 
