@@ -31,7 +31,7 @@ onMounted(async () => {
     } else if (res.status === 401) {
       console.warn('Nicht eingeloggt. Weiterleitung zur Anmeldung empfohlen.');
     }
-  } catch (error) {
+  } catch ( error) {
     console.error('Verbindungsfehler:', error);
   }
 });

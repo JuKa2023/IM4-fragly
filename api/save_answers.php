@@ -1,41 +1,41 @@
 <?php
 // api/save_answers.php
-require_once __DIR__.'/db.php';
-require_once __DIR__.'/session_check.php';
+require_once('db.php');
+require_once('session_check.php');
 header('Content-Type: application/json; charset=utf-8');
 
-session_start();
 if (!isset($_SESSION['ID'])) {
   http_response_code(401);
-  echo json_encode(['success'=>false,'error'=>'Nicht eingeloggt']);
+  echo json_encode(['error'=>'Nicht eingeloggt']);
   exit;
 }
 $user_id = $_SESSION['ID'];
 
-// Expect payload as JSON: { answers: { [frage_id]: antwort, … } }
 $input = json_decode(file_get_contents('php://input'), true);
-$answers = $input['answers'] ?? [];
+if (!isset($input['answers']) || !is_array($input['answers'])) {
+  http_response_code(400);
+  echo json_encode(['error'=>'Ungültige Nutzlast']);
+  exit;
+}
 
 try {
   $pdo->beginTransaction();
   $upsert = $pdo->prepare("
-    INSERT INTO Nutzer_hat_Frage (frage_id, user_id, antwort, erstelltdatum)
-    VALUES (?, ?, ?, CURRENT_DATE())
-    ON DUPLICATE KEY UPDATE
-      antwort = VALUES(antwort),
-      erstelltdatum = CURRENT_DATE()
+    INSERT INTO Nutzer_hat_Frage (user_id, frage_id, antwort)
+    VALUES (?, ?, ?)
+    ON DUPLICATE KEY UPDATE antwort = VALUES(antwort)
   ");
-
-  foreach ($answers as $fid => $text) {
-    // skip empty
-    if (trim($text)==='') continue;
-    $upsert->execute([(int)$fid, $user_id, $text]);
+  foreach ($input['answers'] as $a) {
+    $upsert->execute([
+      $user_id,
+      $a['frage_id'],
+      $a['antwort']
+    ]);
   }
-
   $pdo->commit();
   echo json_encode(['success'=>true]);
 } catch (PDOException $e) {
   $pdo->rollBack();
   http_response_code(500);
-  echo json_encode(['success'=>false,'error'=>$e->getMessage()]);
+  echo json_encode(['error'=>'DB-Fehler: '.$e->getMessage()]);
 }

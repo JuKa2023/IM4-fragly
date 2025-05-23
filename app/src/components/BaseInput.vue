@@ -1,6 +1,6 @@
 <template>
   <div class="mb-4 relative">
-    <label :for="id" class="block text-[#472402] font-medium mb-1">{{ label }}</label>
+    <label :for="id" class="block text-[#472402] font-medium mb-1 text-left">{{ label }}</label>
 
     <div class="relative">
       <input
@@ -9,7 +9,7 @@
           :placeholder="placeholder"
           :value="modelValue"
           @input="$emit('update:modelValue', $event.target.value)"
-          class="bg-white w-full px-4 py-2 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FCC1DB] custom-placeholder"
+          class="bg-white w-full px-4 py-2 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FCC1DB] custom-placeholder text-left"
       />
 
       <!-- Toggle Button for Password -->

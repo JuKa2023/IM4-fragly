@@ -1,7 +1,7 @@
 <?php
 // api/get_questions.php
-require_once __DIR__.'/db.php';
-require_once __DIR__.'/session_check.php';
+require_once('db.php');
+error_reporting(E_ALL);
 header('Content-Type: application/json; charset=utf-8');
 
 session_start();
