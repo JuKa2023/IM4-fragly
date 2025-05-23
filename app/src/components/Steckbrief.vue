@@ -11,7 +11,7 @@
       </p>
   
       <!-- Antworten-Liste -->
-      <div v-else>
+      <div v-else class="text-left">
         <div
           v-for="f in fields"
           :key="f.frage_id"
