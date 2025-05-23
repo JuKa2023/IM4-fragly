@@ -17,9 +17,9 @@
           :key="q.frage_id"
           class="mb-6 last:mb-0"
       >
-        <h2 class="font-semibold mb-1">{{ q.frage }}</h2>
         <BaseInput
             v-model="answers[q.frage_id]"
+            :label="q.frage"
             :placeholder="q.antwort_vorschlag || ''"
             textarea
         />
