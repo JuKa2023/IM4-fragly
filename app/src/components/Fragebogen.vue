@@ -29,14 +29,12 @@
         <button
             type="button"
             @click="onCancel"
-            class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-        >
+            class="btn btn-sm btn-secondary"        >
           Abbrechen
         </button>
         <button
             type="submit"
-            class="px-4 py-2 bg-brown text-white rounded hover:bg-brown-dark"
-        >
+            class="btn btn-sm btn-primary">
           Speichern
         </button>
       </div>
@@ -46,7 +44,15 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
-import BaseInput from './BaseInput.vue'
+// OPTION A: use the browser history API directly
+// const goBack = () => window.history.back();
+
+// OPTION B: use Vue Router
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const goBack = () => router.back();
+
+import BaseInput from './BaseInput.vue';
 
 interface FrageRow {
   frage_id: number;
@@ -69,29 +75,26 @@ async function loadQuestions() {
     });
     const data: FrageRow[] = await res.json();
     questions.value = data;
-    // build reactive answers object
     data.forEach(q => {
       answers[q.frage_id] = q.antwort ?? '';
     });
-    // keep a copy for “Abbrechen”
     originalAnswers = { ...answers };
   } catch (err) {
     console.error('Fehler beim Laden der Fragen:', err);
-    // ggf. Fehlermeldung anzeigen
   } finally {
     loading.value = false;
   }
 }
 
 function onCancel() {
-  // reset to original loaded state
+  // reset local answers (if you still want that), then go back
   Object.keys(answers).forEach(key => {
     answers[+key] = originalAnswers[+key] || '';
   });
+  goBack();
 }
 
 async function onSave() {
-  // prepare payload
   const payload = questions.value.map(q => ({
     frage_id: q.frage_id,
     antwort: answers[q.frage_id].trim()
@@ -105,10 +108,9 @@ async function onSave() {
     });
     const result = await res.json();
     if (res.ok) {
-      // update originalAnswers
       originalAnswers = { ...answers };
-      // Optionally: Kurze Bestätigung anzeigen
       alert('Deine Antworten wurden gespeichert.');
+      goBack();
     } else {
       alert('Fehler beim Speichern: ' + (result.error || res.statusText));
     }
