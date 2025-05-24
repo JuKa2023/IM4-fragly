@@ -152,8 +152,5 @@ onMounted(loadQuestions);
 </script>
 
 <style scoped>
-.bg-cream-light { background-color: #FFF3E0; }
-.text-brown     { color: #5C2E00; }
-.bg-brown       { background-color: #5C2E00; }
-.bg-brown-dark  { background-color: #4A2400; }
+
 </style>
