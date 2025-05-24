@@ -12,6 +12,7 @@ import LandingPage from "./components/LandingPage.vue";
 import GruppeErstellen from "./components/GruppeErstellenPage.vue";
 import Steckbrief from "./components/Steckbrief.vue";
 import Fragebogen from "./components/Fragebogen.vue";
+import GruppenMitgliederPage from "./components/GruppenMitgliederPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -25,7 +26,13 @@ const router = createRouter({
         { path: "/gruppeerstellen", component: GruppeErstellen, meta: { requiresAuth: true } },
         { path: "/meinsteckbrief", component: Steckbrief, meta: { requiresAuth: true } },
         { path: "/fragebogen", component: Fragebogen, meta: { requiresAuth: true } },
-
+        {
+            path: "/gruppenmitglieder/:id",
+            name: "GruppenMitglieder",
+            component: GruppenMitgliederPage,
+            props: true,
+            meta: { requiresAuth: true }
+        },
     ],
 });
 

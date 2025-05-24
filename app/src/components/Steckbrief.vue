@@ -1,6 +1,6 @@
 <template>
     <div class="p-8 max-w-2xl mx-auto bg-cream-light rounded-xl shadow-md text-brown">
-      <h1 class="text-3xl font-bold mb-6">Dein Steckbrief</h1>
+      <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
   
       <!-- Loader -->
       <p v-if="!loaded" class="text-center">Lade …</p>

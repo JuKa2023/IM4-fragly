@@ -4,6 +4,8 @@ import { UserGroupIcon } from '@heroicons/vue/24/solid';
 
 type Group = {
   Gruppe_Name: string;
+  Gruppe_ID: number;
+  Kuerzel: string;
 };
 
 const groups = ref<Group[]>([]);
@@ -39,7 +41,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <button class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center">
+    <button class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center"       @click="$router.back()"
+    >
       ×
     </button>
 
@@ -59,14 +62,15 @@ onMounted(async () => {
 
         <!-- Group list -->
         <div v-else class="space-y-3">
-          <div
+          <RouterLink
               v-for="group in groups"
-              :key="group.Gruppe_Name"
+              :key="group.Gruppe_ID"
+              :to="{ name: 'GruppenMitglieder', params: { id: group.Gruppe_ID } }"
               class="bg-[#FFEFF6] text-brown flex items-center px-4 py-2 rounded-md shadow-sm cursor-pointer"
           >
             <UserGroupIcon class="w-6 h-6 text-[#7CA4A0] mr-3" />
             <span class="text-xl">{{ group.Gruppe_Name }}</span>
-          </div>
+          </RouterLink>
         </div>
       </div>
 
