@@ -35,11 +35,13 @@ if (!$stmt->fetchColumn()) {
 // 4) Mitglieder abrufen
 try {
     $stmt = $pdo->prepare("
-        SELECT Nutzer.User_ID, Nutzer.Nutzer
+        SELECT Nutzer.User_ID, Nutzer.Nutzer, g.Gruppe_Name
         FROM Nutzer
         JOIN Nutzer_hat_Gruppe nhg
         ON nhg.user_id = Nutzer.User_ID
-        WHERE nhg.gruppe_id = :gid
+        JOIN Gruppe g
+        ON g.Gruppe_ID = nhg.gruppe_id
+        WHERE g.Gruppe_ID = :gid
     ");
     $stmt->execute([':gid' => $gruppeId]);
     $members = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -7,9 +7,11 @@ const route = useRoute()
 const router = useRouter()
 const groupId = Number(route.params.id)
 
+
 const members = ref<[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
+const gruppeName = ref<string>('')
 
 onMounted(async () => {
   try {
@@ -18,6 +20,7 @@ onMounted(async () => {
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ gruppe_id: groupId })
+
     })
 
     if (res.status === 401) {
@@ -33,6 +36,7 @@ onMounted(async () => {
       error.value = data || 'Fehler beim Laden der Mitglieder.'
     } else {
       members.value = data
+      gruppeName.value = data[0].Gruppe_Name
     }
   } finally {
     loading.value = false
@@ -47,7 +51,7 @@ onMounted(async () => {
         class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center"
     >×</button>
 
-    <h2 class="text-2xl font-bold text-brown mb-6">Mitglieder</h2>
+    <h2 class="text-2xl font-bold text-brown mb-6">{{ gruppeName }}</h2>
 
     <div v-if="loading" class="text-center text-brown">Lade Mitglieder…</div>
     <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
