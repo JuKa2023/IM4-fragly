@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import BaseInput from './BaseInput.vue'
-import { useRouter } from 'vue-router'
+import { ref } from "vue";
+import BaseInput from "./BaseInput.vue";
+import { useRouter } from "vue-router";
 
 // Reactive input fields
-const username = ref('')
-const password = ref('')
+const username = ref("");
+const password = ref("");
 
-const router = useRouter()
+const router = useRouter();
 
 // Login function
 const login = async () => {
@@ -17,8 +17,8 @@ const login = async () => {
   }
 
   const formData = new FormData();
-  formData.append('username', username.value);
-  formData.append('password', password.value);
+  formData.append("username", username.value);
+  formData.append("password", password.value);
 
   try {
     const res = await fetch("api/login.php", {
@@ -35,7 +35,7 @@ const login = async () => {
   } catch (err) {
     console.error("Fehler beim Senden:", err);
   }
-}
+};
 </script>
 
 <template>
@@ -45,24 +45,22 @@ const login = async () => {
 
       <form id="loginForm" @submit.prevent="login">
         <BaseInput
-            label="Benutzername eingeben"
-            v-model="username"
-            id="username"
-            type="text"
-            placeholder="JuKa365"
+          label="Benutzername eingeben"
+          v-model="username"
+          id="username"
+          type="text"
+          placeholder="JuKa365"
         />
 
         <BaseInput
-            label="Passwort eingeben"
-            v-model="password"
-            id="password"
-            type="password"
-            placeholder="*****"
+          label="Passwort eingeben"
+          v-model="password"
+          id="password"
+          type="password"
+          placeholder="*****"
         />
 
-        <button type="submit" class="btn btn-lg btn-primary">
-          Anmelden
-        </button>
+        <button type="submit" class="btn btn-lg btn-primary">Anmelden</button>
       </form>
     </div>
   </div>

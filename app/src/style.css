@@ -12,7 +12,7 @@
 
   color-scheme: light dark;
   color: #231201;
-  background-color: #FFF6EB;
+  background-color: #fff6eb;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -97,7 +97,9 @@ p {
 /* Transition classes for dropdown */
 .dropdown-enter-active,
 .dropdown-leave-active {
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.3s ease;
   max-height: 500px;
   opacity: 1;
 }
@@ -107,4 +109,3 @@ p {
   max-height: 0;
   opacity: 0;
 }
-
