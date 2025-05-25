@@ -9,7 +9,7 @@
 
     <!-- Keine Antworten -->
     <p v-else-if="fields.length === 0" class="text-center">
-      Du hast noch keine Fragen beantwortet.
+      Es wurden noch keine Fragen beantwortet.
     </p>
 
     <!-- Antworten-Liste -->
@@ -19,15 +19,18 @@
         <p>{{ f.antwort }}</p>
       </div>
     </div>
-    <RouterLink to="/fragebogen" class="btn btn-sm btn-primary mt-8"
+    <RouterLink
+      to="/fragebogen"
+      class="btn btn-sm btn-primary mt-8"
+      v-if="!userId"
       >Bearbeiten</RouterLink
     >
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import {useRoute} from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 interface FrageRow {
   frage_id: number;
@@ -38,23 +41,20 @@ interface FrageRow {
 const fields = ref<FrageRow[]>([]);
 const loaded = ref(false);
 
-const route = useRoute()
-const userId = route.params.id
+const route = useRoute();
+const userId = route.params.id;
 
 onMounted(async () => {
   try {
-    const res = await fetch('/api/get_questions.php', {
-      credentials: 'include'
-      body: JSON.stringify({ user_id: userId })
+    const res = await fetch("/api/get_questions.php", {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify({ user_id: userId }),
     });
-    const data: FrageRow[] = await res.json();
-
-    // Nur wirklich beantwortete Fragen anzeigen
-    fields.value = data.filter(q =>
-      q.antwort !== null && q.antwort.trim() !== ''
-    );
+    const data = await res.json();
+    fields.value = data.filter((q: FrageRow) => q.antwort !== null);
   } catch (e) {
-    console.error('Fehler beim Laden der Fragen:', e);
+    console.error("Fehler beim Laden der Fragen:", e);
   } finally {
     loaded.value = true;
   }

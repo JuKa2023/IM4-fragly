@@ -25,8 +25,6 @@ const handleClickOutside = (event: MouseEvent) => {
   }
 };
 
-// Logout function
-
 const router = useRouter();
 
 const logout = async () => {

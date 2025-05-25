@@ -50,26 +50,30 @@ interface FrageRow {
 }
 
 const router = useRouter();
-const goBack = () => router.back();
+
+const redirectRoute = "/meinsteckbrief";
 
 const loading = ref(true);
 const questions = ref<FrageRow[]>([]);
 const answers = reactive<Record<number, string>>({});
 let originalAnswers: Record<number, string> = {};
 
-// initial load
 async function loadQuestions() {
   loading.value = true;
   try {
     const res = await fetch("/api/get_questions.php", {
-      method: "POST",
       credentials: "include",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: undefined }), // undefined = current logged-in user
     });
     const data: FrageRow[] = await res.json();
     questions.value = data;
+
     data.forEach((q) => {
       answers[q.frage_id] = q.antwort ?? "";
     });
+
     originalAnswers = { ...answers };
   } catch (err) {
     console.error("Fehler beim Laden der Fragen:", err);
@@ -78,16 +82,13 @@ async function loadQuestions() {
   }
 }
 
-// Abbrechen: zurück zur vorherigen Seite
 function onCancel() {
-  // Antworten zurücksetzen (optional) …
   Object.keys(answers).forEach((key) => {
     answers[+key] = originalAnswers[+key] || "";
   });
-  goBack();
+  router.push(redirectRoute);
 }
 
-// Speichern: nur tatsächliche Änderungen schicken
 async function onSave() {
   // 1) Diff zwischen originalAnswers und aktuellem answers
   const diff = questions.value
@@ -100,7 +101,7 @@ async function onSave() {
 
   // 2) Nichts geändert? sofort zurück
   if (diff.length === 0) {
-    return goBack();
+    return router.push(redirectRoute);
   }
 
   // 3) Trennen in Updates vs. Deletes
@@ -131,7 +132,7 @@ async function onSave() {
     });
 
     alert("Deine Antworten wurden gespeichert.");
-    goBack();
+    await router.push(redirectRoute);
   } catch (err: any) {
     console.error("Save-Error:", err);
     alert("Fehler beim Speichern: " + err.message);

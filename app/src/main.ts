@@ -42,7 +42,7 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: "/steckbrief",
+      path: "/steckbrief/:id",
       component: Steckbrief,
       meta: { requiresAuth: true },
     },

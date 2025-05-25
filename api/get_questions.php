@@ -1,19 +1,22 @@
 <?php
-// api/get_questions.php
 require_once('db.php');
+require_once('session_check.php');
+
 error_reporting(E_ALL);
 header('Content-Type: application/json; charset=utf-8');
 
-session_start();
-if (!isset($_SESSION['ID'])) {
-  http_response_code(401);
-  echo json_encode(['error'=>'Nicht eingeloggt']);
-  exit;
+$this_user_id = $_SESSION['ID'];
+
+$input = json_decode(file_get_contents('php://input'), true);
+
+$user_id = null;
+if (empty($input['user_id'])) {
+  $user_id = $this_user_id;
+} else {
+  $user_id = (int) $input['user_id'];
 }
-$user_id = $_SESSION['ID'];
 
 try {
-  // left-join master questions with any existing user answers
   $sql = "
     SELECT
       f.frage_id,
@@ -23,14 +26,15 @@ try {
     FROM Frage AS f
     LEFT JOIN Nutzer_hat_Frage AS uf
       ON f.frage_id = uf.frage_id
-     AND uf.user_id = ?
+      AND uf.user_id = ?
     ORDER BY f.reihenfolge
   ";
   $stmt = $pdo->prepare($sql);
   $stmt->execute([$user_id]);
   $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
   echo json_encode($rows);
 } catch (PDOException $e) {
   http_response_code(500);
-  echo json_encode(['error'=>'DB-Fehler: '.$e->getMessage()]);
+  echo json_encode('DB-Fehler');
 }

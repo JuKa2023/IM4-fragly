@@ -2,14 +2,6 @@
 require_once('db.php');
 require_once('session_check.php');
 
-// 1) Anmeldung prüfen
-if (!isset($_SESSION['ID'])) {
-    http_response_code(401);
-    echo json_encode(['status' => 'error', 'message' => 'Nicht eingeloggt']);
-    exit;
-}
-
-// 2) Input parsen
 $input = json_decode(file_get_contents('php://input'), true);
 if (empty($input['gruppe_id'])) {
     http_response_code(400);
@@ -19,7 +11,7 @@ if (empty($input['gruppe_id'])) {
 $gruppeId = (int)$input['gruppe_id'];
 $userId   = $_SESSION['ID'];
 
-// 3) Berechtigungs‐Check: ist der User in dieser Gruppe?
+// Berechtigungs‐Check: ist der User in dieser Gruppe?
 $stmt = $pdo->prepare("
     SELECT 1
     FROM Nutzer_hat_Gruppe
