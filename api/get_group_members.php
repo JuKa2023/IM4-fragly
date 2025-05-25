@@ -35,24 +35,21 @@ if (!$stmt->fetchColumn()) {
 // 4) Mitglieder abrufen
 try {
     $stmt = $pdo->prepare("
-        SELECT nhg.user_id,
-               nhf.bezeichnung
-        FROM Nutzer_hat_Gruppe nhg
-        JOIN Nutzer_hat_Frage nhf
-          ON nhg.user_id = nhf.user_id
-         AND nhf.frage_id = 1
+        SELECT Nutzer.User_ID, Nutzer.Nutzer
+        FROM Nutzer
+        JOIN Nutzer_hat_Gruppe nhg
+        ON nhg.user_id = Nutzer.User_ID
         WHERE nhg.gruppe_id = :gid
     ");
     $stmt->execute([':gid' => $gruppeId]);
     $members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     http_response_code(200);
-    echo json_encode([
-      'status'  => 'success',
-      'members' => $members
-    ]);
+    echo json_encode(
+      $members
+    );
 } catch (PDOException $e) {
     error_log("Error in get_group_members.php: {$e->getMessage()}");
     http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => 'Datenbankfehler']);
+    echo json_encode('Datenbankfehler');
 }

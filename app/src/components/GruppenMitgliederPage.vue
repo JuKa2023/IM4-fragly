@@ -1,25 +1,19 @@
-<!-- src/pages/GruppenMitgliederPage.vue -->
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { UserIcon } from '@heroicons/vue/24/solid'
 import { useRoute, useRouter } from 'vue-router'
 
-type Member = {
-  user_id: number;
-  bezeichnung: string;
-}
-
 const route = useRoute()
 const router = useRouter()
 const groupId = Number(route.params.id)
 
-const members = ref<Member[]>([])
+const members = ref<[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
 
 onMounted(async () => {
   try {
-    const res = await fetch('api/get_group_members.php', {
+    const res = await fetch('/api/get_group_members.php', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -33,10 +27,12 @@ onMounted(async () => {
     }
 
     const data = await res.json()
-    if (res.status !== 200 || data.status !== 'success') {
-      error.value = data.message || 'Fehler beim Laden der Mitglieder.'
+    console.log(data)
+
+    if (res.status !== 200) {
+      error.value = data || 'Fehler beim Laden der Mitglieder.'
     } else {
-      members.value = data.members
+      members.value = data
     }
   } finally {
     loading.value = false
@@ -59,11 +55,11 @@ onMounted(async () => {
     <div v-else class="space-y-3">
       <div
           v-for="m in members"
-          :key="m.user_id"
+          :key="m.User_ID"
           class="bg-[#FFEFF6] text-brown flex items-center px-4 py-2 rounded-md shadow-sm"
       >
         <UserIcon class="w-6 h-6 text-[#7CA4A0] mr-3" />
-        <span class="text-xl">{{ m.bezeichnung }}</span>
+        <span class="text-xl">{{ m.Nutzer }}</span>
       </div>
     </div>
   </div>
