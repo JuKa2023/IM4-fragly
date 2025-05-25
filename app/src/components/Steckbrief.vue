@@ -4,6 +4,11 @@
   >
     <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
 
+    <ProfilePicture
+      initial-url="/images/default-profile.png"
+      :editable="false"
+    />
+
     <!-- Loader -->
     <p v-if="!loaded" class="text-center">Lade …</p>
 
@@ -31,6 +36,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import ProfilePicture from "./ProfilePicture.vue";
 
 interface FrageRow {
   frage_id: number;
