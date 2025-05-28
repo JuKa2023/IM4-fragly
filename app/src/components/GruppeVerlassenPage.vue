@@ -24,14 +24,14 @@
       <div class="flex gap-4">
         <button
           @click="$router.back()"
-          class="flex-1 py-2 rounded-full text-gray-600 font-medium border border-gray-300 hover:bg-gray-50"
+          class="btn btn-sm btn-primary"
         >
           Abbrechen
         </button>
         <button
           :disabled="!isMatch"
           @click="onLeave"
-          class="flex-1 py-2 rounded-full text-white font-medium bg-pink-400 hover:bg-pink-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="btn btn-sm btn-secondary"
         >
           Gruppe verlassen
         </button>

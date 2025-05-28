@@ -69,22 +69,21 @@ const router = createRouter({
   ],
 });
 
-// 🔐 Navigation Guard
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
     try {
       const res = await fetch("/api/session_check.php");
       if (res.ok) {
-        next(); // user is logged in
+        next();
       } else {
-        next("/"); // or wherever your login/landing page is
+        next("/");
       }
     } catch (error) {
       console.error("Session check failed:", error);
       next("/anmelden");
     }
   } else {
-    next(); // No auth required
+    next(); 
   }
 });
 
