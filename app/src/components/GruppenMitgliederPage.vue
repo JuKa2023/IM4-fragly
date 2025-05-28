@@ -66,6 +66,9 @@ onMounted(async () => {
         <span class="text-xl">{{ m.Nutzer }}</span>
       </div>
     </div>
+    <RouterLink :to="{ name: 'GruppeVerlassen', params: { id: groupId } }" class="btn btn-sm btn-primary mt-8">
+      Gruppe verlassen
+    </RouterLink>
   </div>
 </template>
 

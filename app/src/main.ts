@@ -13,6 +13,7 @@ import GruppeErstellen from "./components/GruppeErstellenPage.vue";
 import Steckbrief from "./components/Steckbrief.vue";
 import Fragebogen from "./components/Fragebogen.vue";
 import GruppenMitgliederPage from "./components/GruppenMitgliederPage.vue";
+import GruppeVerlassenPage from "./components/GruppeVerlassenPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -57,6 +58,13 @@ const router = createRouter({
       component: GruppenMitgliederPage,
       props: true,
       meta: { requiresAuth: true },
+    },
+    {
+      path: "/Gruppeverlassen/:id",
+        name: "GruppeVerlassen",
+        component: GruppeVerlassenPage,
+        props: true,
+        meta: { requiresAuth: true },
     },
   ],
 });
