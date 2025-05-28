@@ -82,7 +82,7 @@ async function onLeave() {
   if (!isMatch.value) return
 
   try {
-    const res = await fetch("/api/leave_group.php", {
+    const res = await fetch("/api/gruppe_verlassen.php", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

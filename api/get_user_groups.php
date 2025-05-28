@@ -2,16 +2,6 @@
 require_once('db.php');
 require_once('session_check.php');
 
-// Not logged in
-if (!isset($_SESSION['ID'])) {
-    http_response_code(401); // Unauthorized
-    echo json_encode([
-      'success' => false,
-      'message' => 'Nicht eingeloggt'
-    ]);
-    exit;
-}
-
 $userId = $_SESSION['ID'];
 
 // Function 1: Get gruppe_ids
