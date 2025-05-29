@@ -3,8 +3,6 @@ require_once('db.php');
 require_once('session_check.php');
 
 
-header('Content-Type: text/plain; charset=UTF-8');
-
 // Get POST data
 $username = $_POST['username'] ?? '';
 $email    = $_POST['email'] ?? '';

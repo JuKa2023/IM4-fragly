@@ -18,17 +18,16 @@ const nutzer = reactive<Nutzer>({
   Profilbild_URL: null,
 });
 
-const password = ref("");
+// nur neue Passwörter
+const newPassword = ref("");
 const confirmPassword = ref("");
 
 async function fetchNutzer() {
   loading.value = true;
   error.value = null;
-
   try {
     const res = await fetch("/api/nutzer.php", { credentials: "include" });
     const json = await res.json();
-
     nutzer.Benutzername = json.Nutzer;
     nutzer.Email = json.Email;
     nutzer.Profilbild_URL = json.Profilbild_URL ?? null;
@@ -40,25 +39,30 @@ async function fetchNutzer() {
 }
 
 async function updateNutzer() {
-  if (password.value !== confirmPassword.value) {
+  // wenn ein neues Passwort eingegeben wurde, müssen die beiden übereinstimmen
+  if (newPassword.value && newPassword.value !== confirmPassword.value) {
     error.value = "Die Passwörter stimmen nicht überein.";
     return;
   }
   error.value = null;
 
   try {
+    const payload = {
+      ...nutzer,
+      ...(newPassword.value ? { newPassword: newPassword.value } : {})
+    };
     const res = await fetch("/api/update_nutzer.php", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(nutzer),
+      body: JSON.stringify(payload),
     });
     const json = await res.json();
     if (!json.success)
       throw new Error(json.error ?? "Speichern fehlgeschlagen");
 
-    // clear pwd fields after a successful save
-    password.value = "";
+    // Passwort-Felder zurücksetzen
+    newPassword.value = "";
     confirmPassword.value = "";
     alert("Änderungen gespeichert!");
   } catch (e) {
@@ -67,8 +71,8 @@ async function updateNutzer() {
 }
 
 function cancelUpdate() {
-  fetchNutzer(); // reset to DB state
-  password.value = "";
+  fetchNutzer();
+  newPassword.value = "";
   confirmPassword.value = "";
 }
 
@@ -111,7 +115,7 @@ onMounted(fetchNutzer);
 
           <BaseInput
             label="Neues Passwort"
-            v-model="password"
+            v-model="newPassword"
             id="password"
             type="password"
             placeholder="Neues Passwort (optional)"
