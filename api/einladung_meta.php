@@ -10,7 +10,6 @@ if ($code === '') {
   exit;
 }
 
-// ── 2  look up the group
 $stmt = $pdo->prepare("
   SELECT Gruppe_ID, Gruppe_Name
   FROM   Gruppe

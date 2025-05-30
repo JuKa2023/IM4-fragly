@@ -51,57 +51,59 @@ const logout = async () => {
 </script>
 
 <template>
-  <header class="bg-orange-300 h-16 w-full px-6 shadow-md z-20 sticky top-0">
-    <div class="mx-auto max-w-xl h-full flex items-center">
-      <nav class="flex items-center justify-between w-full h-full">
-        <a href="#" class="p-2 cursor-pointer iconHeader w-auto h-full">
-          <img :src="logo" alt="Logo" class="h-full" />
-        </a>
+    <div class="flex flex-col min-h-screen w-full">
+      <header class="bg-orange-300 h-16 w-full px-6 shadow-md z-20 sticky top-0">
+        <div class="mx-auto max-w-xl h-full flex items-center">
+          <nav class="flex items-center justify-between w-full h-full">
+            <a href="#" class="p-2 cursor-pointer iconHeader w-auto h-full">
+              <img :src="logo" alt="Logo" class="h-full" />
+            </a>
 
-        <!-- Right User Dropdown -->
-        <div class="relative" ref="dropdownRef">
-          <div
-            @click="toggleDropdown"
-            class="p-2 h-full w-auto cursor-pointer iconHeader"
-          >
-            <img
-              :src="gruppeicon"
-              alt="Nutzer"
-              class="cursor-pointer iconHeader"
-            />
-          </div>
-
-          <!-- Dropdown Menu with transition -->
-          <transition name="dropdown">
-            <div
-              v-show="dropdownOpen"
-              class="absolute right-0 w-56 bg-orange-300 shadow-md overflow-hidden z-30"
-            >
-              <RouterLink
-                class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
-                to="/benutzerdatenbearbeiten"
-                >Benutzerdaten bearbeiten</RouterLink
+            <!-- Right User Dropdown -->
+            <div class="relative" ref="dropdownRef">
+              <div
+                @click="toggleDropdown"
+                class="p-2 h-full w-auto cursor-pointer iconHeader"
               >
+                <img
+                  :src="gruppeicon"
+                  alt="Nutzer"
+                  class="cursor-pointer iconHeader"
+                />
+              </div>
 
-              <RouterLink
-                class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
-                to="/"
-                @click.prevent="logout"
-                >Abmelden</RouterLink
-              >
+              <!-- Dropdown Menu with transition -->
+              <transition name="dropdown">
+                <div
+                  v-show="dropdownOpen"
+                  class="absolute right-0 w-56 bg-orange-300 shadow-md overflow-hidden z-30"
+                >
+                  <RouterLink
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
+                    to="/benutzerdatenbearbeiten"
+                    >Benutzerdaten bearbeiten</RouterLink
+                  >
+
+                  <RouterLink
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
+                    to="/"
+                    @click.prevent="logout"
+                    >Abmelden</RouterLink
+                  >
+                </div>
+              </transition>
             </div>
-          </transition>
+          </nav>
         </div>
-      </nav>
-    </div>
-  </header>
-  <main>
-    <router-view> </router-view>
-  </main>
+      </header>
+      <main class="flex-1">
+        <router-view> </router-view>
+      </main>
 
-  <footer class="bg-orange-300 h-16 w-full px-6 shadow-inner sticky bottom-0">
-    <div class="mx-auto max-w-xl h-full flex items-center justify-center">
-      <p class="text-brown text-sm">© 2025 Fragly</p>
-    </div>
-  </footer>
+      <footer class="bg-orange-300 h-16 w-full px-6 shadow-inner sticky bottom-0">
+        <div class="mx-auto max-w-xl h-full flex items-center justify-center">
+          <p class="text-brown text-sm">© 2025 Fragly</p>
+        </div>
+      </footer>
+  </div>
 </template>

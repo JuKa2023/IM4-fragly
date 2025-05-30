@@ -11,7 +11,6 @@ const joining  = ref(false);
 const family   = ref<{ id:number; name:string }|null>(null);
 const errorMsg = ref('');
 
-/* ─────────────────────────────── GET meta once ── */
 onMounted(async () => {
   try {
     const res  = await fetch(`/api/einladung_meta.php?code=${encodeURIComponent(code)}`);
@@ -26,9 +25,8 @@ onMounted(async () => {
   }
 });
 
-/* ─────────────────────────────── POST join ── */
 async function accept () {
-  if (!family.value) return;          // should never happen but be safe
+  if (!family.value) return;
   joining.value = true;
 
   try {
@@ -42,7 +40,7 @@ async function accept () {
 
     if (!res.ok) throw new Error(data.message || 'Beitritt fehlgeschlagen');
 
-    router.push(`/gruppen/${data.gruppeId ?? family.value.id}`);
+    router.push(`/gruppenmitglieder/${data.gruppeId ?? family.value.id}`);
   } catch (err:any) {
     errorMsg.value = err.message || 'Beitritt fehlgeschlagen';
   } finally {
@@ -60,19 +58,21 @@ async function accept () {
     <div v-else>
       <h2 class="text-2xl font-bold mb-6">
         Möchtest du der
-        <span class="text-teal-700">{{ family!.name }}</span>
+        <span class="text-[#456469]">{{ family!.name }}</span>
         beitreten?
       </h2>
 
-      <button class="btn btn-outline w-full mb-4" @click="$router.push('/')">
-        Einladung ablehnen
-      </button>
+      <div class="flex flex-col items-center gap-4">
+        <button class="btn btn-lg btn-secondary" @click="$router.push('/')">
+            Einladung ablehnen
+        </button>
 
-      <button class="btn btn-primary w-full"
-              :disabled="joining"
-              @click="accept">
-        Gruppe beitreten
-      </button>
+        <button class="btn btn-lg btn-primary"
+                :disabled="joining"
+                @click="accept">
+            Gruppe beitreten
+        </button>
+      </div>
     </div>
   </div>
 </template>

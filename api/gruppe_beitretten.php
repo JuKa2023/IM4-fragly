@@ -1,10 +1,10 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-require_once('session_check.php');  // ⬅ verifies the user is logged-in
+require_once('session_check.php'); 
 require_once('db.php');
 
-$userId = $_SESSION['ID'];          // comes from session_check.php
+$userId = $_SESSION['ID'];
 $code   = $_POST['code'] ?? '';
 
 if ($code === '') {
@@ -16,7 +16,6 @@ if ($code === '') {
 try {
   $pdo->beginTransaction();
 
-  // ── 1  lock the target group row
   $q = $pdo->prepare("
     SELECT Gruppe_ID
     FROM   Gruppe
@@ -30,17 +29,32 @@ try {
     throw new RuntimeException('Einladung ungültig oder abgelaufen', 410);
   }
 
-  // ── 2  add the user to the group (IGNORE = no error if already a member)
-  $pdo->prepare("
-    INSERT IGNORE INTO Nutzer_hat_Gruppe (user_id, gruppe_id, erstelldatum)
-    VALUES (:uid, :gid, CURDATE())
-  ")->execute(['uid'=>$userId, 'gid'=>$grp['Gruppe_ID']]);
+  $gruppeId = (int)$grp['Gruppe_ID'];
+
+  $alreadyStmt = $pdo->prepare("
+      SELECT 1
+      FROM   Nutzer_hat_Gruppe
+      WHERE  user_id  = :uid
+        AND  gruppe_id = :gid
+      LIMIT 1
+  ");
+  $alreadyStmt->execute(['uid'=>$userId, 'gid'=>$gruppeId]);
+  $alreadyMember = (bool)$alreadyStmt->fetchColumn();
+
+  if (!$alreadyMember) {
+    $insert = $pdo->prepare("
+        INSERT INTO Nutzer_hat_Gruppe (user_id, gruppe_id, erstelldatum)
+        VALUES (:uid, :gid, CURDATE())
+    ");
+    $insert->execute(['uid'=>$userId, 'gid'=>$gruppeId]);
+}
 
   $pdo->commit();
 
   echo json_encode([
-    'success'   => true,
-    'gruppeId'  => (int)$grp['Gruppe_ID']
+    'success'       => true,
+    'gruppeId'      => $gruppeId,
+    'alreadyMember' => $alreadyMember
   ]);
 
 } catch (Throwable $e) {
