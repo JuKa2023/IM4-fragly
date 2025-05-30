@@ -59,7 +59,7 @@ try {
       'success'     => true,
       'message'     => 'Gruppe wurde erfolgreich erstellt.',
       'kuerzel'     => $kuerzel,
-      'link'        => "https://example.com/{$kuerzel}"
+      'link'        => "http://localhost:5173/{$kuerzel}"
     ]);
 
 } catch (PDOException $e) {
