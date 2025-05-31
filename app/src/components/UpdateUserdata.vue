@@ -61,7 +61,6 @@ async function updateNutzer() {
     if (!json.success)
       throw new Error(json.error ?? "Speichern fehlgeschlagen");
 
-    // Passwort-Felder zurücksetzen
     newPassword.value = "";
     confirmPassword.value = "";
     alert("Änderungen gespeichert!");
@@ -80,7 +79,7 @@ onMounted(fetchNutzer);
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center">
+  <div class="mt-40 mb-40 flex items-center justify-center">
     <div class="p-6 bg-[#FFF4EB] rounded-xl max-w-md mx-auto mt-8 shadow-md">
       <h1 class="font-bold text-[#472402] mb-6">Nutzerdaten bearbeiten</h1>
 

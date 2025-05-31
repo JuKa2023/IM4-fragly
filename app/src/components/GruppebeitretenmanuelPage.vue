@@ -21,7 +21,7 @@ async function joinGroup () {
 
   joining.value = true;
   try {
-    const res  = await fetch('/api/gruppe_beitreten_manual.php', {
+    const res  = await fetch('/api/gruppe_beitreten_manuel.php', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type':'application/x-www-form-urlencoded' },
@@ -49,7 +49,7 @@ async function joinGroup () {
   <div class="p-10 max-w-xs mx-auto text-brown">
 
     <h1 class="text-3xl font-bold leading-tight text-center mb-10">
-      Gib bitte ein, wie<br />die Gruppe heisst.
+      Gib bitte ein, wie die Gruppe heisst.
     </h1>
 
     <p v-if="errorMsg" class="text-red-600 mb-4 text-center">{{ errorMsg }}</p>

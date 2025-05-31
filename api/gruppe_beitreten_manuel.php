@@ -23,9 +23,10 @@ try {
   $grpStmt = $pdo->prepare("
       SELECT Gruppe_ID
       FROM   Gruppe
-      WHERE  Bezeichnung = :name AND Kuerzel = :code
-      FOR UPDATE
+      WHERE  Bezeichnung = :name 
+        AND Kuerzel = :code
       LIMIT 1
+      FOR UPDATE
   ");
   $grpStmt->execute(['name'=>$name, 'code'=>$code]);
   $grp = $grpStmt->fetch(PDO::FETCH_ASSOC);

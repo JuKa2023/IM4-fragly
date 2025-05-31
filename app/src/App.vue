@@ -96,7 +96,7 @@ const logout = async () => {
           </nav>
         </div>
       </header>
-      <main class="flex-1">
+      <main class="flex-1 mt-20">
         <router-view> </router-view>
       </main>
 
