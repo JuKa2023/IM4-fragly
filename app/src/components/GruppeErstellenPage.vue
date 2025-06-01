@@ -94,7 +94,6 @@ async function submitGroup() {
       body: formData,
     });
 
-    // Check if the response is JSON
     const contentType = res.headers.get("content-type");
     if (!contentType || !contentType.includes("application/json")) {
       throw new Error("Keine gültige JSON-Antwort vom Server");

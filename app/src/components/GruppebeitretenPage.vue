@@ -1,82 +1,140 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-
-const route  = useRoute();
-const router = useRouter();
-const code   = route.params.code as string;      // comes from /join/:code
-
-const loading  = ref(true);
-const joining  = ref(false);
-const family   = ref<{ id:number; name:string }|null>(null);
-const errorMsg = ref('');
-
-onMounted(async () => {
-  try {
-    const res  = await fetch(`/api/einladung_meta.php?code=${encodeURIComponent(code)}`);
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.message || 'Einladung ungültig');
-    family.value = { id:Number(data.gruppeId), name:data.familyName };
-  } catch (err:any) {
-    errorMsg.value = err.message || 'Einladung ungültig';
-  } finally {
-    loading.value = false;
-  }
-});
-
-async function accept () {
-  if (!family.value) return;
-  joining.value = true;
-
-  try {
-    const res  = await fetch('/api/gruppe_beitretten.php', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type':'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ code })
-    });
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.message || 'Beitritt fehlgeschlagen');
-
-    router.push(`/gruppenmitglieder/${data.gruppeId ?? family.value.id}`);
-  } catch (err:any) {
-    errorMsg.value = err.message || 'Beitritt fehlgeschlagen';
-  } finally {
-    joining.value = false;
-  }
-}
-</script>
-
 <template>
-  <div class="p-10 text-center text-brown">
-    <div v-if="loading">Lade Einladung…</div>
+  <div class="p-8 w-full text-brown">
+    <h2 class="text-2xl font-bold text-center mb-6">
+      {{ success ? "Hier dein Link, Name und Kürzel" : "Gebe folgende Angaben an" }}
+    </h2>
 
-    <div v-else-if="errorMsg" class="text-red-600">{{ errorMsg }}</div>
-
-    <div v-else>
-      <h2 class="text-2xl font-bold mb-6">
-        Möchtest du der
-        <span class="text-[#456469]">{{ family!.name }}</span>
-        beitreten?
-      </h2>
-
-      <div class="flex flex-col items-center gap-4">
-        <button class="btn btn-lg btn-secondary" @click="$router.push('/')">
-            Einladung ablehnen
-        </button>
-
-        <button class="btn btn-lg btn-primary"
-                :disabled="joining"
-                @click="accept">
-            Gruppe beitreten
-        </button>
+    <!-- Success View -->
+    <div v-if="success" class="text-center space-y-6">
+      <!-- Link -->
+      <div
+        class="flex items-center justify-center gap-2 cursor-pointer group"
+        @click="copyToClipboard(gruppeLink, 'link')"
+      >
+        <span class="text-2xl">🔗</span>
+        <a
+          :href="gruppeLink"
+          target="_blank"
+          class="text-xl underline font-bold group-hover:text-pink-600"
+        >
+          {{ gruppeLink }}
+        </a>
       </div>
+      <p v-if="copied === 'link'" class="text-green-600 text-sm">Link kopiert!</p>
+
+      <!-- Gruppenname -->
+      <div
+        class="flex items-center justify-center gap-2 cursor-pointer group"
+        @click="copyToClipboard(groupNameCreated, 'name')"
+      >
+        <span class="text-2xl">🔗</span>
+        <span class="text-xl underline font-bold group-hover:text-pink-600">
+          {{ groupNameCreated }}
+        </span>
+      </div>
+      <p v-if="copied === 'name'" class="text-green-600 text-sm">Name kopiert!</p>
+
+      <!-- Kürzel -->
+      <div
+        class="flex items-center justify-center gap-2 cursor-pointer group"
+        @click="copyToClipboard(kuerzel, 'kuerzel')"
+      >
+        <span class="text-2xl">🔗</span>
+        <span class="text-xl underline font-bold group-hover:text-pink-600">
+          {{ kuerzel }}
+        </span>
+      </div>
+      <p v-if="copied === 'kuerzel'" class="text-green-600 text-sm">Kürzel kopiert!</p>
+
+      <RouterLink to="/gruppen" class="btn btn-lg btn-primary mt-6">
+        meine Gruppen
+      </RouterLink>
     </div>
+
+    <!-- Form View -->
+    <form v-else @submit.prevent="submitGroup">
+      <BaseInput
+        id="gruppe-name"
+        label="*Gruppenbezeichnung"
+        v-model="groupName"
+        placeholder="Familie Huber"
+        type="text"
+      />
+      <BaseInput
+        id="loeschdatum"
+        label="Löschdatum"
+        v-model="loeschdatum"
+        type="date"
+      />
+      <button type="submit" class="btn btn-lg btn-primary w-full mt-6">
+        Gruppe erstellen
+      </button>
+      <p v-if="message" class="mt-4 text-center text-red-600">{{ message }}</p>
+    </form>
   </div>
 </template>
 
+<script setup lang="ts">
+import { ref } from "vue";
+import BaseInput from "./BaseInput.vue";
+import { RouterLink } from "vue-router";
+
+const groupName = ref("");
+const loeschdatum = ref("");
+const message = ref("");
+const success = ref(false);
+const kuerzel = ref("");
+const gruppeLink = ref("");
+const groupNameCreated = ref("");
+const copied = ref<null | "link" | "kuerzel" | "name">(null);
+
+async function submitGroup() {
+  message.value = "";
+  success.value = false;
+
+  const formData = new FormData();
+  formData.append("Gruppe_Name", groupName.value);
+  formData.append("Loeschdatum", loeschdatum.value || "");
+
+  try {
+    const res = await fetch("api/insert_group.php", {
+      method: "POST",
+      credentials: "include",
+      body: formData,
+    });
+
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error("Keine gültige JSON-Antwort vom Server");
+    }
+
+    const data = await res.json();
+    message.value = data.message;
+
+    if (res.ok && data.success) {
+      success.value = true;
+      kuerzel.value = data.kuerzel;
+      gruppeLink.value = data.link;
+      groupNameCreated.value = data.group_name;
+    } else {
+      success.value = false;
+    }
+  } catch (err) {
+    message.value = "Verbindungsfehler.";
+    success.value = false;
+  }
+}
+
+function copyToClipboard(text: string, type: "link" | "kuerzel" | "name") {
+  navigator.clipboard.writeText(text).then(() => {
+    copied.value = type;
+    setTimeout(() => (copied.value = null), 2000);
+  });
+}
+</script>
+
 <style scoped>
-.text-brown { color:#5c2e00; }
+.text-brown {
+  color: #5c2e00;
+}
 </style>
