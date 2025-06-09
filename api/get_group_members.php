@@ -11,7 +11,6 @@ if (empty($input['gruppe_id'])) {
 $gruppeId = (int)$input['gruppe_id'];
 $userId   = $_SESSION['ID'];
 
-// Berechtigungs‐Check: ist der User in dieser Gruppe?
 $stmt = $pdo->prepare("
     SELECT 1
     FROM Nutzer_hat_Gruppe
@@ -24,7 +23,6 @@ if (!$stmt->fetchColumn()) {
     exit;
 }
 
-// 4) Mitglieder abrufen
 try {
     $stmt = $pdo->prepare("
         SELECT Nutzer.User_ID, Nutzer.Nutzer, g.Gruppe_Name, Nutzer.Profilbild_URL

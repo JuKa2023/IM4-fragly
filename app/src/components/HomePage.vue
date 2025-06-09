@@ -15,9 +15,7 @@
 
     <div class="text-center space-y-6">
       <h1 class="text-3xl font-bold leading-snug">
-        Gemeinsam mehr <br />
-        übereinander <br />
-        erfahren
+        Gemeinsam mehr übereinander erfahren
       </h1>
       <p class="text-xl">
         Erstelle deinen persönlichen Steckbrief, beantworte Fragen aus
