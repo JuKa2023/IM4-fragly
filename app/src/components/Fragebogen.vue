@@ -1,3 +1,106 @@
+<script setup lang="ts">
+import { ref, reactive, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { toast } from "vue-sonner";
+
+import BaseInput from "./BaseInput.vue";
+import ProfilePicture from "./ProfilePicture.vue";
+
+interface FrageRow {
+  frage_id: number;
+  frage: string;
+  antwort_vorschlag: string | null;
+  antwort: string | null;
+}
+
+const router = useRouter();
+
+const redirectRoute = {name: 'steckbriefMe'};
+
+const loading = ref(true);
+const questions = ref<FrageRow[]>([]);
+const answers = reactive<Record<number, string>>({});
+let originalAnswers: Record<number, string> = {};
+
+async function loadQuestions() {
+  loading.value = true;
+  try {
+    const res = await fetch("/api/get_questions.php", {
+      credentials: "include",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: undefined }), // undefined = current logged-in user
+    });
+    const data: FrageRow[] = await res.json();
+    questions.value = data;
+
+    data.forEach((q) => {
+      answers[q.frage_id] = q.antwort ?? "";
+    });
+
+    originalAnswers = { ...answers };
+  } catch (err) {
+    console.error("Fehler beim Laden der Fragen:", err);
+  } finally {
+    loading.value = false;
+  }
+}
+
+function onCancel() {
+  Object.keys(answers).forEach((key) => {
+    answers[+key] = originalAnswers[+key] || "";
+  });
+  router.push(redirectRoute);
+}
+
+async function onSave() {
+  const diff = questions.value
+      .map((q) => {
+        const neu = answers[q.frage_id].trim();
+        const alt = originalAnswers[q.frage_id] ?? "";
+        return { frage_id: q.frage_id, neu, alt };
+      })
+      .filter((item) => item.neu !== item.alt);
+
+  if (diff.length === 0) {
+    return router.push(redirectRoute);
+  }
+
+  const toUpdate = diff
+      .filter((d) => d.neu !== "")
+      .map((d) => ({ frage_id: d.frage_id, antwort: d.neu }));
+
+  const toDelete = diff.filter((d) => d.neu === "").map((d) => d.frage_id);
+
+  try {
+    const res = await fetch("/api/save_answers.php", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ update: toUpdate, delete: toDelete }),
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || res.statusText);
+
+    toUpdate.forEach((u) => {
+      originalAnswers[u.frage_id] = u.antwort;
+    });
+    toDelete.forEach((id) => {
+      delete originalAnswers[id];
+      answers[id] = "";
+    });
+
+    toast.success("Deine Antworten wurden gespeichert.");
+    await router.push(redirectRoute);
+  } catch (err: any) {
+    console.error("Save-Error:", err);
+    toast.error("Fehler beim Speichern: " + err.message);
+  }
+}
+
+onMounted(loadQuestions);
+</script>
+
 <template>
   <div
     class="p-8 max-w-2xl mx-auto bg-cream-light rounded-xl shadow-md text-brown"
@@ -42,110 +145,5 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import BaseInput from "./BaseInput.vue";
-import ProfilePicture from "./ProfilePicture.vue";
 
-interface FrageRow {
-  frage_id: number;
-  frage: string;
-  antwort_vorschlag: string | null;
-  antwort: string | null;
-}
 
-const router = useRouter();
-
-const redirectRoute = "/meinsteckbrief";
-
-const loading = ref(true);
-const questions = ref<FrageRow[]>([]);
-const answers = reactive<Record<number, string>>({});
-let originalAnswers: Record<number, string> = {};
-
-async function loadQuestions() {
-  loading.value = true;
-  try {
-    const res = await fetch("/api/get_questions.php", {
-      credentials: "include",
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: undefined }), // undefined = current logged-in user
-    });
-    const data: FrageRow[] = await res.json();
-    questions.value = data;
-
-    data.forEach((q) => {
-      answers[q.frage_id] = q.antwort ?? "";
-    });
-
-    originalAnswers = { ...answers };
-  } catch (err) {
-    console.error("Fehler beim Laden der Fragen:", err);
-  } finally {
-    loading.value = false;
-  }
-}
-
-function onCancel() {
-  Object.keys(answers).forEach((key) => {
-    answers[+key] = originalAnswers[+key] || "";
-  });
-  router.push(redirectRoute);
-}
-
-async function onSave() {
-  // 1) Diff zwischen originalAnswers und aktuellem answers
-  const diff = questions.value
-    .map((q) => {
-      const neu = answers[q.frage_id].trim();
-      const alt = originalAnswers[q.frage_id] ?? "";
-      return { frage_id: q.frage_id, neu, alt };
-    })
-    .filter((item) => item.neu !== item.alt);
-
-  // 2) Nichts geändert? sofort zurück
-  if (diff.length === 0) {
-    return router.push(redirectRoute);
-  }
-
-  // 3) Trennen in Updates vs. Deletes
-  const toUpdate = diff
-    .filter((d) => d.neu !== "")
-    .map((d) => ({ frage_id: d.frage_id, antwort: d.neu }));
-
-  const toDelete = diff.filter((d) => d.neu === "").map((d) => d.frage_id);
-
-  // 4) Absenden
-  try {
-    const res = await fetch("/api/save_answers.php", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ update: toUpdate, delete: toDelete }),
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || res.statusText);
-
-    // 5) Lokaler State aktualisieren
-    toUpdate.forEach((u) => {
-      originalAnswers[u.frage_id] = u.antwort;
-    });
-    toDelete.forEach((id) => {
-      delete originalAnswers[id];
-      answers[id] = "";
-    });
-
-    alert("Deine Antworten wurden gespeichert.");
-    await router.push(redirectRoute);
-  } catch (err: any) {
-    console.error("Save-Error:", err);
-    alert("Fehler beim Speichern: " + err.message);
-  }
-}
-
-onMounted(loadQuestions);
-</script>
-
-<style scoped></style>

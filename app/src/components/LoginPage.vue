@@ -28,7 +28,7 @@ const login = async () => {
     });
     const reply = await res.text();
     console.log("Antwort vom Server:\n" + reply);
-    alert(reply);
+    toast.error(reply);
 
     if (reply === "Login erfolgreich") {
       router.push("/home");

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { toast } from "vue-sonner";
 import BaseInput from "./BaseInput.vue";
 import { useRouter } from "vue-router";
 
@@ -13,15 +14,15 @@ const router = useRouter();
 const register = async () => {
   // Validation
   if (!username.value || !email.value || !password.value) {
-    alert("Bitte fülle alle Felder aus");
+    toast.error("Bitte fülle alle Felder aus");
     return;
   }
   if (password.value.length < 8) {
-    alert("Passwort muss mindestens 8 Zeichen lang sein");
+    toast.error("Passwort muss mindestens 8 Zeichen lang sein");
     return;
   }
   if (password.value !== confirmPassword.value) {
-    alert("Passwörter stimmen nicht überein");
+    toast.error("Passwörter stimmen nicht überein");
     return;
   }
 
@@ -37,13 +38,13 @@ const register = async () => {
       body: formData,
     });
     const reply = await res.text();
-    alert(reply);
+    toast(reply);
 
     if (reply === "Registrierung erfolgreich") {
       router.push("/anmelden");
     }
   } catch (err) {
-    alert("Fehler beim Senden: " + err);
+    toast.error("Fehler beim Senden: " + err);
   }
 };
 </script>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, onMounted } from "vue";
+import { toast } from "vue-sonner";
 import BaseInput from "./BaseInput.vue";
 import ProfilePicture from "./ProfilePicture.vue";
 
@@ -63,7 +64,7 @@ async function updateNutzer() {
 
     newPassword.value = "";
     confirmPassword.value = "";
-    alert("Änderungen gespeichert!");
+    toast.success("Änderungen gespeichert!");
   } catch (e) {
     error.value = (e as Error).message;
   }

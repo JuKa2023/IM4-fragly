@@ -47,7 +47,6 @@ const logout = async () => {
     }
   } catch (error) {
     console.error("Logout error:", error);
-    alert("Something went wrong during logout!");
   }
 };
 

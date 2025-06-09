@@ -1,38 +1,3 @@
-<template>
-  <div
-    class="p-8 max-w-2xl mx-auto bg-cream-light rounded-xl shadow-md text-brown"
-  >
-    <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
-
-    <ProfilePicture
-      :initial-url="user?.Profilbild_URL"
-      :editable="false"
-    />
-
-    <!-- Loader -->
-    <p v-if="!loaded" class="text-center">Lade …</p>
-
-    <!-- Keine Antworten -->
-    <p v-else-if="fields.length === 0" class="text-center">
-      Es wurden noch keine Fragen beantwortet.
-    </p>
-
-    <!-- Antworten-Liste -->
-    <div v-else class="text-left">
-      <div v-for="f in fields" :key="f.frage_id" class="mb-6 last:mb-0">
-        <h2 class="font-semibold mb-1">{{ f.frage }}</h2>
-        <p>{{ f.antwort }}</p>
-      </div>
-    </div>
-    <RouterLink
-      :to="{ name: 'fragebogen'}"
-      class="btn btn-sm btn-primary mt-8"
-      v-if="!userId">
-        Bearbeiten
-    </RouterLink>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
@@ -76,6 +41,41 @@ onMounted(async () => {
 
 });
 </script>
+
+<template>
+  <div
+    class="p-8 max-w-2xl mx-auto bg-cream-light rounded-xl shadow-md text-brown"
+  >
+    <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
+
+    <ProfilePicture
+      :initial-url="user?.Profilbild_URL"
+      :editable="false"
+    />
+
+    <!-- Loader -->
+    <p v-if="!loaded" class="text-center">Lade …</p>
+
+    <!-- Keine Antworten -->
+    <p v-else-if="fields.length === 0" class="text-center">
+      Es wurden noch keine Fragen beantwortet.
+    </p>
+
+    <!-- Antworten-Liste -->
+    <div v-else class="text-left">
+      <div v-for="f in fields" :key="f.frage_id" class="mb-6 last:mb-0">
+        <h2 class="font-semibold mb-1">{{ f.frage }}</h2>
+        <p>{{ f.antwort }}</p>
+      </div>
+    </div>
+    <RouterLink
+      :to="{ name: 'fragebogen'}"
+      class="btn btn-sm btn-primary mt-8"
+      v-if="!userId">
+        Bearbeiten
+    </RouterLink>
+  </div>
+</template>
 
 <style scoped>
 .bg-cream-light {

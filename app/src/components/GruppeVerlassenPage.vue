@@ -1,48 +1,7 @@
-<!-- components/GruppeVerlassenPage.vue -->
-<template>
-  <div class="bg-[#ffebd2] min-h-screen p-6 rounded-3xl w-max-md m-2">
-    <button
-      @click="$router.back()"
-      class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center"
-    >
-      ×
-    </button>
-
-    <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">
-        Bist du sicher, dass du die Gruppe verlassen möchtest?
-      </h2>
-      <p class="text-sm text-gray-600 mb-6">
-        Bestätige, dass du die Gruppe verlassen möchtest durch die Eingabe der Gruppenbezeichnung <span class="font-medium">{{ groupName }}</span>.
-      </p>
-      <input
-        v-model="inputName"
-        type="text"
-        placeholder="Gruppenbezeichnung"
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 mb-4"
-      />
-      <div class="flex gap-4">
-        <button
-          @click="$router.back()"
-          class="btn btn-sm btn-primary"
-        >
-          Abbrechen
-        </button>
-        <button
-          :disabled="!isMatch"
-          @click="onLeave"
-          class="btn btn-sm btn-secondary"
-        >
-          Gruppe verlassen
-        </button>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { toast } from "vue-sonner";
 
 const route = useRoute()
 const router = useRouter()
@@ -92,11 +51,52 @@ async function onLeave() {
     if (res.ok) {
       router.push("/gruppen")
     } else {
-      alert("Fehler beim Verlassen der Gruppe")
+      toast.success("Fehler beim Verlassen der Gruppe")
     }
   } catch (error) {
     console.error("Error leaving group:", error)
-    alert("Fehler beim Verlassen der Gruppe")
+    toast.error("Fehler beim Verlassen der Gruppe")
   }
 }
 </script>
+
+<template>
+  <div class="bg-[#ffebd2] min-h-screen p-6 rounded-3xl w-max-md m-2">
+    <button
+      @click="$router.back()"
+      class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center"
+    >
+      ×
+    </button>
+
+    <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">
+        Bist du sicher, dass du die Gruppe verlassen möchtest?
+      </h2>
+      <p class="text-sm text-gray-600 mb-6">
+        Bestätige, dass du die Gruppe verlassen möchtest durch die Eingabe der Gruppenbezeichnung <span class="font-medium">{{ groupName }}</span>.
+      </p>
+      <input
+        v-model="inputName"
+        type="text"
+        placeholder="Gruppenbezeichnung"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 mb-4"
+      />
+      <div class="flex gap-4">
+        <button
+          @click="$router.back()"
+          class="btn btn-sm btn-primary"
+        >
+          Abbrechen
+        </button>
+        <button
+          :disabled="!isMatch"
+          @click="onLeave"
+          class="btn btn-sm btn-secondary"
+        >
+          Gruppe verlassen
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
