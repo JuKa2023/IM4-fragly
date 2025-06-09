@@ -5,8 +5,9 @@
         v-if="currentUrl"
         :src="'/api' + currentUrl + cacheBuster"
         alt="Profile picture"
-        class="w-32 h-32 rounded-full object-cover shadow"
+        class="rounded-full object-cover shadow max-w-32 max-h-32 w-full h-full"
       />
+      <img v-else :src="defaultImage" alt="Default profile picture" class="rounded-full object-cover shadow max-w-32 max-h-32 w-full h-full" />
       <div
         v-if="isEditable"
         class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
@@ -42,6 +43,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
+import gruppeicon from "../assets/gruppeicon.svg";
 
 interface Props {
   /** The url of the current profile picture (can be null). */
@@ -58,7 +60,12 @@ const emit = defineEmits<{
   (e: "uploaded", url: string): void;
 }>();
 
+const defaultImage = gruppeicon; // Default image if no URL is provided
+
 const currentUrl = ref<string | null>(props.initialUrl);
+console.log("Current URL:", currentUrl.value);
+
+
 const fileInput = ref<HTMLInputElement | null>(null);
 const uploading = ref(false);
 const progress = ref(0);
@@ -150,6 +157,4 @@ async function uploadFile(file: File) {
 </script>
 
 <style scoped>
-.btn {
-}
 </style>

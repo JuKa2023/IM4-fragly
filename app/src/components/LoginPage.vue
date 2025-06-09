@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { toast } from "vue-sonner";
 import BaseInput from "./BaseInput.vue";
 import { useRouter } from "vue-router";
 
@@ -12,7 +13,7 @@ const router = useRouter();
 // Login function
 const login = async () => {
   if (!username.value || !password.value) {
-    alert("Bitte fülle alle Felder aus");
+    toast.error("Bitte fülle alle Felder aus");
     return;
   }
 

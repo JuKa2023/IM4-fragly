@@ -5,7 +5,7 @@
     <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
 
     <ProfilePicture
-      initial-url="/images/default-profile.png"
+      :initial-url="user?.Profilbild_URL"
       :editable="false"
     />
 
@@ -25,11 +25,11 @@
       </div>
     </div>
     <RouterLink
-      to="/fragebogen"
+      :to="{ name: 'fragebogen'}"
       class="btn btn-sm btn-primary mt-8"
-      v-if="!userId"
-      >Bearbeiten</RouterLink
-    >
+      v-if="!userId">
+        Bearbeiten
+    </RouterLink>
   </div>
 </template>
 
@@ -46,6 +46,7 @@ interface FrageRow {
 
 const fields = ref<FrageRow[]>([]);
 const loaded = ref(false);
+const user = ref(null);
 
 const route = useRoute();
 const userId = route.params.id;
@@ -64,6 +65,15 @@ onMounted(async () => {
   } finally {
     loaded.value = true;
   }
+
+
+  const resUser = await fetch("/api/nutzer.php", {
+    credentials: "include",
+    method: "POST",
+    body: JSON.stringify({ user_id: userId }),
+  });
+  user.value = await resUser.json();
+
 });
 </script>
 

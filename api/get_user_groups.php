@@ -1,6 +1,6 @@
 <?php
-require_once('db.php');
 require_once('session_check.php');
+require_once('db.php');
 
 $userId = $_SESSION['ID'];
 

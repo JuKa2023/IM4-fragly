@@ -80,10 +80,10 @@ onMounted(async () => {
 
       <!-- Bottom Button -->
       <div class="mt-8 flex flex-col items-center gap-y-2">
-        <RouterLink class="btn btn-sm btn-primary" to="/gruppebeitreten">
+        <RouterLink class="btn btn-sm btn-primary" :to="{name: 'joinGroupManual'}">
           Gruppe beitreten
         </RouterLink>
-        <RouterLink to="/gruppeerstellen" class="btn btn-sm btn-secondary">
+        <RouterLink :to="{name: 'createGroup'}" class="btn btn-sm btn-secondary">
           Gruppe erstellen
         </RouterLink>
       </div>

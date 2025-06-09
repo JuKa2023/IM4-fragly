@@ -5,4 +5,15 @@ ini_set('display_errors', 1);
 header('Content-Type: application/json; charset=utf-8');
 
 session_start();
-// Don't send any response code here, let the main script handle it
+
+if (isset($_SESSION['user']) && isset($_SESSION['ID'])) {
+    // User is logged in, continue
+} else {
+    // User is not logged in, destroy session and return error
+    session_destroy();
+    $response = [
+        "status" => "user not logged in"
+    ];
+    http_response_code(401); // Unauthorized
+    die(json_encode($response));
+}

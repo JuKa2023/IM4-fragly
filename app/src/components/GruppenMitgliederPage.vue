@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { UserIcon } from "@heroicons/vue/24/solid";
 import { useRoute, useRouter } from "vue-router";
+import ProfilePicture from "./ProfilePicture.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -22,14 +22,11 @@ onMounted(async () => {
     });
 
     if (res.status === 401) {
-      // nicht eingeloggt
-      router.push("/login");
+      await router.push("/login");
       return;
     }
 
     const data = await res.json();
-    console.log(data);
-
     if (res.status !== 200) {
       error.value = data || "Fehler beim Laden der Mitglieder.";
     } else {
@@ -62,12 +59,14 @@ onMounted(async () => {
         :key="m.User_ID"
         class="bg-[#FFEFF6] text-brown flex items-center px-4 py-2 rounded-md shadow-sm"
       >
-        <UserIcon class="w-6 h-6 text-[#7CA4A0] mr-3" />
-        <span class="text-xl">{{ m.Nutzer }}</span>
+        <RouterLink :to="{ name: 'steckbrief', params: { id: m.User_ID } }" class="flex items-center">
+          <ProfilePicture :userId="m.User_ID" :initial-url="m.Profilbild_URL" class="w-10 h-10 mr-3" />
+          <span class="text-xl">{{ m.Nutzer }}</span>
+        </RouterLink>
       </div>
     </div>
-    <RouterLink :to="{ name: 'GruppeVerlassen', params: { id: groupId } }" class="btn btn-sm btn-primary mt-8">
-      Gruppe verlassen
+    <RouterLink :to="{ name: 'GruppeVerlassen', params: { id: groupId } }">
+      <button class="btn btn-sm btn-primary mt-8"> Gruppe verlassen </button>
     </RouterLink>
   </div>
 </template>

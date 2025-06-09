@@ -27,7 +27,7 @@ if (!$stmt->fetchColumn()) {
 // 4) Mitglieder abrufen
 try {
     $stmt = $pdo->prepare("
-        SELECT Nutzer.User_ID, Nutzer.Nutzer, g.Gruppe_Name
+        SELECT Nutzer.User_ID, Nutzer.Nutzer, g.Gruppe_Name, Nutzer.Profilbild_URL
         FROM Nutzer
         JOIN Nutzer_hat_Gruppe nhg
         ON nhg.user_id = Nutzer.User_ID
