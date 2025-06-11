@@ -15,14 +15,13 @@
   }
 
   .page-default {
-    @apply p-8 max-w-2xl mx-auto
+    @apply p-8 max-w-2xl mx-auto;
   }
 
   .page-wrapper {
     @apply flex-1 pt-20 pb-20;
   }
 }
-
 
 :root {
   font-family: "Nunito", sans-serif;
@@ -54,8 +53,6 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {

@@ -60,7 +60,7 @@ onMounted(async () => {
   <div class="card-default relative">
 
     <div class="flex items-baseline justify-between mb-6">
-      <h1 class="text-2xl font-bold text-brown">{{ gruppeName }}</h1>
+      <h1>{{ gruppeName }}</h1>
       <CloseButton class="btn-close" />
     </div>
 

@@ -43,10 +43,12 @@ onMounted(async () => {
 
 <template>
     <div class="card-default relative">
-      <CloseButton class="absolute -top-6 -right-6 z-10"/>
 
-      <!-- Title -->
+      <div class="flex items-baseline justify-between mb-6">
       <h1>Deine Gruppen</h1>
+      <CloseButton class="btn-close"/>
+
+      </div>
 
       <!-- Conditional content -->
       <div class="flex-1">

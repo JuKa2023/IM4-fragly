@@ -44,7 +44,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="p-8 max-w-2xl mx-auto bg-cream-light rounded-xl shadow-md text-brown"
+    class="card-default relative"
   >
     <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
 
@@ -53,15 +53,12 @@ onMounted(async () => {
       :editable="false"
     />
 
-    <!-- Loader -->
     <p v-if="!loaded" class="text-center">Lade …</p>
 
-    <!-- Keine Antworten -->
     <p v-else-if="fields.length === 0" class="text-center">
       Es wurden noch keine Fragen beantwortet.
     </p>
 
-    <!-- Antworten-Liste -->
     <div v-else class="text-left">
       <div v-for="f in fields" :key="f.frage_id" class="mb-6 last:mb-0">
         <p class="p-bold">{{ f.frage }}</p>
@@ -76,12 +73,3 @@ onMounted(async () => {
     </RouterLink>
   </div>
 </template>
-
-<style scoped>
-.bg-cream-light {
-  background-color: #ffebd2;
-}
-.text-brown {
-  color: #472402;
-}
-</style>
