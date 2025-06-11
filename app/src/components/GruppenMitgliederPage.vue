@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ProfilePicture from "./ProfilePicture.vue";
 import GroupLinkDisplay from "./GroupLinkDisplay.vue";
+import CloseButton from "./CloseButton.vue";
 import { toast } from "vue-sonner";
 
 const route = useRoute();
@@ -56,15 +57,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="relative bg-[#ffebd2] min-h-screen p-6 rounded-3xl w-max-md m-2">
-    <button
-      @click="$router.back()"
-      class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center"
-    >
-      ×
-    </button>
+  <div class="card-default">
+    <CloseButton />
 
-    <h2 class="text-2xl font-bold text-brown mb-6">{{ gruppeName }}</h2>
+    <h1 class="text-2xl font-bold text-brown mb-6">{{ gruppeName }}</h1>
 
     <!-- Group Link and Kürzel -->
     
@@ -88,7 +84,7 @@ onMounted(async () => {
     <div class="mb-6">
       <GroupLinkDisplay :gruppe-link="gruppeLink" :kuerzel="kuerzel" />
     </div>
-    
+
     <RouterLink :to="{ name: 'GruppeVerlassen', params: { id: groupId } }">
       <button class="btn btn-sm btn-primary mt-8"> Gruppe verlassen </button>
     </RouterLink>

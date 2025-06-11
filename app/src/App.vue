@@ -87,14 +87,14 @@ setInterval(() => {
                   class="absolute right-0 w-56 bg-orange-300 shadow-md overflow-hidden z-30"
               >
                 <RouterLink
-                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="block px-4 py-2 text-gray-800 hover:bg-[#FCC1DB] transition-colors"
                     to="/benutzerdatenbearbeiten"
                 >Benutzerdaten bearbeiten
                 </RouterLink
                 >
 
                 <RouterLink
-                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="block px-4 py-2 text-gray-800 hover:bg-[#FCC1DB] transition-colors"
                     to="/"
                     @click.prevent="logout"
                 >Abmelden
@@ -106,7 +106,7 @@ setInterval(() => {
         </nav>
       </div>
     </header>
-    <main class="flex-1 mt-20">
+    <main class="flex-1">
       <router-view></router-view>
     </main>
 

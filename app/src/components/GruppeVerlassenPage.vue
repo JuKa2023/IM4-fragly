@@ -70,9 +70,9 @@ async function onLeave() {
     </button>
 
     <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">
+      <h1 class="text-xl font-semibold text-gray-800 mb-4">
         Bist du sicher, dass du die Gruppe verlassen möchtest?
-      </h2>
+      </h1>
       <p class="text-sm text-gray-600 mb-6">
         Bestätige, dass du die Gruppe verlassen möchtest durch die Eingabe der Gruppenbezeichnung <span class="font-medium">{{ groupName }}</span>.
       </p>

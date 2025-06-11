@@ -64,7 +64,7 @@ onMounted(async () => {
     <!-- Antworten-Liste -->
     <div v-else class="text-left">
       <div v-for="f in fields" :key="f.frage_id" class="mb-6 last:mb-0">
-        <h2 class="font-semibold mb-1">{{ f.frage }}</h2>
+        <p class="p-bold">{{ f.frage }}</p>
         <p>{{ f.antwort }}</p>
       </div>
     </div>

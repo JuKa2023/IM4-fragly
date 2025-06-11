@@ -1,8 +1,8 @@
 <template>
   <div class="p-8 w-full text-brown">
-    <h2 class="text-2xl font-bold text-center mb-6">
+    <h1 class="text-center mb-6">
       {{ success ? "Hier dein Link, Name und Kürzel" : "Gebe folgende Angaben an" }}
-    </h2>
+    </h1>
 
     <!-- Success View -->
     <div v-if="success" class="text-center space-y-6">

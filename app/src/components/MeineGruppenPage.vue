@@ -49,19 +49,19 @@ onMounted(async () => {
     </button>
 
     <div
-      class="bg-[#ffebd2] min-h-screen p-6 flex flex-col justify-between rounded-3xl w-max-md m-2"
+      class="card-default"
     >
       <!-- Title -->
-      <h2 class="text-2xl font-bold text-brown mb-6">Deine Gruppen</h2>
+      <h1>Deine Gruppen</h1>
 
       <!-- Conditional content -->
       <div class="flex-1">
         <!-- No groups message -->
         <div v-if="noGroups" class="text-center text-brown p-6">
-          <p class="text-lg font-medium">
-            Du bist noch in keiner Gruppe.<br />
-            Möchtest du einer Gruppe beitreten?
+          <p>
+            Du bist noch in keiner Gruppe.
           </p>
+          <p>Möchtest du einer Gruppe beitreten?</p>
         </div>
 
         <!-- Group list -->
