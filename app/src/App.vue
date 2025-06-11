@@ -107,7 +107,9 @@ setInterval(() => {
       </div>
     </header>
     <main class="flex-1 p-5">
-      <router-view></router-view>
+      <div class="page-wrapper">
+        <router-view></router-view>
+      </div>
     </main>
 
     <footer class="bg-orange-300 h-16 w-full px-6 shadow-inner sticky bottom-0">

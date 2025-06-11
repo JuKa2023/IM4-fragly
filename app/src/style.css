@@ -19,7 +19,7 @@
   }
 
   .page-wrapper {
-    @apply flex-1 pt-20 pb-20;
+    @apply max-w-2xl mx-auto sm:px-6;
   }
 }
 
