@@ -25,21 +25,23 @@ if (!$stmt->fetchColumn()) {
 
 try {
     $stmt = $pdo->prepare("
-        SELECT Nutzer.User_ID, Nutzer.Nutzer, g.Gruppe_Name, Nutzer.Profilbild_URL
+        SELECT 
+            Nutzer.User_ID, 
+            Nutzer.Nutzer, 
+            Nutzer.Profilbild_URL,
+            g.Gruppe_Name,
+            g.Kuerzel,
+            g.Gruppe_Link AS Link
         FROM Nutzer
-        JOIN Nutzer_hat_Gruppe nhg
-        ON nhg.user_id = Nutzer.User_ID
-        JOIN Gruppe g
-        ON g.Gruppe_ID = nhg.gruppe_id
+        JOIN Nutzer_hat_Gruppe nhg ON nhg.user_id = Nutzer.User_ID
+        JOIN Gruppe g ON g.Gruppe_ID = nhg.gruppe_id
         WHERE g.Gruppe_ID = :gid
     ");
     $stmt->execute([':gid' => $gruppeId]);
     $members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     http_response_code(200);
-    echo json_encode(
-      $members
-    );
+    echo json_encode($members);
 } catch (PDOException $e) {
     error_log("Error in get_group_members.php: {$e->getMessage()}");
     http_response_code(500);

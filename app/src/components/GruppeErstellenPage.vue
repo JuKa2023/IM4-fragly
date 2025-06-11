@@ -3,6 +3,7 @@ import { ref } from "vue";
 import BaseInput from "./BaseInput.vue";
 import { RouterLink } from "vue-router";
 import { toast } from "vue-sonner";
+import GroupLinkDisplay from "./GroupLinkDisplay.vue";
 
 const groupName = ref("");
 const loeschdatum = ref("");
@@ -10,7 +11,6 @@ const message = ref("");
 const success = ref(false);
 const kuerzel = ref("");
 const gruppeLink = ref("");
-const copied = ref<null | "link" | "kuerzel">(null);
 
 async function submitGroup() {
   message.value = "";
@@ -52,16 +52,6 @@ async function submitGroup() {
     toast.error(message.value);
   }
 }
-
-function copyToClipboard(text: string, type: "link" | "kuerzel") {
-  navigator.clipboard.writeText(text).then(() => {
-    if (type === "link") {
-      toast.success("Link kopiert!");
-    } else if (type === "kuerzel") {
-      toast.success("Kürzel kopiert!");
-    }
-  });
-}
 </script>
 
 <template>
@@ -72,31 +62,7 @@ function copyToClipboard(text: string, type: "link" | "kuerzel") {
 
     <!-- Success View -->
     <div v-if="success" class="text-center space-y-6">
-      <!-- Link -->
-      <div
-        class="flex items-center justify-center gap-2 cursor-pointer group"
-        @click="copyToClipboard(gruppeLink, 'link')"
-      >
-        <span class="text-2xl">🔗</span>
-        <a
-          :href="gruppeLink"
-          target="_blank"
-          class="text-xl underline font-bold group-hover:text-pink-600"
-        >
-          {{ gruppeLink }}
-        </a>
-      </div>
-
-      <!-- Kürzel -->
-      <div
-        class="flex items-center justify-center gap-2 cursor-pointer group"
-        @click="copyToClipboard(kuerzel, 'kuerzel')"
-      >
-        <span class="text-2xl">🔗</span>
-        <span class="text-xl underline font-bold group-hover:text-pink-600">
-          {{ kuerzel }}
-        </span>
-      </div>
+      <GroupLinkDisplay :gruppe-link="gruppeLink" :kuerzel="kuerzel" />
 
       <RouterLink to="/gruppen" class="btn btn-lg btn-primary mt-6">
         meine Gruppen

@@ -2,6 +2,8 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ProfilePicture from "./ProfilePicture.vue";
+import GroupLinkDisplay from "./GroupLinkDisplay.vue";
+import { toast } from "vue-sonner";
 
 const route = useRoute();
 const router = useRouter();
@@ -11,6 +13,18 @@ const members = ref<[]>([]);
 const loading = ref(true);
 const error = ref<string | null>(null);
 const gruppeName = ref<string>("");
+const gruppeLink = ref<string>("");
+const kuerzel = ref<string>("");
+
+function copyToClipboard(text: string, type: "link" | "kuerzel") {
+  navigator.clipboard.writeText(text).then(() => {
+    if (type === "link") {
+      toast.success("Link kopiert!");
+    } else if (type === "kuerzel") {
+      toast.success("Kürzel kopiert!");
+    }
+  });
+}
 
 onMounted(async () => {
   try {
@@ -32,6 +46,8 @@ onMounted(async () => {
     } else {
       members.value = data;
       gruppeName.value = data[0].Gruppe_Name;
+      kuerzel.value = data[0].Kuerzel;
+      gruppeLink.value = `${window.location.origin}/${data[0].Kuerzel}`;
     }
   } finally {
     loading.value = false;
@@ -50,6 +66,9 @@ onMounted(async () => {
 
     <h2 class="text-2xl font-bold text-brown mb-6">{{ gruppeName }}</h2>
 
+    <!-- Group Link and Kürzel -->
+    
+
     <div v-if="loading" class="text-center text-brown">Lade Mitglieder…</div>
     <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
 
@@ -65,6 +84,11 @@ onMounted(async () => {
         </RouterLink>
       </div>
     </div>
+
+    <div class="mb-6">
+      <GroupLinkDisplay :gruppe-link="gruppeLink" :kuerzel="kuerzel" />
+    </div>
+    
     <RouterLink :to="{ name: 'GruppeVerlassen', params: { id: groupId } }">
       <button class="btn btn-sm btn-primary mt-8"> Gruppe verlassen </button>
     </RouterLink>
