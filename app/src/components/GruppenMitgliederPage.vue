@@ -58,9 +58,11 @@ onMounted(async () => {
 
 <template>
   <div class="card-default relative">
-    <CloseButton class="absolute -top-6 -right-6 z-10"/>
 
-    <h1 class="text-2xl font-bold text-brown mb-6">{{ gruppeName }}</h1>
+    <div class="flex items-baseline justify-between mb-6">
+      <h1 class="text-2xl font-bold text-brown">{{ gruppeName }}</h1>
+      <CloseButton class="btn-close" />
+    </div>
 
     <!-- Group Link and Kürzel -->
     

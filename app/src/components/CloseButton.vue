@@ -16,7 +16,7 @@ function handleClick() {
 <template>
   <button
     @click="handleClick"
-    class="rounded-full btn p-6 btn-primary flex items-center justify-center"
+    class="btn-close"
   >
     <img src="../assets/xicon.svg" alt="Close"/>
   </button>

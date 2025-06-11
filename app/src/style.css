@@ -5,6 +5,11 @@
 @tailwind utilities;
 
 @layer components {
+  .btn-close {
+    @apply bg-[#FFE2EF] px-4 py-4 rounded-full shadow-md 
+           hover:shadow-none transition duration-200 ease-in-out;
+  }
+
   .card-default {
     @apply p-8 max-w-2xl mx-auto bg-[#ffebd2] rounded-xl shadow-md;
   }
