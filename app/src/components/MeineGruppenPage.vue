@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import CloseButton from "./CloseButton.vue";
+
 import { UserGroupIcon } from "@heroicons/vue/24/solid";
 
 type Group = {
@@ -40,17 +42,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <button
-      class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center"
-      @click="$router.back()"
-    >
-      ×
-    </button>
+    <div class="card-default relative">
+      <CloseButton class="absolute -top-6 -right-6 z-10"/>
 
-    <div
-      class="card-default"
-    >
       <!-- Title -->
       <h1>Deine Gruppen</h1>
 
@@ -88,7 +82,6 @@ onMounted(async () => {
         </RouterLink>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>

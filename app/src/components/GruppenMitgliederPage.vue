@@ -57,8 +57,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="card-default">
-    <CloseButton />
+  <div class="card-default relative">
+    <CloseButton class="absolute -top-6 -right-6 z-10"/>
 
     <h1 class="text-2xl font-bold text-brown mb-6">{{ gruppeName }}</h1>
 
@@ -90,7 +90,3 @@ onMounted(async () => {
     </RouterLink>
   </div>
 </template>
-
-<style scoped>
-/* Bei Bedarf noch Fein‐Tuning */
-</style>
