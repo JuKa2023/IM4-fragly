@@ -59,8 +59,8 @@ setInterval(() => {
 
 <template>
   <Toaster position="top-right"/>
-  <div class="flex flex-col min-h-screen w-full">
-    <header class="bg-orange-300 h-16 w-full px-6 shadow-md z-20 sticky top-0">
+  <div class="flex flex-col h-screen w-full">
+    <header class="bg-orange-300 py-5 z-20">
       <div class="mx-auto max-w-xl h-full flex items-center">
         <nav class="flex items-center justify-between w-full h-full">
           <RouterLink class="p-2 cursor-pointer iconHeader w-auto h-full" to="/">
@@ -106,13 +106,13 @@ setInterval(() => {
         </nav>
       </div>
     </header>
-    <main class="flex-1 p-5">
+    <main class="flex-1 overflow-yauto p-5">
       <div class="page-wrapper">
         <router-view></router-view>
       </div>
     </main>
 
-    <footer class="bg-orange-300 h-16 w-full px-6 shadow-inner sticky bottom-0">
+    <footer class="bg-orange-300 py-5 text-center">
       <div class="mx-auto max-w-xl h-full flex items-center justify-center">
         <p class="text-brown text-sm">© 2025 Fragly</p>
       </div>
