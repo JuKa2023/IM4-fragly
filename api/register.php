@@ -1,14 +1,10 @@
 <?php
 require_once('db.php');
-require_once('session_check.php');
 
-
-// Get POST data
 $username = $_POST['username'] ?? '';
 $email    = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
-// Validate input
 if (empty($username) || empty($email) || empty($password)) {
     echo "Bitte fülle alle Felder aus";
     exit;

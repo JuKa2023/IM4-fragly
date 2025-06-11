@@ -12,7 +12,6 @@ const confirmPassword = ref("");
 const router = useRouter();
 
 const register = async () => {
-  // Validation
   if (!username.value || !email.value || !password.value) {
     toast.error("Bitte fülle alle Felder aus");
     return;
