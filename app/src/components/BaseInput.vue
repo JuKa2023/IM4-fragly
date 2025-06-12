@@ -45,9 +45,9 @@ const togglePassword = () => {
       <Datepicker
   v-else-if="type === 'date'"
   :model-value="modelValue"
-  @update:model-value="$emit('update:modelValue', $event)"
-  :locale="'de'"
+  @update:model-value="$emit('update:modelValue', new Date($event).toISOString().slice(0, 10))"  :locale="'de'"
   :format="'dd.MM.yyyy'"
+  :enable-time-picker="false"
   :max-date="disableFutureDates ? new Date() : undefined"
   :min-date="allowOnlyFutureDates ? new Date() : undefined"
   v-slot="{ inputValue, inputEvents, togglePopover }"

@@ -79,11 +79,12 @@ async function submitGroup() {
         type="text"
       />
       <BaseInput
-        id="loeschdatum"
-        label="Löschdatum"
-        v-model="loeschdatum"
-        type="date"
-      />
+  id="loeschdatum"
+  label="Löschdatum"
+  v-model="loeschdatum"
+  type="date"
+  :allowOnlyFutureDates="true"
+/>
       <button type="submit" class="btn btn-lg btn-primary w-full mt-6">
         Gruppe erstellen
       </button>
