@@ -62,15 +62,12 @@ onMounted(async () => {
     <div class="flex items-baseline justify-between mb-6">
       <h1>{{ gruppeName }}</h1>
       <CloseButton class="btn-close" />
-    </div>
-
-    <!-- Group Link and Kürzel -->
-    
+    </div>    
 
     <div v-if="loading" class="text-center text-brown">Lade Mitglieder…</div>
     <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
 
-    <div v-else class="space-y-3">
+    <div v-else class="space-y-6">
       <RouterLink
         v-for="m in members"
         :key="m.User_ID"

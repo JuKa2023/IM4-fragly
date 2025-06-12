@@ -44,27 +44,5 @@ function copyToClipboard(text: string, type: "link" | "kuerzel") {
         Klicken zum Kopieren
       </span>
     </div>
-
-    <!-- Kürzel Label -->
-    <div class="mb-1 mt-4 text-left">
-      <span class="mb-1 text-left">Gruppen-Kürzel</span>
-    </div>
-    <!-- Kürzel -->
-    <div
-      class="flex items-center px-4 py-3 rounded-md border border-[#FFD6EC] bg-[#FFEFF6]/60 cursor-pointer transition duration-200 group text-left"
-      @click="copyToClipboard(kuerzel, 'kuerzel')"
-    >
-      <span class="text-[#7CA4A0]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg>
-      </span>
-      <span class="text-[#472402] text-s font-medium ml-3 group-hover:text-[#7CA4A0] transition-colors duration-200">
-        {{ kuerzel }}
-      </span>
-      <span class="ml-auto text-sm text-[#7CA4A0] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        Klicken zum Kopieren
-      </span>
-    </div>
   </div>
 </template> 

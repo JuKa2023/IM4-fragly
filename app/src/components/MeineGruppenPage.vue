@@ -61,7 +61,7 @@ onMounted(async () => {
         </div>
 
         <!-- Group list -->
-        <div v-else class="space-y-3">
+        <div v-else class="space-y-6">
           <RouterLink
             v-for="group in groups"
             :key="group.Gruppe_ID"
