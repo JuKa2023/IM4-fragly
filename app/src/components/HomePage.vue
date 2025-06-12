@@ -28,7 +28,7 @@
       </p>
     </div>
 
-    <div class="mt-8 text-center">
+    <div class="mt-8 text-right">
       <RouterLink class="btn btn-sm btn-primary" :to="{name: 'createGroup'}">
         Gruppe erstellen
       </RouterLink>

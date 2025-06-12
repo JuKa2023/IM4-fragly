@@ -56,13 +56,13 @@ async function submitGroup() {
 
 <template>
   <div class="page-default">
-    <h1 class="text-2xl font-bold text-center mb-6">
-      {{ success ? "Hier dein Link und Kürzel" : "Gebe folgende Angaben an" }}
+    <h1>
+      {{ success ? "Hier dein Link" : "Gebe folgende Angaben an" }}
     </h1>
 
     <!-- Success View -->
     <div v-if="success" class="text-center space-y-6">
-      <GroupLinkDisplay :gruppe-link="gruppeLink" :kuerzel="kuerzel" />
+      <GroupLinkDisplay :gruppe-link="gruppeLink" />
 
       <RouterLink to="/gruppen" class="btn btn-lg btn-primary mt-6">
         meine Gruppen
