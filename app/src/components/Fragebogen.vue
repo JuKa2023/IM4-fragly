@@ -11,6 +11,7 @@ interface FrageRow {
   frage: string;
   antwort_vorschlag: string | null;
   antwort: string | null;
+  input_type: string; // <-- Add this
 }
 
 const router = useRouter();
@@ -124,11 +125,12 @@ onMounted(loadQuestions);
     <form v-else @submit.prevent="onSave">
       <div v-for="q in questions" :key="q.frage_id" class="mb-6 last:mb-0">
         <BaseInput
-          v-model="answers[q.frage_id]"
-          :label="q.frage"
-          :placeholder="q.antwort_vorschlag || ''"
-          textarea
-        />
+  v-model="answers[q.frage_id]"
+  :label="q.frage"
+  :placeholder="q.antwort_vorschlag || ''"
+  :type="q.input_type || 'text'"
+  :id="'frage-' + q.frage_id"
+/>
       </div>
 
       <div class="flex justify-end space-x-4 mt-8">

@@ -18,16 +18,17 @@ if (empty($input['user_id'])) {
 
 try {
   $sql = "
-    SELECT
-      f.frage_id,
-      f.frage,
-      f.antwort_vorschlag,
-      uf.antwort
-    FROM Frage AS f
-    LEFT JOIN Nutzer_hat_Frage AS uf
-      ON f.frage_id = uf.frage_id
-      AND uf.user_id = ?
-    ORDER BY f.reihenfolge
+  SELECT
+    f.frage_id,
+    f.frage,
+    f.antwort_vorschlag,
+    f.input_type,
+    uf.antwort
+  FROM Frage AS f
+  LEFT JOIN Nutzer_hat_Frage AS uf
+    ON f.frage_id = uf.frage_id
+    AND uf.user_id = ?
+  ORDER BY f.reihenfolge
   ";
   $stmt = $pdo->prepare($sql);
   $stmt->execute([$user_id]);
