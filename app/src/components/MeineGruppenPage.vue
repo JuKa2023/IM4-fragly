@@ -66,10 +66,10 @@ onMounted(async () => {
             v-for="group in groups"
             :key="group.Gruppe_ID"
             :to="{ name: 'GruppenMitglieder', params: { id: group.Gruppe_ID } }"
-            class="bg-[#FFEFF6] text-brown flex items-center px-4 py-2 rounded-md shadow-sm cursor-pointer"
+            class="bg-[#FFEFF6] flex items-center px-4 py-2 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"
           >
             <UserGroupIcon class="w-6 h-6 text-[#7CA4A0] mr-3" />
-            <span class="text-xl">{{ group.Gruppe_Name }}</span>
+            <span class="text-xl text-[#472402]">{{ group.Gruppe_Name }}</span>
           </RouterLink>
         </div>
       </div>

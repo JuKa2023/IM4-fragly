@@ -71,16 +71,14 @@ onMounted(async () => {
     <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
 
     <div v-else class="space-y-3">
-      <div
+      <RouterLink
         v-for="m in members"
         :key="m.User_ID"
-        class="bg-[#FFEFF6] text-brown flex items-center px-4 py-2 rounded-md shadow-sm"
-      >
-        <RouterLink :to="{ name: 'steckbrief', params: { id: m.User_ID } }" class="flex items-center">
+        :to="{ name: 'steckbrief', params: { id: m.User_ID } }"
+        class="bg-[#FFEFF6] flex items-center px-4 py-2 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"      >
           <ProfilePicture :userId="m.User_ID" :initial-url="m.Profilbild_URL" class="w-10 h-10 mr-3" />
-          <span class="text-xl">{{ m.Nutzer }}</span>
-        </RouterLink>
-      </div>
+          <span class="text-xl text-[#472402]">{{ m.Nutzer }}</span>
+      </RouterLink>
     </div>
 
     <div class="mb-6">
