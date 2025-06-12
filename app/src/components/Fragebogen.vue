@@ -99,6 +99,14 @@ async function onSave() {
   }
 }
 
+function shouldDisableFutureDates(q: FrageRow): boolean {
+  // You can use whatever logic you want
+  return (
+    q.input_type === "date" &&
+    q.frage.toLowerCase().includes("geboren") // or any other check
+  );
+}
+
 onMounted(loadQuestions);
 </script>
 
@@ -130,6 +138,7 @@ onMounted(loadQuestions);
   :placeholder="q.antwort_vorschlag || ''"
   :type="q.input_type || 'text'"
   :id="'frage-' + q.frage_id"
+  :disableFutureDates="shouldDisableFutureDates(q)"
 />
       </div>
 
