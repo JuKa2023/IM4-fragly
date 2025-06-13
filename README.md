@@ -1,6 +1,6 @@
-# 
+# Fragly - IM4
 
-![Header](docs/header.png)
+![Header](docs/header.jpg)
 
 Ein Projekt von:
 
@@ -81,7 +81,7 @@ Die Anwendung verwendet folgende Umgebungsvariablen:
 - `APP_ENV`: Anwendungsumgebung (Entwicklung/Produktion)
 - `APP_DEBUG`: Debug-Modus (true/false)
 
-## Reflektion
+## Reflexion
 
 Die Arbeit an Fragly war eine spannende und vielseitige Erfahrung. Besonders der konzeptionelle Teil des Projekts hat mir viel Freude bereitet, von der Ideenfindung bis hin zur Ausarbeitung der Nutzerführung. Die Vorstellung, dass Menschen in Gruppen durch persönliche Antworten ins Gespräch kommen, hat mich von Anfang an begeistert.
 
