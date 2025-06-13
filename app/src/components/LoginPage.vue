@@ -40,7 +40,7 @@ const login = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center w-md">
+  <div class="flex items-center justify-center">
     <div class="p-8 w-full">
       <h1 class="font-bold text-[#472402] mb-6">Melde dich an</h1>
 
