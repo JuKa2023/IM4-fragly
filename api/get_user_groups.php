@@ -9,7 +9,7 @@ function getGroupIdsForUser($pdo, $userId) {
     try {
         $stmt = $pdo->prepare("
             SELECT gruppe_id
-            FROM Nutzer_hat_Gruppe
+            FROM nutzer_gruppe
             WHERE user_id = :user_id
         ");
         $stmt->execute([':user_id' => $userId]);
@@ -30,9 +30,9 @@ function getGroupDetailsForIds($pdo, $gruppeIds) {
         $placeholders = implode(',', array_fill(0, count($gruppeIds), '?'));
 
         $stmt = $pdo->prepare("
-            SELECT Gruppe_ID, Gruppe_Name, Kuerzel, Erstellt_von_User_ID
-            FROM Gruppe
-            WHERE Gruppe_ID IN ($placeholders)
+            SELECT gruppe_id, name, kuerzel, ersteller
+            FROM gruppe
+            WHERE gruppe_id IN ($placeholders)
         ");
         $stmt->execute($gruppeIds);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

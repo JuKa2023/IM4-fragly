@@ -24,8 +24,8 @@ try {
     f.antwort_vorschlag,
     f.input_type,
     uf.antwort
-  FROM Frage AS f
-  LEFT JOIN Nutzer_hat_Frage AS uf
+  FROM frage AS f
+  LEFT JOIN nutzer_frage AS uf
     ON f.frage_id = uf.frage_id
     AND uf.user_id = ?
   ORDER BY f.reihenfolge

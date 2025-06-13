@@ -15,7 +15,7 @@ if ($input === null || !isset($input['user_id'])) {
 }
 
 try {
-    $stmt = $pdo->prepare('SELECT User_ID, Nutzer, Profilbild_URL, Email FROM Nutzer WHERE User_ID = :uid LIMIT 1');
+    $stmt = $pdo->prepare('SELECT user_id, nutzer, avatar_url, email FROM nutzer WHERE user_id = :uid LIMIT 1');
     $stmt->execute([':uid' => $this_user_id]);
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);

@@ -11,21 +11,21 @@ try {
 
     $stmt = $pdo->prepare("
         SELECT COUNT(*) 
-        FROM Nutzer_hat_Gruppe 
+        FROM nutzer_gruppe
         WHERE gruppe_id = ? AND user_id != ?
     ");
     $stmt->execute([$gruppe_id, $user_id]);
     $remainingMembers = (int)$stmt->fetchColumn();
 
     $stmt = $pdo->prepare("
-        DELETE FROM Nutzer_hat_Gruppe 
+        DELETE FROM nutzer_gruppe
         WHERE user_id = ? AND gruppe_id = ? 
         LIMIT 1
     ");
     $stmt->execute([$user_id, $gruppe_id]);
 
     if ($remainingMembers === 0) {
-        $stmt = $pdo->prepare("DELETE FROM Gruppe WHERE Gruppe_ID = ? LIMIT 1");
+        $stmt = $pdo->prepare("DELETE FROM gruppe WHERE gruppe_id = ? LIMIT 1");
         $stmt->execute([$gruppe_id]);
     }
 

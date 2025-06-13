@@ -13,7 +13,7 @@ $userId   = $_SESSION['ID'];
 
 $stmt = $pdo->prepare("
     SELECT 1
-    FROM Nutzer_hat_Gruppe
+    FROM nutzer_gruppe
     WHERE user_id = :uid AND gruppe_id = :gid
 ");
 $stmt->execute([':uid' => $userId, ':gid' => $gruppeId]);
@@ -26,16 +26,16 @@ if (!$stmt->fetchColumn()) {
 try {
     $stmt = $pdo->prepare("
         SELECT 
-            Nutzer.User_ID, 
-            Nutzer.Nutzer, 
-            Nutzer.Profilbild_URL,
-            g.Gruppe_Name,
-            g.Kuerzel,
-            g.Gruppe_Link AS Link
-        FROM Nutzer
-        JOIN Nutzer_hat_Gruppe nhg ON nhg.user_id = Nutzer.User_ID
-        JOIN Gruppe g ON g.Gruppe_ID = nhg.gruppe_id
-        WHERE g.Gruppe_ID = :gid
+            nutzer.user_id,
+            nutzer.nutzer,
+            nutzer.avatar_url,
+            g.name,
+            g.kuerzel,
+            g.link AS Link
+        FROM nutzer
+        JOIN nutzer_gruppe nhg ON nhg.user_id = nutzer.user_id
+        JOIN gruppe g ON g.gruppe_id = nhg.gruppe_id
+        WHERE g.gruppe_id = :gid
     ");
     $stmt->execute([':gid' => $gruppeId]);
     $members = $stmt->fetchAll(PDO::FETCH_ASSOC);

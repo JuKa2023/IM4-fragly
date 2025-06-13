@@ -17,11 +17,11 @@ async function submitGroup() {
   success.value = false
 
   const formData = new FormData();
-  formData.append("Gruppe_Name", groupName.value);
-  formData.append("Loeschdatum", loeschdatum.value || "");
+  formData.append("name", groupName.value);
+  formData.append("loeschdatum", loeschdatum.value || "");
 
   try {
-    const res = await fetch("/api/insert_group.php", {
+    const res = await fetch("/api/gruppe_erstellen.php", {
       method: "POST",
       credentials: "include",
       body: formData,
@@ -65,7 +65,7 @@ async function submitGroup() {
       <GroupLinkDisplay :gruppe-link="gruppeLink" />
 
       <RouterLink to="/gruppen" class="btn btn-lg btn-primary mt-6">
-        meine Gruppen
+        Meine Gruppen
       </RouterLink>
     </div>
 

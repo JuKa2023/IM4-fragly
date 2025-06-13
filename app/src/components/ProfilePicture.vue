@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { ref, watch, computed } from "vue";
-import gruppeicon from "../assets/gruppeicon.svg";
+<script lang="ts" setup>
+import {computed, ref, watch} from "vue";
+import cameraIcon from "../assets/Kameraicon.svg";
 
 interface Props {
   initialUrl: string | null;
@@ -14,11 +14,7 @@ const emit = defineEmits<{
   (e: "uploaded", url: string): void;
 }>();
 
-const defaultImage = gruppeicon; // Default image if no URL is provided
-
-const currentUrl = ref<string | null>(props.initialUrl);
-console.log("Current URL:", currentUrl.value);
-
+const currentUrl = ref<string | null>(props.initialUrl ?? cameraIcon);
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const uploading = ref(false);
@@ -49,7 +45,7 @@ function handleFileChange(evt: Event) {
   const file = files[0];
 
   if (!file.type.startsWith("image/")) {
-    error.value = "Please select an image file.";
+    error.value = "Bitte eine Bilddatei auswählen.";
     return;
   }
 
@@ -88,13 +84,13 @@ async function uploadFile(file: File) {
               currentUrl.value = response.url;
               emit("uploaded", response.url);
             } else {
-              error.value = response.error ?? "Upload failed.";
+              error.value = response.error ?? "Hochladen fehlgeschlagen.";
             }
           } catch (e) {
-            error.value = "Server returned an invalid response.";
+            error.value = "Server antwort konnte nicht verarbeitet werden.";
           }
         } else {
-          error.value = `Upload failed with status ${xhr.status}.`;
+          error.value = `Hochladen fehlgeschlagen.`;
         }
         if (fileInput.value) fileInput.value.value = "";
       }
@@ -109,44 +105,58 @@ async function uploadFile(file: File) {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-4">
-    <div class="relative group">
+  <div class="flex flex-col items-center w-25 h-25 ">
+    <div class="relative inline-block">
       <img
-        v-if="currentUrl"
-        :src="'/api' + currentUrl + cacheBuster"
-        alt="Profile picture"
-        class="rounded-full object-cover shadow max-w-32 max-h-32 w-full h-full"
+          v-if="currentUrl"
+          :src="'/api' + currentUrl + cacheBuster"
+          alt="Profilbild"
+          class="rounded-full object-cover
+               ring-4 ring-[#472402] ring-offset-2 shadow-md"
       />
-      <img v-else :src="defaultImage" alt="Default profile picture" class="rounded-full object-cover shadow max-w-32 max-h-32 w-full h-full" />
+
       <div
-        v-if="isEditable"
-        class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-        @click="openFileDialog"
+          v-if="isEditable && !uploading"
+          class="absolute bottom-0 right-0
+               translate-x-1/3 translate-y-1/3
+               w-12 h-12 bg-pink-300 rounded-full shadow-xl
+               flex items-center justify-center cursor-pointer
+               group"
+          @click="openFileDialog"
       >
-        <span class="text-white text-sm">Change</span>
+        <img
+            :src="cameraIcon"
+            alt="Neues Bild auswählen"
+            class="w-6 h-6 select-none transition-transform
+                 group-hover:scale-105"
+        />
+      </div>
+
+      <div
+          v-if="isEditable"
+          class="absolute inset-0 rounded-full
+               bg-black/50 flex items-center justify-center
+               opacity-0 hover:opacity-100 transition-opacity
+               cursor-pointer"
+          @click="openFileDialog"
+      >
+        <span class="text-white text-base">Change</span>
       </div>
     </div>
 
     <input
-      ref="fileInput"
-      type="file"
-      accept="image/*"
-      class="hidden"
-      @change="handleFileChange"
+        ref="fileInput"
+        accept="image/*"
+        class="hidden"
+        type="file"
+        @change="handleFileChange"
     />
 
-    <button
-      v-if="isEditable && !uploading"
-      class="btn btn-primary"
-      @click="openFileDialog"
-    >
-      Upload new picture
-    </button>
-
-    <p v-if="uploading" class="text-sm text-gray-600">
+    <p v-if="uploading" class="mt-3 text-sm text-gray-600">
       Uploading… {{ progress }}%
     </p>
-
-    <p v-if="error" class="text-sm text-red-500">{{ error }}</p>
+    <p v-if="error" class="mt-3 text-sm text-red-500">
+      {{ error }}
+    </p>
   </div>
 </template>

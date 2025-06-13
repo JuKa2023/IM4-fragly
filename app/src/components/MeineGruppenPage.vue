@@ -5,9 +5,9 @@ import CloseButton from "./CloseButton.vue";
 import { UserGroupIcon } from "@heroicons/vue/24/solid";
 
 type Group = {
-  Gruppe_Name: string;
-  Gruppe_ID: number;
-  Kuerzel: string;
+  name: string;
+  gruppe_id: number;
+  kuerzel: string;
 };
 
 const groups = ref<Group[]>([]);
@@ -64,12 +64,12 @@ onMounted(async () => {
         <div v-else class="space-y-6">
           <RouterLink
             v-for="group in groups"
-            :key="group.Gruppe_ID"
-            :to="{ name: 'GruppenMitglieder', params: { id: group.Gruppe_ID } }"
+            :key="group.gruppe_id"
+            :to="{ name: 'GruppenMitglieder', params: { id: group.gruppe_id } }"
             class="bg-[#FFEFF6] flex items-center px-4 py-2 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"
           >
             <UserGroupIcon class="w-6 h-6 text-[#7CA4A0] mr-3" />
-            <span class="text-xl text-[#472402]">{{ group.Gruppe_Name }}</span>
+            <span class="text-xl text-[#472402]">{{ group.name }}</span>
           </RouterLink>
         </div>
       </div>

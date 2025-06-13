@@ -32,7 +32,7 @@ onMounted(async () => {
   }
 
 
-  const resUser = await fetch("/api/nutzer.php", {
+  const resUser = await fetch("/api/nutzer_meta.php", {
     credentials: "include",
     method: "POST",
     body: JSON.stringify({ user_id: userId }),
@@ -49,7 +49,7 @@ onMounted(async () => {
     <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
 
     <ProfilePicture
-      :initial-url="user?.Profilbild_URL"
+      :initial-url="user?.avatar_url"
       :editable="false"
     />
 

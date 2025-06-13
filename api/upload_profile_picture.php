@@ -62,11 +62,11 @@ try {
     $publicUrl = '/uploads/profile_pictures/' . $newFilename;
 
     // Remove previous picture if exists
-    $stmt = $pdo->prepare('SELECT Profilbild_URL FROM Nutzer WHERE User_ID = :uid');
+    $stmt = $pdo->prepare('SELECT avatar_url FROM nutzer WHERE user_id = :uid');
     $stmt->execute([':uid' => $this_user_id]);
     $previous = $stmt->fetchColumn();
 
-    $stmtUpdate = $pdo->prepare('UPDATE Nutzer SET Profilbild_URL = :pp WHERE User_ID = :uid');
+    $stmtUpdate = $pdo->prepare('UPDATE nutzer SET avatar_url = :pp WHERE user_id = :uid');
     $stmtUpdate->execute([
         ':pp'  => $publicUrl,
         ':uid' => $this_user_id,

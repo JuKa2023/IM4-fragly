@@ -63,11 +63,11 @@ const register = async () => {
         />
 
         <BaseInput
-          label="Email"
+          label="email"
           v-model="email"
           id="email"
           type="email"
-          placeholder="Gib deine Email ein"
+          placeholder="Gib deine email ein"
         />
 
         <BaseInput

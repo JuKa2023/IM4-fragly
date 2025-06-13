@@ -1,140 +1,120 @@
-<template>
-  <div class="p-8 w-full text-brown">
-    <h1 class="text-center mb-6">
-      {{ success ? "Hier dein Link, Name und Kürzel" : "Gebe folgende Angaben an" }}
-    </h1>
-
-    <!-- Success View -->
-    <div v-if="success" class="text-center space-y-6">
-      <!-- Link -->
-      <div
-        class="flex items-center justify-center gap-2 cursor-pointer group"
-        @click="copyToClipboard(gruppeLink, 'link')"
-      >
-        <span class="text-2xl">🔗</span>
-        <a
-          :href="gruppeLink"
-          target="_blank"
-          class="text-xl underline font-bold group-hover:text-pink-600"
-        >
-          {{ gruppeLink }}
-        </a>
-      </div>
-      <p v-if="copied === 'link'" class="text-green-600 text-sm">Link kopiert!</p>
-
-      <!-- Gruppenname -->
-      <div
-        class="flex items-center justify-center gap-2 cursor-pointer group"
-        @click="copyToClipboard(groupNameCreated, 'name')"
-      >
-        <span class="text-2xl">🔗</span>
-        <span class="text-xl underline font-bold group-hover:text-pink-600">
-          {{ groupNameCreated }}
-        </span>
-      </div>
-      <p v-if="copied === 'name'" class="text-green-600 text-sm">Name kopiert!</p>
-
-      <!-- Kürzel -->
-      <div
-        class="flex items-center justify-center gap-2 cursor-pointer group"
-        @click="copyToClipboard(kuerzel, 'kuerzel')"
-      >
-        <span class="text-2xl">🔗</span>
-        <span class="text-xl underline font-bold group-hover:text-pink-600">
-          {{ kuerzel }}
-        </span>
-      </div>
-      <p v-if="copied === 'kuerzel'" class="text-green-600 text-sm">Kürzel kopiert!</p>
-
-      <RouterLink to="/gruppen" class="btn btn-lg btn-primary mt-6">
-        meine Gruppen
-      </RouterLink>
-    </div>
-
-    <!-- Form View -->
-    <form v-else @submit.prevent="submitGroup">
-      <BaseInput
-        id="gruppe-name"
-        label="*Gruppenbezeichnung"
-        v-model="groupName"
-        placeholder="Familie Huber"
-        type="text"
-      />
-      <BaseInput
-        id="loeschdatum"
-        label="Löschdatum"
-        v-model="loeschdatum"
-        type="date"
-      />
-      <button type="submit" class="btn btn-lg btn-primary w-full mt-6">
-        Gruppe erstellen
-      </button>
-      <p v-if="message" class="mt-4 text-center text-red-600">{{ message }}</p>
-    </form>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { ref } from "vue";
+<script lang="ts" setup>
+import { ref, computed, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import BaseInput from "./BaseInput.vue";
-import { RouterLink } from "vue-router";
 
-const groupName = ref("");
-const loeschdatum = ref("");
-const message = ref("");
-const success = ref(false);
-const kuerzel = ref("");
-const gruppeLink = ref("");
-const groupNameCreated = ref("");
-const copied = ref<null | "link" | "kuerzel" | "name">(null);
+const router = useRouter();
+const route  = useRoute();
 
-async function submitGroup() {
-  message.value = "";
-  success.value = false;
+const groupName = ref('');
+const groupCode = computed(() => route.params.code as string | undefined);
+const fetchedName = ref('');
+const errorMsg = ref('');
+const busy = ref(false);
 
-  const formData = new FormData();
-  formData.append("Gruppe_Name", groupName.value);
-  formData.append("Loeschdatum", loeschdatum.value || "");
+onMounted(async () => {
+  if (!groupCode.value) return;
+  try {
+    const res = await fetch(`/api/gruppe_meta.php?code=${encodeURIComponent(groupCode.value)}`,
+        { credentials: 'include' });
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.message);
+    fetchedName.value = data.name;
+  } catch (e: any) {
+    errorMsg.value = e.message || 'Gruppe nicht gefunden';
+  }
+});
+
+async function join() {
+  errorMsg.value = '';
+  busy.value = true;
+
+  const payload = new URLSearchParams(
+      groupCode.value
+          ? { code: groupCode.value.trim() }
+          : { name: groupName.value.trim() }
+  );
+
+  if (!groupCode.value && !payload.get('name')) {
+    errorMsg.value = 'Bitte gib einen Gruppennamen ein.';
+    busy.value = false;
+    return;
+  }
 
   try {
-    const res = await fetch("api/insert_group.php", {
-      method: "POST",
-      credentials: "include",
-      body: formData,
+    const res  = await fetch('/api/gruppe_beitreten.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      credentials: 'include',
+      body: payload
     });
-
-    const contentType = res.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-      throw new Error("Keine gültige JSON-Antwort vom Server");
-    }
-
     const data = await res.json();
-    message.value = data.message;
+    if (!res.ok || !data.success) throw new Error(data.message);
 
-    if (res.ok && data.success) {
-      success.value = true;
-      kuerzel.value = data.kuerzel;
-      gruppeLink.value = data.link;
-      groupNameCreated.value = data.group_name;
-    } else {
-      success.value = false;
-    }
-  } catch (err) {
-    message.value = "Verbindungsfehler.";
-    success.value = false;
+    await router.push({ name: 'GruppenMitglieder', params: { id: data.gruppeId } });
+  } catch (e: any) {
+    errorMsg.value = e.message || 'Beitritt fehlgeschlagen';
+  } finally {
+    busy.value = false;
   }
 }
 
-function copyToClipboard(text: string, type: "link" | "kuerzel" | "name") {
-  navigator.clipboard.writeText(text).then(() => {
-    copied.value = type;
-    setTimeout(() => (copied.value = null), 2000);
-  });
+function decline () {
+  router.replace({ name: 'home' });
 }
 </script>
 
+<template>
+  <div class="p-10 max-w-xs mx-auto text-brown">
+
+    <!-- ---------- headline ---------- -->
+    <h1 v-if="!groupCode"
+        class="text-3xl font-bold leading-tight text-center mb-8">
+      Gib bitte ein, wie die&nbsp;Gruppe heisst.
+    </h1>
+
+    <h1 v-else
+        class="text-3xl font-bold leading-tight text-center mb-8">
+      Möchtest du der<br>
+      <span class="text-teal-700">{{ fetchedName || '…' }}</span><br>
+      beitreten?
+    </h1>
+
+    <p v-if="errorMsg"
+       class="text-red-600 mb-4 text-center">
+      {{ errorMsg }}
+    </p>
+
+    <form v-if="!groupCode"
+          class="flex flex-col gap-6"
+          @submit.prevent="join">
+      <BaseInput id="groupName"
+                 v-model="groupName"
+                 label="Gruppenbezeichnung"
+                 placeholder="Familie Mustermann"/>
+      <button :disabled="busy"
+              type="submit"
+              class="btn btn-lg btn-primary mt-4">
+        Gruppe beitreten
+      </button>
+    </form>
+
+    <div v-else class="flex flex-col gap-4">
+      <button :disabled="busy"
+              class="btn btn-lg btn-secondary"
+              @click="decline">
+        Einladung ablehnen
+      </button>
+
+      <button :disabled="busy"
+              class="btn btn-lg btn-primary"
+              @click="join">
+        Gruppe beitreten
+      </button>
+    </div>
+  </div>
+</template>
+
 <style scoped>
-.text-brown {
-  color: #5c2e00;
-}
+.text-brown { color:#5c2e00; }
 </style>

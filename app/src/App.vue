@@ -88,10 +88,10 @@ setInterval(() => {
               >
                 <RouterLink
                     class="block px-4 py-2 text-gray-800 hover:bg-[#FCC1DB] transition-colors"
-                    to="/benutzerdatenbearbeiten"
-                >Benutzerdaten bearbeiten
-                </RouterLink
+                    :to="{ name: 'ich'}"
                 >
+                  Benutzerdaten bearbeiten
+                </RouterLink>
 
                 <RouterLink
                     class="block px-4 py-2 text-gray-800 hover:bg-[#FCC1DB] transition-colors"

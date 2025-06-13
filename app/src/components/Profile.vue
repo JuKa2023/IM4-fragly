@@ -3,23 +3,24 @@ import { reactive, ref, onMounted } from "vue";
 import { toast } from "vue-sonner";
 import BaseInput from "./BaseInput.vue";
 import ProfilePicture from "./ProfilePicture.vue";
+import { useRouter } from "vue-router";
 
 interface Nutzer {
   Benutzername: string;
-  Email: string;
-  Profilbild_URL: string | null;
+  email: string;
+  avatar_url: string | null;
 }
 
+const router = useRouter();
 const loading = ref(true);
 const error = ref<string | null>(null);
 
 const nutzer = reactive<Nutzer>({
   Benutzername: "",
-  Email: "",
-  Profilbild_URL: null,
+  email: "",
+  avatar_url: null,
 });
 
-// nur neue Passwörter
 const newPassword = ref("");
 const confirmPassword = ref("");
 
@@ -27,11 +28,11 @@ async function fetchNutzer() {
   loading.value = true;
   error.value = null;
   try {
-    const res = await fetch("/api/nutzer.php", { credentials: "include" });
+    const res = await fetch("/api/nutzer_meta.php", { credentials: "include" });
     const json = await res.json();
-    nutzer.Benutzername = json.Nutzer;
-    nutzer.Email = json.Email;
-    nutzer.Profilbild_URL = json.Profilbild_URL ?? null;
+    nutzer.Benutzername = json.nutzer;
+    nutzer.email = json.email;
+    nutzer.avatar_url = json.avatar_url ?? null;
   } catch (e) {
     error.value = (e as Error).message;
   } finally {
@@ -71,9 +72,7 @@ async function updateNutzer() {
 }
 
 function cancelUpdate() {
-  fetchNutzer();
-  newPassword.value = "";
-  confirmPassword.value = "";
+  router.push({ name: "home" });
 }
 
 onMounted(fetchNutzer);
@@ -82,7 +81,7 @@ onMounted(fetchNutzer);
 <template>
   <div class="mt-40 mb-40 flex items-center justify-center">
     <div class="p-6 bg-[#FFF4EB] rounded-xl max-w-md mx-auto mt-8 shadow-md">
-      <h1 class="font-bold text-[#472402] mb-6">Nutzerdaten bearbeiten</h1>
+      <h1 class="font-bold text-[#472402] mb-6">Ich</h1>
 
       <p v-if="loading" class="text-sm text-gray-600">Lade Nutzerdaten…</p>
       <p v-if="error" class="text-sm text-red-500">{{ error }}</p>
@@ -90,9 +89,9 @@ onMounted(fetchNutzer);
       <div v-if="!loading">
         <div class="mb-6 flex justify-center">
           <ProfilePicture
-            :initial-url="nutzer.Profilbild_URL"
+            :initial-url="nutzer.avatar_url"
             :editable="true"
-            @uploaded="(url) => (nutzer.Profilbild_URL = url)"
+            @uploaded="(url) => (nutzer.avatar_url = url)"
           />
         </div>
 
@@ -107,7 +106,7 @@ onMounted(fetchNutzer);
 
           <BaseInput
             label="E-Mail"
-            v-model="nutzer.Email"
+            v-model="nutzer.email"
             id="email"
             type="email"
             placeholder="Aktuelle E-Mail"

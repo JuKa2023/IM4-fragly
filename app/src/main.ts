@@ -7,15 +7,14 @@ import HomePage from "./components/HomePage.vue";
 import Register from "./components/Register.vue";
 import LoginPage from "./components/LoginPage.vue";
 import MeineGruppenPage from "./components/MeineGruppenPage.vue";
-import UpdateUserdata from "./components/UpdateUserdata.vue";
+import UpdateUserdata from "./components/Profile.vue";
 import LandingPage from "./components/LandingPage.vue";
 import GruppeErstellen from "./components/GruppeErstellenPage.vue";
 import Steckbrief from "./components/Steckbrief.vue";
 import Fragebogen from "./components/Fragebogen.vue";
 import GruppenMitgliederPage from "./components/GruppenMitgliederPage.vue";
 import GruppeVerlassenPage from "./components/GruppeVerlassenPage.vue";
-import InviteJoinPage from "./components/GruppebeitretenPage.vue"
-import GruppeBeitretenManuel from "./components/GruppebeitretenmanuelPage.vue";
+import GruppeBeitretenManuel from "./components/GruppeBeitretenPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -48,7 +47,8 @@ const router = createRouter({
             component: LoginPage
         },
         {
-            path: "/benutzerdatenbearbeiten",
+            path: "/ich",
+            name: "ich",
             component: UpdateUserdata,
             meta: {requiresAuth: true},
         },
@@ -59,7 +59,7 @@ const router = createRouter({
             meta: {requiresAuth: true},
         },
         {
-            path: "/steckbrief/me",
+            path: "/steckbrief/ich",
             component: Steckbrief,
             name: "steckbriefMe",
             meta: {requiresAuth: true},
@@ -85,7 +85,7 @@ const router = createRouter({
             meta: {requiresAuth: true},
         },
         {
-            path: "/Gruppeverlassen/:id",
+            path: "/gruppe/:id/verlassen",
             name: "GruppeVerlassen",
             component: GruppeVerlassenPage,
             props: true,
@@ -93,9 +93,9 @@ const router = createRouter({
         },
 
         {
-            path: "/:code",
+            path: "/beitreten/:code",
             name: "InviteJoin",
-            component: InviteJoinPage,
+            component: GruppeBeitretenManuel,
             meta: {requiresAuth: true}
         },
 

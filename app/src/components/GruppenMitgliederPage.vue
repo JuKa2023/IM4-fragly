@@ -46,9 +46,9 @@ onMounted(async () => {
       error.value = data || "Fehler beim Laden der Mitglieder.";
     } else {
       members.value = data;
-      gruppeName.value = data[0].Gruppe_Name;
-      kuerzel.value = data[0].Kuerzel;
-      gruppeLink.value = `${window.location.origin}/${data[0].Kuerzel}`;
+      gruppeName.value = data[0].name;
+      kuerzel.value = data[0].kuerzel;
+      gruppeLink.value = `${window.location.origin}/beitreten/${data[0].kuerzel}`;
     }
   } finally {
     loading.value = false;
@@ -70,11 +70,11 @@ onMounted(async () => {
     <div v-else class="space-y-6">
       <RouterLink
         v-for="m in members"
-        :key="m.User_ID"
-        :to="{ name: 'steckbrief', params: { id: m.User_ID } }"
+        :key="m.user_id"
+        :to="{ name: 'steckbrief', params: { id: m.user_id } }"
         class="bg-[#FFEFF6] flex items-center px-4 py-2 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"      >
-          <ProfilePicture :userId="m.User_ID" :initial-url="m.Profilbild_URL" class="w-10 h-10 mr-3" />
-          <span class="text-xl text-[#472402]">{{ m.Nutzer }}</span>
+          <ProfilePicture :userId="m.user_id" :initial-url="m.avatar_url" />
+          <span class="text-xl text-[#472402]">{{ m.nutzer }}</span>
       </RouterLink>
     </div>
 

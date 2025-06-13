@@ -27,7 +27,7 @@ onMounted(async () => {
 
     const data = await res.json()
     if (res.status === 200 && data.length > 0) {
-      groupName.value = data[0].Gruppe_Name
+      groupName.value = data[0].name
     } else {
       router.push("/gruppen")
     }

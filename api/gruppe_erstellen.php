@@ -4,8 +4,8 @@ require_once('db.php');
 
 $user_id = $_SESSION['ID'];
 
-$groupName = trim($_POST['Gruppe_Name'] ?? '');
-$loeschdatum = $_POST['Loeschdatum'] ?? null;
+$groupName = trim($_POST['name'] ?? '');
+$loeschdatum = $_POST['loeschdatum'] ?? null;
 
 if ($groupName === '') {
     http_response_code(400);
@@ -19,7 +19,7 @@ if ($groupName === '') {
 try {
     $pdo->beginTransaction();
 
-    $check = $pdo->prepare("SELECT COUNT(*) FROM Gruppe WHERE Gruppe_Name = ?");
+    $check = $pdo->prepare("SELECT COUNT(*) FROM gruppe WHERE name = ?");
     $check->execute([$groupName]);
     if ($check->fetchColumn() > 0) {
         $pdo->rollBack();
@@ -32,21 +32,21 @@ try {
     }
 
     $kuerzel = bin2hex(random_bytes(6));
-    $erstelldatum = date('Y-m-d');
+    $erstellt = date('Y-m-d');
     $insertGroup = $pdo->prepare("
-        INSERT INTO Gruppe
-            (Gruppe_Name, Kuerzel, Erstellt_von_User_ID, Erstelldatum, Loeschdatum)
+        INSERT INTO gruppe
+            (name, kuerzel, ersteller, erstellt, loeschdatum)
         VALUES (?, ?, ?, ?, ?)
     ");
     $insertGroup->execute([
-        $groupName, $kuerzel, $user_id, $erstelldatum,
+        $groupName, $kuerzel, $user_id, $erstellt,
         $loeschdatum ?: null
     ]);
     $gruppe_id = $pdo->lastInsertId();
 
     $insertMember = $pdo->prepare("
-        INSERT INTO Nutzer_hat_Gruppe
-            (user_id, gruppe_id, erstelldatum)
+        INSERT INTO nutzer_gruppe
+            (user_id, gruppe_id, erstellt)
         VALUES (?, ?, ?)
     ");
     $insertMember->execute([

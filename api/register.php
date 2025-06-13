@@ -15,11 +15,9 @@ if (strlen($password) < 8) {
     exit;
 }
 
-// Hash the password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-// Check if user already exists
-$stmt = $pdo->prepare("SELECT * FROM Nutzer WHERE Email = :email OR Nutzer = :username");
+$stmt = $pdo->prepare("SELECT * FROM nutzer WHERE email = :email OR nutzer = :username");
 $stmt->execute([
     ':email' => $email,
     ':username' => $username
@@ -30,8 +28,7 @@ if ($user) {
     echo "Username oder E-Mail bereits vergeben";
     exit;
 } else {
-    // Insert new user
-    $insert = $pdo->prepare("INSERT INTO Nutzer (Nutzer, Email, PW, Erstelldatum) VALUES (:user, :email, :pass, CURDATE())");
+    $insert = $pdo->prepare("INSERT INTO nutzer (nutzer, email, password, erstellt) VALUES (:user, :email, :pass, CURDATE())");
     $success = $insert->execute([
         ':user'  => $username,
         ':email' => $email,

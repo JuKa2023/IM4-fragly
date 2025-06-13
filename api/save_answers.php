@@ -20,7 +20,7 @@ try {
   if (!empty($deletes)) {
     $in  = implode(',', array_fill(0, count($deletes), '?'));
     $stmt = $pdo->prepare("
-      DELETE FROM Nutzer_hat_Frage
+      DELETE FROM nutzer_frage
       WHERE user_id = ?
         AND frage_id IN ($in)
     ");
@@ -29,7 +29,7 @@ try {
 
   if (!empty($updates)) {
     $stmt = $pdo->prepare("
-      INSERT INTO Nutzer_hat_Frage (user_id, frage_id, antwort)
+      INSERT INTO nutzer_frage (user_id, frage_id, antwort)
       VALUES (?, ?, ?)
       ON DUPLICATE KEY UPDATE antwort = VALUES(antwort)
     ");

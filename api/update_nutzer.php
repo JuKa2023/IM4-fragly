@@ -5,12 +5,11 @@ require_once('session_check.php');
 // JSON-Eingabe einlesen
 $raw  = file_get_contents('php://input');
 $data = json_decode($raw, true);
-
 $userId = $_SESSION['ID'];
 
-// Felder auslesen
+// Felder auslesens
 $username    = trim($data['Benutzername']   ?? '');
-$email       = trim($data['Email']          ?? '');
+$email       = trim($data['email']          ?? '');
 $newPassword = trim($data['newPassword']    ?? '');
 
 // Validierung
@@ -25,10 +24,10 @@ if ($newPassword !== '' && strlen($newPassword) < 8) {
 
 // Dubletten-Check
 $stmt = $pdo->prepare("
-    SELECT User_ID
-    FROM Nutzer
-    WHERE (Nutzer = :user OR Email = :email)
-      AND User_ID <> :me
+    SELECT user_id
+    FROM nutzer
+    WHERE (Nutzer = :user OR email = :email)
+      AND user_id <> :me
     LIMIT 1
 ");
 $stmt->execute([
@@ -50,16 +49,16 @@ $params = [
 ];
 if ($newPassword !== '') {
     $params[':pass'] = password_hash($newPassword, PASSWORD_DEFAULT);
-    $passClause = ", PW = :pass";
+    $passClause = ", password = :pass";
 }
 
 // Update ausführen
 $sql = "
     UPDATE Nutzer
-    SET Nutzer = :user,
-        Email  = :email
+    SET nutzer = :user,
+        email  = :email
         {$passClause}
-    WHERE User_ID = :me
+    WHERE user_id = :me
 ";
 $upd = $pdo->prepare($sql);
 $ok  = $upd->execute($params);
