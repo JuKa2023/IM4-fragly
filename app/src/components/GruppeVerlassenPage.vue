@@ -61,19 +61,13 @@ async function onLeave() {
 </script>
 
 <template>
-  <div class="bg-[#ffebd2] min-h-screen p-6 rounded-3xl w-max-md m-2">
-    <button
-      @click="$router.back()"
-      class="absolute top-4 right-4 w-8 h-8 rounded-full btn btn-sm btn-primary flex items-center justify-center"
-    >
-      ×
-    </button>
+  <div class="card-default relative">
 
-    <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center">
-      <h1 class="text-xl font-semibold text-gray-800 mb-4">
+    <div>
+      <h1>
         Bist du sicher, dass du die Gruppe verlassen möchtest?
       </h1>
-      <p class="text-sm text-gray-600 mb-6">
+      <p>
         Bestätige, dass du die Gruppe verlassen möchtest durch die Eingabe der Gruppenbezeichnung <span class="font-medium">{{ groupName }}</span>.
       </p>
       <input
