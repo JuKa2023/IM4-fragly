@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {computed, ref, watch} from "vue";
 import cameraIcon from "../assets/Kameraicon.svg";
+import gruppeIcon from "../assets/gruppeicon.svg";
 
 interface Props {
   initialUrl: string | null;
@@ -14,8 +15,8 @@ const emit = defineEmits<{
   (e: "uploaded", url: string): void;
 }>();
 
-const currentUrl = ref<string | null>(props.initialUrl ?? cameraIcon);
 
+const currentUrl = ref<string | null>(props.initialUrl ?? null);
 const fileInput = ref<HTMLInputElement | null>(null);
 const uploading = ref(false);
 const progress = ref(0);
@@ -31,7 +32,7 @@ const isEditable = computed(() => props.editable ?? false);
 watch(
     () => props.initialUrl,
     (newVal) => {
-      currentUrl.value = newVal;
+      currentUrl.value = newVal ? newVal : gruppeIcon;
     },
 );
 
@@ -110,6 +111,13 @@ async function uploadFile(file: File) {
       <img
           v-if="currentUrl"
           :src="'/api' + currentUrl + cacheBuster"
+          alt="Profilbild"
+          class="rounded-full object-cover
+               ring-4 ring-[#472402] ring-offset-2 shadow-md"
+      />
+      <img
+          v-else
+          :src="gruppeIcon"
           alt="Profilbild"
           class="rounded-full object-cover
                ring-4 ring-[#472402] ring-offset-2 shadow-md"

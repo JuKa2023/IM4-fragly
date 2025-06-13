@@ -48,7 +48,6 @@ onMounted(async () => {
       members.value = data;
       gruppeName.value = data[0].name;
       kuerzel.value = data[0].kuerzel;
-      gruppeLink.value = `${window.location.origin}/beitreten/${data[0].kuerzel}`;
     }
   } finally {
     loading.value = false;
@@ -79,7 +78,7 @@ onMounted(async () => {
     </div>
 
     <div class="mb-6">
-      <GroupLinkDisplay :gruppe-link="gruppeLink" :kuerzel="kuerzel" />
+      <GroupLinkDisplay :kuerzel="kuerzel" />
     </div>
 
     <RouterLink :to="{ name: 'GruppeVerlassen', params: { id: groupId } }">

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { toast } from "vue-sonner";
 
-defineProps<{
-  gruppeLink: string;
+const props = defineProps<{
   kuerzel: string;
 }>();
+
+
+// get kuerzel prop
+const gruppeLink = `${window.location.origin}/beitreten/${ props.kuerzel }`;
 
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text).then(() => {

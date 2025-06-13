@@ -74,4 +74,13 @@ CONSTRAINT nutzer_gruppe_ibfk_1 FOREIGN KEY (user_id) REFERENCES nutzer (user_id
 CONSTRAINT nutzer_gruppe_ibfk_2 FOREIGN KEY (gruppe_id) REFERENCES gruppe (gruppe_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+SET GLOBAL event_scheduler = ON;
+CREATE EVENT DeleteExpired
+  ON SCHEDULE EVERY 1 MINUTE
+  DO
+    DELETE FROM gruppe
+    WHERE loeschdatum IS NOT NULL AND loeschdatum < NOW();
+ALTER EVENT DeleteExpired ENABLE;
+
+
 COMMIT;

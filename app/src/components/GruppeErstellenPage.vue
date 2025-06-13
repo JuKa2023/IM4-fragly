@@ -1,8 +1,8 @@
-<script setup lang="ts">
-import { ref } from "vue";
+<script lang="ts" setup>
+import {ref} from "vue";
 import BaseInput from "./BaseInput.vue";
-import { RouterLink } from "vue-router";
-import { toast } from "vue-sonner";
+import {RouterLink} from "vue-router";
+import {toast} from "vue-sonner";
 import GroupLinkDisplay from "./GroupLinkDisplay.vue";
 
 const groupName = ref("");
@@ -10,7 +10,6 @@ const loeschdatum = ref("");
 const message = ref("");
 const success = ref(false);
 const kuerzel = ref("");
-const gruppeLink = ref("");
 
 async function submitGroup() {
   message.value = "";
@@ -39,7 +38,6 @@ async function submitGroup() {
     if (res.ok && data.success) {
       success.value = true;
       kuerzel.value = data.kuerzel;
-      gruppeLink.value = data.link;
     } else {
       success.value = false;
       if (message.value) {
@@ -62,9 +60,9 @@ async function submitGroup() {
 
     <!-- Success View -->
     <div v-if="success" class="text-center space-y-6">
-      <GroupLinkDisplay :gruppe-link="gruppeLink" />
+      <GroupLinkDisplay :kuerzel="kuerzel"/>
 
-      <RouterLink to="/gruppen" class="btn btn-lg btn-primary mt-6">
+      <RouterLink class="btn btn-lg btn-primary mt-6" to="/gruppen">
         Meine Gruppen
       </RouterLink>
     </div>
@@ -72,28 +70,22 @@ async function submitGroup() {
     <!-- Form View -->
     <form v-else @submit.prevent="submitGroup">
       <BaseInput
-        id="gruppe-name"
-        label="*Gruppenbezeichnung"
-        v-model="groupName"
-        placeholder="Familie Huber"
-        type="text"
+          id="gruppe-name"
+          v-model="groupName"
+          label="*Gruppenbezeichnung"
+          placeholder="Familie Huber"
+          type="text"
       />
       <BaseInput
-  id="loeschdatum"
-  label="Löschdatum"
-  v-model="loeschdatum"
-  type="date"
-  :allowOnlyFutureDates="true"
-/>
-      <button type="submit" class="btn btn-lg btn-primary w-full mt-6">
+          id="loeschdatum"
+          v-model="loeschdatum"
+          :allowOnlyFutureDates="true"
+          label="Löschdatum"
+          type="date"
+      />
+      <button class="btn btn-lg btn-primary w-full mt-6" type="submit">
         Gruppe erstellen
       </button>
     </form>
   </div>
 </template>
-
-<style scoped>
-.text-brown {
-  color: #5c2e00;
-}
-</style>
