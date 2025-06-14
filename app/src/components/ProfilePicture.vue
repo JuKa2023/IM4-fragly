@@ -130,7 +130,7 @@ async function uploadFile(file: File) {
           v-if="isEditable && !uploading"
           class="absolute bottom-0 right-0
                translate-x-1/3 translate-y-1/3
-               w-12 h-12 bg-pink-300 rounded-full shadow-xl
+               w-12 h-12 bg-[#FCC1DB] rounded-full shadow-xl
                flex items-center justify-center cursor-pointer group"
           @click="openFileDialog"
       >
