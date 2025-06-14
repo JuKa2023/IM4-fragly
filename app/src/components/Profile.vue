@@ -79,9 +79,8 @@ onMounted(fetchNutzer);
 </script>
 
 <template>
-  <div class="mt-40 mb-40 flex items-center justify-center">
-    <div class="p-6 bg-[#FFF4EB] rounded-xl max-w-md mx-auto mt-8 shadow-md">
-      <h1>Ich</h1>
+   <div class="p-4 sm-8 bg-[#FFF4EB] rounded-xl max-w-2xl mx-auto shadow-md">
+      <h1 class="mb-6">Ich</h1>
 
       <p v-if="loading" class="text-sm text-gray-600">Lade Nutzerdaten…</p>
       <p v-if="error" class="text-sm text-red-500">{{ error }}</p>
@@ -96,7 +95,7 @@ onMounted(fetchNutzer);
           />
         </div>
 
-        <form @submit.prevent="updateNutzer">
+        <form @submit.prevent="updateNutzer" class="mt-6 space-y-4">
           <BaseInput
             label="Benutzername bearbeiten"
             v-model="nutzer.Benutzername"
@@ -129,7 +128,7 @@ onMounted(fetchNutzer);
             placeholder="Passwort erneut eingeben"
           />
 
-          <div class="flex gap-4 mt-6">
+          <div class="flex justify-between space-x-4 mt-6">
             <button type="submit" class="btn btn-lg btn-primary flex-1">
               Speichern
             </button>
@@ -144,5 +143,4 @@ onMounted(fetchNutzer);
         </form>
       </div>
     </div>
-  </div>
 </template>

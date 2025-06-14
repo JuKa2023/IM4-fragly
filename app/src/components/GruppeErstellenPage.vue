@@ -58,7 +58,7 @@ function cancelGroup() {
 
 <template>
   <div class="page-default">
-    <h1>{{ success ? "Hier dein Link" : "Gebe folgende Angaben an" }}</h1>
+    <h1 class="mb-6">{{ success ? "Hier dein Link" : "Gebe folgende Angaben an" }}</h1>
 
     <!-- Success View -->
     <div v-if="success" class="text-center space-y-6">
@@ -86,7 +86,7 @@ function cancelGroup() {
           type="date"
       />
 
-      <div class="flex flex-col items-center gap-y-6 w-full max-w-xs mt-8 mx-auto">
+      <div class="flex flex-col items-center gap-y-6 mt-10 mx-auto">
         <button class="btn btn-lg btn-primary" type="submit">
           Gruppe erstellen
         </button>

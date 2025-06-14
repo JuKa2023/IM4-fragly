@@ -56,7 +56,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="card-default relative">
+  <div class="card-default">
 
     <div class="flex items-baseline justify-between mb-6">
       <h1>{{ gruppeName }}</h1>

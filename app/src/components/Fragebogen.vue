@@ -129,7 +129,7 @@ onMounted(async () => {
     <ProfilePicture
         :editable="false"
         :initial-url="avatar_url"
-        class="mx-auto"
+        class="w-22 aspect-square flex-shrink-0 mx-auto"
     />
 
     <p v-if="loading" class="text-center">Lade …</p>
