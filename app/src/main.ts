@@ -14,7 +14,7 @@ import Steckbrief from "./components/Steckbrief.vue";
 import Fragebogen from "./components/Fragebogen.vue";
 import GruppenMitgliederPage from "./components/GruppenMitgliederPage.vue";
 import GruppeVerlassenPage from "./components/GruppeVerlassenPage.vue";
-import GruppeBeitretenManuel from "./components/GruppeBeitretenPage.vue";
+import GruppeBeitretenPage from "./components/GruppebeitretenPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -95,14 +95,14 @@ const router = createRouter({
         {
             path: "/beitreten/:code",
             name: "InviteJoin",
-            component: GruppeBeitretenManuel,
+            component: GruppeBeitretenPage,
             meta: {requiresAuth: true}
         },
 
         {
             path: "/gruppen/beitreten",
             name: "joinGroupManual",
-            component: GruppeBeitretenManuel,
+            component: GruppeBeitretenPage,
             meta: {requiresAuth: true}
         },
 

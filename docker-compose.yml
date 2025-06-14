@@ -7,37 +7,23 @@ services:
       MARIADB_DATABASE: ${DB_DATABASE}
       MARIADB_USER: ${DB_USER}
       MARIADB_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "6969:3306"
     volumes:
-      - mariadb_data:/var/lib/mysqls
+      - mariadb_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
     command: --default-authentication-plugin=mysql_native_password --event-scheduler=ON
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: unless-stopped
-    environment:
-      PMA_HOST: mariadb
-      PMA_PORT: 3306
-    ports:
-      - "8081:80"
-    depends_on:
-      - mariadb
-
-  php-app:
-    image: php:8.0-apache
+  app:
+    build: .
     restart: always
-    env_file:
-      - .env
-    volumes:
-      - ./api:/var/www/html
+    environment:
+      - DB_HOST=mariadb
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - mariadb
-    command: >
-      bash -c "docker-php-ext-install mysqli pdo pdo_mysql && apache2-foreground"
 
 volumes:
   mariadb_data:

@@ -8,9 +8,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:8080", // Backend
-        changeOrigin: true, // Ensure the request appears to come from the frontend server
-        rewrite: (path) => path.replace(/^\/api/, ""), // Optional: Remove '/api' prefix
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },
