@@ -92,6 +92,7 @@ onMounted(fetchNutzer);
             :initial-url="nutzer.avatar_url"
             :editable="true"
             @uploaded="(url) => (nutzer.avatar_url = url)"
+            class="w-25 aspect-square flex-shrink-0"
           />
         </div>
 

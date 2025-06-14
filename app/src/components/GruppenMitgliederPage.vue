@@ -71,8 +71,8 @@ onMounted(async () => {
         v-for="m in members"
         :key="m.user_id"
         :to="{ name: 'steckbrief', params: { id: m.user_id } }"
-        class="bg-[#FFEFF6] flex items-center px-4 py-2 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"      >
-          <ProfilePicture :userId="m.user_id" :initial-url="m.avatar_url" />
+        class="bg-[#FFEFF6] flex items-center gap-4 px-4 py-4 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"      >
+          <ProfilePicture :userId="m.user_id" :initial-url="m.avatar_url" class="w-10 aspect-square flex-shrink-0"  />
           <span class="text-xl text-[#472402]">{{ m.nutzer }}</span>
       </RouterLink>
     </div>

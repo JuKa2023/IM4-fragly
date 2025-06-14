@@ -3,6 +3,8 @@ import {computed, ref, watch} from "vue";
 import cameraIcon from "../assets/Kameraicon.svg";
 import gruppeIcon from "../assets/gruppeicon.svg";
 
+defineOptions({ inheritAttrs: false });
+
 interface Props {
   initialUrl: string | null;
   editable?: boolean;
@@ -22,7 +24,6 @@ const uploading = ref(false);
 const progress = ref(0);
 const error = ref<string | null>(null);
 
-// give browsers a hint to break cache when image changes
 const cacheBuster = computed(() =>
     currentUrl.value ? `?v=${Date.now()}` : "",
 );
@@ -106,10 +107,11 @@ async function uploadFile(file: File) {
 </script>
 
 <template>
-  <div class="flex flex-col items-center w-25 h-25 ">
+  <div class="flex flex-col items-center">
     <div class="relative inline-block">
       <img
           v-if="currentUrl"
+          v-bind="$attrs"
           :src="'/api' + currentUrl + cacheBuster"
           alt="Profilbild"
           class="rounded-full object-cover
@@ -117,6 +119,7 @@ async function uploadFile(file: File) {
       />
       <img
           v-else
+          v-bind="$attrs"
           :src="gruppeIcon"
           alt="Profilbild"
           class="rounded-full object-cover
@@ -128,15 +131,13 @@ async function uploadFile(file: File) {
           class="absolute bottom-0 right-0
                translate-x-1/3 translate-y-1/3
                w-12 h-12 bg-pink-300 rounded-full shadow-xl
-               flex items-center justify-center cursor-pointer
-               group"
+               flex items-center justify-center cursor-pointer group"
           @click="openFileDialog"
       >
         <img
             :src="cameraIcon"
             alt="Neues Bild auswählen"
-            class="w-6 h-6 select-none transition-transform
-                 group-hover:scale-105"
+            class="w-6 h-6 select-none transition-transform group-hover:scale-105"
         />
       </div>
 
@@ -144,8 +145,7 @@ async function uploadFile(file: File) {
           v-if="isEditable"
           class="absolute inset-0 rounded-full
                bg-black/50 flex items-center justify-center
-               opacity-0 hover:opacity-100 transition-opacity
-               cursor-pointer"
+               opacity-0 hover:opacity-100 transition-opacity cursor-pointer"
           @click="openFileDialog"
       >
         <span class="text-white text-base">Change</span>
@@ -154,9 +154,9 @@ async function uploadFile(file: File) {
 
     <input
         ref="fileInput"
-        accept="image/*"
         class="hidden"
         type="file"
+        accept="image/*"
         @change="handleFileChange"
     />
 

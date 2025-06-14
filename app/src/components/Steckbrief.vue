@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import ProfilePicture from "./ProfilePicture.vue";
+import CloseButton from "./CloseButton.vue";
 
 interface FrageRow {
   frage_id: number;
@@ -46,11 +47,15 @@ onMounted(async () => {
   <div
     class="card-default relative"
   >
-    <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
+    <div class="flex items-baseline justify-between mb-4">
+      <CloseButton class="absolute top-4 right-4" />
+      <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
+    </div>
 
     <ProfilePicture
       :initial-url="user?.avatar_url"
       :editable="false"
+      class="w-22 aspect-square flex-shrink-0"
     />
 
     <p v-if="!loaded" class="text-center">Lade …</p>
