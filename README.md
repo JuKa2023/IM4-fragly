@@ -34,11 +34,15 @@ Fragly unterstützt dabei, sich nicht alles merken zu müssen. Vor einem Familie
 - Frontend:
   - Vue.js für die Struktur der Webseite
   - Tailwind CSS für responsives und modernes Design
-  - JavaScript für interaktive Elemente
+  - JavaScript für interaktive Elemente udn die Kommunikation mit dem Backend
 
 ## Datenbankstruktur
 
-Das Projekt verwendet ein relationales Datenbankschema mit zwei Haupttabellen:
+Das Projekt verwendet ein relationales Datenbankschema mit 5 Haupttabellen:
+
+![Database Schema](docs/erd.png)
+
+Das loeschdatum in der Gruppe-Tabelle wird durch [MySQL Events](https://dev.mysql.com/doc/refman/8.4/en/events-overview.html) (Scheduled Tasks) automatisch überwacht - so werden temporäre Gruppen nach Ablauf selbständig gelöscht, ohne manuellen Eingriff oder Applikationslogik.
 
 
 ## Setup
@@ -56,7 +60,7 @@ Für die Einrichtung des Projekts empfehlen wir die Verwendung von Docker, da di
 4. Docker-Container starten:
 
    ```bash
-   docker-compose up -d
+   docker-compose -f docker-compose.dev.yml up -d
    ```
 
 5. Die Anwendung ist unter `http://localhost:8080` erreichbar
@@ -73,13 +77,12 @@ Das Docker-Setup beinhaltet:
 
 Die Anwendung verwendet folgende Umgebungsvariablen:
 
-- `DB_HOST`: Datenbank-Host (Standard: mysql)
-- `DB_NAME`: Datenbankname (Standard: im3)
-- `DB_USER`: Datenbankbenutzer (Standard: root)
-- `DB_PASSWORD`: Datenbankpasswort
-- `DB_ROOT_PASSWORD`: Root-Passwort
-- `APP_ENV`: Anwendungsumgebung (Entwicklung/Produktion)
-- `APP_DEBUG`: Debug-Modus (true/false)
+* DB_ROOT_PASSWORD=dein rootpassword
+* DB_DATABASE=dein database
+* DB_USER=your user
+* DB_PASSWORD=dein userpassword
+* DB_HOST=dein mariadb
+
 
 ## Reflexion
 
@@ -89,7 +92,7 @@ Zu Beginn lag ein grosser Fokus auf der Zielgruppenanalyse. Es war sehr interess
 
 Besonders kreativ fanden wir, die Idee mit der Steckbrief-Logik spielerisch weiterzudenken. Daraus entstand das Grundkonzept, das auch bei Anlässen wie Hochzeiten eingesetzt werden kann, um auf charmante Weise Gemeinsamkeiten zu entdecken. Das visuelle Gestalten des Mockups hat ebenfalls Spass gemacht, weil dabei genau überlegt werden musste, wie man die App auch für ältere Menschen zugänglich, verständlich und freundlich gestaltet.
 
-Die Zusammenarbeit im Team hat gut funktioniert. Unsere unterschiedlichen Stärken haben sich gut ergänzt und wir konnten viel von einander profitieren. (Vor allem ich von Julie lol)
+Die Zusammenarbeit im Team hat gut funktioniert. Unsere unterschiedlichen Stärken haben sich gut ergänzt und wir konnten viel von einander profitieren.
 
 ### Learnings
 - Eine gute Zielgruppenanalyse kann ein Projekt von Grund auf prägen
@@ -131,4 +134,4 @@ Die aktuelle Version von Fragly konzentriert sich auf das Ausfüllen eines pers�
 - Stimmungsfragen oder Tagesfragen:
   Optional könnten spontane, wechselnde Fragen eingebaut werden, um auch aktuelle Gedanken oder Gefühle sichtbar zu machen.
 ### Bugs
-
+- Die Seite scheint nicht auf Safari zu funktionieren. Wir haben es mit Chrome und Firefox getestet, dort funktioniert es einwandfrei.
