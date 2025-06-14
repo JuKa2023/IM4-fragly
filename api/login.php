@@ -29,6 +29,6 @@ if ($user) {
     } else {
         echo "Falsches Passwort";
     }
-    } else {
-        echo "Benutzername nicht gefunden";
+} else {
+    echo "Benutzername nicht gefunden";
 }

@@ -2,13 +2,13 @@
 
 <template>
   <div
-    class="card-default"
+      class="card-default"
   >
     <div class="flex justify-between space-x-4 mb-8">
       <RouterLink class="btn btn-sm btn-primary" to="/gruppen">
         Meine Gruppen
       </RouterLink>
-      <RouterLink class="btn btn-sm btn-secondary" :to="{ name: 'steckbriefMe' }">
+      <RouterLink :to="{ name: 'steckbriefMe' }" class="btn btn-sm btn-secondary">
         Mein Steckbrief
       </RouterLink>
     </div>
@@ -29,7 +29,7 @@
     </div>
 
     <div class="mt-8 text-right">
-      <RouterLink class="btn btn-sm btn-primary" :to="{name: 'createGroup'}">
+      <RouterLink :to="{name: 'createGroup'}" class="btn btn-sm btn-primary">
         Gruppe erstellen
       </RouterLink>
     </div>

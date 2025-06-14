@@ -1,10 +1,10 @@
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+<script lang="ts" setup>
+import {onMounted, ref} from "vue";
+import {useRoute, useRouter} from "vue-router";
 import ProfilePicture from "./ProfilePicture.vue";
 import GroupLinkDisplay from "./GroupLinkDisplay.vue";
 import CloseButton from "./CloseButton.vue";
-import { toast } from "vue-sonner";
+import {toast} from "vue-sonner";
 
 const route = useRoute();
 const router = useRouter();
@@ -32,8 +32,8 @@ onMounted(async () => {
     const res = await fetch("/api/get_group_members.php", {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ gruppe_id: groupId }),
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({gruppe_id: groupId}),
     });
 
     if (res.status === 401) {
@@ -60,29 +60,29 @@ onMounted(async () => {
 
     <div class="flex items-baseline justify-between mb-6">
       <h1>{{ gruppeName }}</h1>
-      <CloseButton class="btn-close" />
-    </div>    
+      <CloseButton class="btn-close"/>
+    </div>
 
     <div v-if="loading" class="text-center text-brown">Lade Mitglieder…</div>
     <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
 
     <div v-else class="space-y-6">
       <RouterLink
-        v-for="m in members"
-        :key="m.user_id"
-        :to="{ name: 'steckbrief', params: { id: m.user_id } }"
-        class="bg-[#FFEFF6] flex items-center gap-4 px-4 py-4 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"      >
-          <ProfilePicture :userId="m.user_id" :initial-url="m.avatar_url" class="w-10 aspect-square flex-shrink-0"  />
-          <span class="text-xl text-[#472402]">{{ m.nutzer }}</span>
+          v-for="m in members"
+          :key="m.user_id"
+          :to="{ name: 'steckbrief', params: { id: m.user_id } }"
+          class="bg-[#FFEFF6] flex items-center gap-4 px-4 py-4 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out">
+        <ProfilePicture :initial-url="m.avatar_url" :userId="m.user_id" class="w-10 aspect-square flex-shrink-0"/>
+        <span class="text-xl text-[#472402]">{{ m.nutzer }}</span>
       </RouterLink>
     </div>
 
     <div class="mb-6">
-      <GroupLinkDisplay :kuerzel="kuerzel" />
+      <GroupLinkDisplay :kuerzel="kuerzel"/>
     </div>
 
     <RouterLink :to="{ name: 'GruppeVerlassen', params: { id: groupId } }">
-      <button class="btn btn-sm btn-primary mt-8"> Gruppe verlassen </button>
+      <button class="btn btn-sm btn-primary mt-8"> Gruppe verlassen</button>
     </RouterLink>
   </div>
 </template>

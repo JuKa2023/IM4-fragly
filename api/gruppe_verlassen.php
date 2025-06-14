@@ -34,8 +34,8 @@ try {
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'message' => $remainingMembers === 0 
-            ? 'Gruppe verlassen und gelöscht (war letztes Mitglied)' 
+        'message' => $remainingMembers === 0
+            ? 'Gruppe verlassen und gelöscht (war letztes Mitglied)'
             : 'Gruppe verlassen'
     ]);
 } catch (PDOException $e) {

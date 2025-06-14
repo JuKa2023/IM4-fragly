@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { toast } from "vue-sonner";
+<script lang="ts" setup>
+import {computed, onMounted, ref} from 'vue'
+import {useRoute, useRouter} from 'vue-router'
+import {toast} from "vue-sonner";
 
 import BaseInput from './BaseInput.vue'
 
@@ -18,8 +18,8 @@ onMounted(async () => {
     const res = await fetch("/api/get_group_members.php", {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ gruppe_id: groupId }),
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({gruppe_id: groupId}),
     })
 
     if (res.status === 401) {
@@ -46,8 +46,8 @@ async function onLeave() {
     const res = await fetch("/api/gruppe_verlassen.php", {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ gruppe_id: groupId }),
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({gruppe_id: groupId}),
     })
 
     if (res.ok) {
@@ -64,7 +64,7 @@ async function onLeave() {
 
 <template>
   <div class="card-default">
-    <form @submit.prevent="onLeave" class="flex flex-col gap-4">
+    <form class="flex flex-col gap-4" @submit.prevent="onLeave">
 
       <h1 class="mb-1">
         Bist du sicher, dass du die Gruppe verlassen möchtest?
@@ -77,27 +77,27 @@ async function onLeave() {
       </p>
 
       <BaseInput
-          v-model="inputName"
           id="confirm-group-name"
+          v-model="inputName"
           label="Gruppenbezeichnung"
           placeholder="Gruppenbezeichnung"
-          type="text"
           required
+          type="text"
       />
 
       <div class="flex justify-between space-x-4 mt-4">
         <button
+            class="btn btn-sm btn-primary"
             type="button"
             @click="$router.back()"
-            class="btn btn-sm btn-primary"
         >
           Abbrechen
         </button>
 
         <button
-            type="submit"
             :disabled="!isMatch"
             class="btn btn-sm btn-secondary"
+            type="submit"
         >
           Gruppe verlassen
         </button>

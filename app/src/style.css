@@ -1,127 +1,127 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Protest+Riot&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
-  .btn-close {
-    @apply bg-[#FFE2EF] px-4 py-4 rounded-full shadow-md cursor-pointer
-           hover:shadow-none transition duration-200 ease-in-out;
-  }
+    .btn-close {
+        @apply bg-[#FFE2EF] px-4 py-4 rounded-full shadow-md cursor-pointer
+        hover:shadow-none transition duration-200 ease-in-out;
+    }
 
     .card-default {
-      @apply p-4 sm:p-8 max-w-2xl mx-auto bg-[#ffebd2] rounded-xl shadow-md;
+        @apply p-4 sm:p-8 max-w-2xl mx-auto bg-[#ffebd2] rounded-xl shadow-md;
     }
 
 
-  .page-default {
-    @apply p-4 sm:p-8 max-w-2xl mx-auto;
-  }
+    .page-default {
+        @apply p-4 sm:p-8 max-w-2xl mx-auto;
+    }
 
-  .page-wrapper {
-    @apply max-w-2xl mx-auto sm:px-6;
-  }
+    .page-wrapper {
+        @apply max-w-2xl mx-auto sm:px-6;
+    }
 }
 
 :root {
-  font-family: "Nunito", sans-serif;
-  line-height: 1.5;
-  font-weight: 600;
+    font-family: "Nunito", sans-serif;
+    line-height: 1.5;
+    font-weight: 600;
 
-  color-scheme: light dark;
-  color: #472402;
-  background-color: #fff6eb;
+    color-scheme: light dark;
+    color: #472402;
+    background-color: #fff6eb;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /*Font*/
 
 .font-bold {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 a {
-  color: #231201;
-  text-decoration: inherit;
+    color: #231201;
+    text-decoration: inherit;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
+    margin: 0;
+    display: flex;
+    place-items: center;
 }
 
 h1 {
-  font-size: 2.25rem;
-  font-style: normal;
-  font-weight: 750;
-  line-height: normal;
-  color: #472402;
+    font-size: 2.25rem;
+    font-style: normal;
+    font-weight: 750;
+    line-height: normal;
+    color: #472402;
 }
 
 p {
-  color: #472402;
-  font-size: 1.25rem;
+    color: #472402;
+    font-size: 1.25rem;
 }
 
 .p-bold {
-  font-weight: 800;
+    font-weight: 800;
 }
 
 #app {
-  margin: 0 auto;
-  padding: 0;
-  text-align: center;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 /* Custom button styles */
 .btn {
-  @apply inline-flex items-center justify-center font-bold rounded-4xl shadow-md transition duration-200 cursor-pointer;
+    @apply inline-flex items-center justify-center font-bold rounded-4xl shadow-md transition duration-200 cursor-pointer;
 }
 
 .btn-sm {
-  @apply px-6 py-3 text-base;
+    @apply px-6 py-3 text-base;
 }
 
 .btn-lg {
-  @apply px-6 py-3 text-2xl;
+    @apply px-6 py-3 text-2xl;
 }
 
 .btn-primary {
-  @apply bg-[#FCC1DB] text-[#231201] hover:shadow-none;
+    @apply bg-[#FCC1DB] text-[#231201] hover:shadow-none;
 }
 
 .btn-secondary {
-  @apply bg-[#FFE2EF] text-[#231201] hover:shadow-none;
+    @apply bg-[#FFE2EF] text-[#231201] hover:shadow-none;
 }
 
 /*Header*/
 .iconHeader {
-  transition: transform 0.6s ease;
-  transform-origin: center;
+    transition: transform 0.6s ease;
+    transform-origin: center;
 }
 
 /* Transition classes for dropdown */
 .dropdown-enter-active,
 .dropdown-leave-active {
-  transition:
-    max-height 0.3s ease,
+    transition: max-height 0.3s ease,
     opacity 0.3s ease;
-  max-height: 500px;
-  opacity: 1;
+    max-height: 500px;
+    opacity: 1;
 }
 
 .dropdown-enter-from,
 .dropdown-leave-to {
-  max-height: 0;
-  opacity: 0;
+    max-height: 0;
+    opacity: 0;
 }

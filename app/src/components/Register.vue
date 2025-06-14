@@ -1,8 +1,8 @@
-<script setup lang="ts">
-import { ref } from "vue";
-import { toast } from "vue-sonner";
+<script lang="ts" setup>
+import {ref} from "vue";
+import {toast} from "vue-sonner";
 import BaseInput from "./BaseInput.vue";
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 
 const username = ref("");
 const email = ref("");
@@ -53,40 +53,40 @@ const register = async () => {
     <div class="w-full">
       <h1 class="mb-8">Registrieren</h1>
 
-      <form @submit.prevent="register" id="registerForm">
+      <form id="registerForm" @submit.prevent="register">
         <BaseInput
-          label="Benutzername"
-          v-model="username"
-          id="username"
-          type="text"
-          placeholder="Gib deinen Benutzernamen ein"
+            id="username"
+            v-model="username"
+            label="Benutzername"
+            placeholder="Gib deinen Benutzernamen ein"
+            type="text"
         />
 
         <BaseInput
-          label="Email"
-          v-model="email"
-          id="email"
-          type="email"
-          placeholder="Gib deine Email ein"
+            id="email"
+            v-model="email"
+            label="Email"
+            placeholder="Gib deine Email ein"
+            type="email"
         />
 
         <BaseInput
-          label="Passwort wählen"
-          v-model="password"
-          id="password"
-          type="password"
-          placeholder="Gib dein Passwort ein"
+            id="password"
+            v-model="password"
+            label="Passwort wählen"
+            placeholder="Gib dein Passwort ein"
+            type="password"
         />
 
         <BaseInput
-          label="Passwort erneut eingeben"
-          v-model="confirmPassword"
-          id="confirm-password"
-          type="password"
-          placeholder="Gib dein Passwort erneut ein"
+            id="confirm-password"
+            v-model="confirmPassword"
+            label="Passwort erneut eingeben"
+            placeholder="Gib dein Passwort erneut ein"
+            type="password"
         />
 
-        <button type="submit" class="btn btn-lg btn-primary mt-8">
+        <button class="btn btn-lg btn-primary mt-8" type="submit">
           Konto erstellen
         </button>
       </form>

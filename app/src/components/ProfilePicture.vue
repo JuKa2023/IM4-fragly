@@ -3,7 +3,7 @@ import {computed, ref, watch} from "vue";
 import cameraIcon from "../assets/Kameraicon.svg";
 import gruppeIcon from "../assets/gruppeicon.svg";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({inheritAttrs: false});
 
 interface Props {
   initialUrl: string | null;
@@ -111,19 +111,19 @@ async function uploadFile(file: File) {
     <div class="relative inline-block">
       <img
           v-if="currentUrl"
-          v-bind="$attrs"
           :src="'/api' + currentUrl + cacheBuster"
           alt="Profilbild"
           class="rounded-full object-cover
                ring-4 ring-[#472402] ring-offset-2 shadow-md"
+          v-bind="$attrs"
       />
       <img
           v-else
-          v-bind="$attrs"
           :src="gruppeIcon"
           alt="Profilbild"
           class="rounded-full object-cover
                ring-4 ring-[#472402] ring-offset-2 shadow-md"
+          v-bind="$attrs"
       />
 
       <div
@@ -154,9 +154,9 @@ async function uploadFile(file: File) {
 
     <input
         ref="fileInput"
+        accept="image/*"
         class="hidden"
         type="file"
-        accept="image/*"
         @change="handleFileChange"
     />
 

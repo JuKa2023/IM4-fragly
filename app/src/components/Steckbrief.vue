@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+<script lang="ts" setup>
+import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
 import ProfilePicture from "./ProfilePicture.vue";
 import CloseButton from "./CloseButton.vue";
 
@@ -22,7 +22,7 @@ onMounted(async () => {
     const res = await fetch("/api/get_questions.php", {
       credentials: "include",
       method: "POST",
-      body: JSON.stringify({ user_id: userId }),
+      body: JSON.stringify({user_id: userId}),
     });
     const data = await res.json();
     fields.value = data.filter((q: FrageRow) => q.antwort !== null);
@@ -36,7 +36,7 @@ onMounted(async () => {
   const resUser = await fetch("/api/nutzer_meta.php", {
     credentials: "include",
     method: "POST",
-    body: JSON.stringify({ user_id: userId }),
+    body: JSON.stringify({user_id: userId}),
   });
   user.value = await resUser.json();
 
@@ -45,17 +45,17 @@ onMounted(async () => {
 
 <template>
   <div
-    class="card-default relative"
+      class="card-default relative"
   >
     <div class="flex items-baseline justify-between mb-4">
-      <CloseButton class="absolute top-4 right-4" />
+      <CloseButton class="absolute top-4 right-4"/>
       <h1 class="text-3xl font-bold mb-6">Steckbrief</h1>
     </div>
 
     <ProfilePicture
-      :initial-url="user?.avatar_url"
-      :editable="false"
-      class="w-22 aspect-square flex-shrink-0"
+        :editable="false"
+        :initial-url="user?.avatar_url"
+        class="w-22 aspect-square flex-shrink-0"
     />
 
     <p v-if="!loaded" class="text-center">Lade …</p>
@@ -71,10 +71,10 @@ onMounted(async () => {
       </div>
     </div>
     <RouterLink
-      :to="{ name: 'fragebogen'}"
-      class="btn btn-sm btn-primary mt-8"
-      v-if="!userId">
-        Bearbeiten
+        v-if="!userId"
+        :to="{ name: 'fragebogen'}"
+        class="btn btn-sm btn-primary mt-8">
+      Bearbeiten
     </RouterLink>
   </div>
 </template>

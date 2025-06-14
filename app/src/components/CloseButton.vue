@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { useRouter, type RouteLocationRaw } from "vue-router";
+<script lang="ts" setup>
+import {type RouteLocationRaw, useRouter} from "vue-router";
 
 const router = useRouter();
 
@@ -22,6 +22,6 @@ function handleClick() {
 
 <template>
   <button class="btn-close" @click="handleClick">
-    <img src="../assets/xicon.svg" alt="Close" />
+    <img alt="Close" src="../assets/xicon.svg"/>
   </button>
 </template>

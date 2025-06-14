@@ -9,7 +9,7 @@ if (empty($input['gruppe_id'])) {
     exit;
 }
 $gruppeId = (int)$input['gruppe_id'];
-$userId   = $_SESSION['ID'];
+$userId = $_SESSION['ID'];
 
 $stmt = $pdo->prepare("
     SELECT 1

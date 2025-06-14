@@ -5,7 +5,8 @@ require_once('db.php');
 $userId = $_SESSION['ID'];
 
 // Function 1: Get gruppe_ids
-function getGroupIdsForUser($pdo, $userId) {
+function getGroupIdsForUser($pdo, $userId)
+{
     try {
         $stmt = $pdo->prepare("
             SELECT gruppe_id
@@ -21,7 +22,8 @@ function getGroupIdsForUser($pdo, $userId) {
 }
 
 // Function 2: Get group details based on gruppe_ids
-function getGroupDetailsForIds($pdo, $gruppeIds) {
+function getGroupDetailsForIds($pdo, $gruppeIds)
+{
     if (empty($gruppeIds)) {
         return [];
     }

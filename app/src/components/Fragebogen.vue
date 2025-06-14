@@ -110,7 +110,7 @@ function shouldDisableFutureDates(q: FrageRow): boolean {
 onMounted(async () => {
   await loadQuestions();
   try {
-    const res = await fetch("/api/nutzer_meta.php", { credentials: "include" });
+    const res = await fetch("/api/nutzer_meta.php", {credentials: "include"});
     const json = await res.json();
     avatar_url.value = json.avatar_url ?? null;
   } catch (e) {

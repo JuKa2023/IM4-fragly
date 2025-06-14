@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import {computed, onMounted, ref} from 'vue';
+import {useRoute, useRouter} from 'vue-router';
 import BaseInput from "./BaseInput.vue";
 
 const router = useRouter();
-const route  = useRoute();
+const route = useRoute();
 
 const groupName = ref('');
 const groupCode = computed(() => route.params.code as string | undefined);
@@ -16,7 +16,7 @@ onMounted(async () => {
   if (!groupCode.value) return;
   try {
     const res = await fetch(`/api/gruppe_meta.php?code=${encodeURIComponent(groupCode.value)}`,
-        { credentials: 'include' });
+        {credentials: 'include'});
     const data = await res.json();
     if (!res.ok || !data.success) throw new Error(data.message);
     fetchedName.value = data.name;
@@ -31,8 +31,8 @@ async function join() {
 
   const payload = new URLSearchParams(
       groupCode.value
-          ? { code: groupCode.value.trim() }
-          : { name: groupName.value.trim() }
+          ? {code: groupCode.value.trim()}
+          : {name: groupName.value.trim()}
   );
 
   if (!groupCode.value && !payload.get('name')) {
@@ -42,16 +42,16 @@ async function join() {
   }
 
   try {
-    const res  = await fetch('/api/gruppe_beitreten.php', {
+    const res = await fetch('/api/gruppe_beitreten.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       credentials: 'include',
       body: payload
     });
     const data = await res.json();
     if (!res.ok || !data.success) throw new Error(data.message);
 
-    await router.push({ name: 'GruppenMitglieder', params: { id: data.gruppeId } });
+    await router.push({name: 'GruppenMitglieder', params: {id: data.gruppeId}});
   } catch (e: any) {
     errorMsg.value = e.message || 'Beitritt fehlgeschlagen';
   } finally {
@@ -59,8 +59,8 @@ async function join() {
   }
 }
 
-function decline () {
-  router.replace({ name: 'home' });
+function decline() {
+  router.replace({name: 'home'});
 }
 </script>
 
@@ -90,8 +90,8 @@ function decline () {
                  label="Gruppenbezeichnung"
                  placeholder="Familie Mustermann"/>
       <button :disabled="busy"
-              type="submit"
-              class="btn btn-lg btn-primary self-center">
+              class="btn btn-lg btn-primary self-center"
+              type="submit">
         Gruppe beitreten
       </button>
     </form>

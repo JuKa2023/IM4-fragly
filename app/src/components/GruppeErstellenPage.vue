@@ -1,25 +1,24 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { RouterLink } from "vue-router";
-import { useRouter } from "vue-router";
+import {ref} from "vue";
+import {RouterLink, useRouter} from "vue-router";
 import BaseInput from "./BaseInput.vue";
-import { toast } from "vue-sonner";
+import {toast} from "vue-sonner";
 import GroupLinkDisplay from "./GroupLinkDisplay.vue";
 
 const router = useRouter();
 
-const groupName   = ref("");
+const groupName = ref("");
 const loeschdatum = ref("");
-const message     = ref("");
-const success     = ref(false);
-const kuerzel     = ref("");
+const message = ref("");
+const success = ref(false);
+const kuerzel = ref("");
 
 async function submitGroup() {
-  message.value  = "";
-  success.value  = false;
+  message.value = "";
+  success.value = false;
 
   const formData = new FormData();
-  formData.append("name",        groupName.value);
+  formData.append("name", groupName.value);
   formData.append("loeschdatum", loeschdatum.value || "");
 
   try {
@@ -52,7 +51,7 @@ async function submitGroup() {
 }
 
 function cancelGroup() {
-  router.push({ name: "groups" });
+  router.push({name: "groups"});
 }
 </script>
 
@@ -62,7 +61,7 @@ function cancelGroup() {
 
     <!-- Success View -->
     <div v-if="success" class="text-center space-y-6">
-      <GroupLinkDisplay :kuerzel="kuerzel" />
+      <GroupLinkDisplay :kuerzel="kuerzel"/>
 
       <RouterLink class="btn btn-lg btn-primary mt-6" to="/gruppen">
         Meine Gruppen
@@ -91,8 +90,8 @@ function cancelGroup() {
           Gruppe erstellen
         </button>
         <button
-            type="reset"
             class="btn btn-lg btn-secondary"
+            type="reset"
             @click="cancelGroup"
         >
           Abbrechen

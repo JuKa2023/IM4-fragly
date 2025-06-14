@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="uuid-987cc4ee-cbe5-495c-a623-78b8b5dc8cdc" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208.94 139.39">
-  <defs>
-    <style>
-      .uuid-36eebf4b-2ed3-4b8f-bd41-ca80a2286b7f {
-        fill: none;
-        stroke: #000;
-        stroke-miterlimit: 10;
-        stroke-width: 13px;
-      }
-    </style>
-  </defs>
-  <g id="uuid-a49fec51-7b50-47db-97bb-aae8d31aa319" data-name="Layer 1">
-    <g id="uuid-0f0faa1d-b772-42eb-871e-de0d2f18588a" data-name="L9tTRh.tif">
-      <g>
-        <path d="M146.43,70.01c0,24.06-18.51,41.9-42.57,41.9s-41.24-20.5-41.24-44.56,16.18-40.9,40.24-40.9,43.56,19.5,43.56,43.56Z"/>
-        <path class="uuid-36eebf4b-2ed3-4b8f-bd41-ca80a2286b7f" d="M7.01,70.98c-.65-.98-.68-2.24-.08-3.26C12.68,57.92,44.92,8.03,106.08,6.53c57.2-1.4,90.42,52.05,95.95,61.7.53.93.55,2.05.05,3-5.1,9.57-35.55,61.31-98.32,61.67-53.3.3-90.24-52.03-96.74-61.91Z"/>
-      </g>
+<svg id="uuid-987cc4ee-cbe5-495c-a623-78b8b5dc8cdc" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 208.94 139.39">
+    <defs>
+        <style>
+            .uuid-36eebf4b-2ed3-4b8f-bd41-ca80a2286b7f {
+            fill: none;
+            stroke: #000;
+            stroke-miterlimit: 10;
+            stroke-width: 13px;
+            }
+        </style>
+    </defs>
+    <g id="uuid-a49fec51-7b50-47db-97bb-aae8d31aa319" data-name="Layer 1">
+        <g id="uuid-0f0faa1d-b772-42eb-871e-de0d2f18588a" data-name="L9tTRh.tif">
+            <g>
+                <path d="M146.43,70.01c0,24.06-18.51,41.9-42.57,41.9s-41.24-20.5-41.24-44.56,16.18-40.9,40.24-40.9,43.56,19.5,43.56,43.56Z"/>
+                <path class="uuid-36eebf4b-2ed3-4b8f-bd41-ca80a2286b7f"
+                      d="M7.01,70.98c-.65-.98-.68-2.24-.08-3.26C12.68,57.92,44.92,8.03,106.08,6.53c57.2-1.4,90.42,52.05,95.95,61.7.53.93.55,2.05.05,3-5.1,9.57-35.55,61.31-98.32,61.67-53.3.3-90.24-52.03-96.74-61.91Z"/>
+            </g>
+        </g>
     </g>
-  </g>
 </svg>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import 'vue-sonner/style.css';
 import {toast, Toaster} from "vue-sonner";
 import {onBeforeUnmount, onMounted, ref} from "vue";
@@ -68,10 +68,10 @@ setInterval(() => {
           </RouterLink>
 
           <!-- Right User Dropdown -->
-          <div v-if="isLoggedIn" class="relative" ref="dropdownRef">
+          <div v-if="isLoggedIn" ref="dropdownRef" class="relative">
             <div
-                @click="toggleDropdown"
                 class="p-2 h-full w-auto cursor-pointer iconHeader"
+                @click="toggleDropdown"
             >
               <img
                   :src="gruppeicon"
@@ -87,8 +87,8 @@ setInterval(() => {
                   class="absolute right-0 w-56 bg-orange-300 shadow-md overflow-hidden z-30"
               >
                 <RouterLink
-                    class="block px-4 py-2 text-gray-800 hover:bg-[#FCC1DB] transition-colors"
                     :to="{ name: 'ich'}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-[#FCC1DB] transition-colors"
                 >
                   Benutzerdaten bearbeiten
                 </RouterLink>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
 import {RouterLink, useRouter} from "vue-router";
 import {onMounted} from "vue";
@@ -23,7 +23,7 @@ onMounted(() => {
       <RouterLink class="btn btn-lg btn-primary" to="/anmelden">
         Anmelden
       </RouterLink>
-      <RouterLink to="/registrieren" class="btn btn-lg btn-secondary">
+      <RouterLink class="btn btn-lg btn-secondary" to="/registrieren">
         Registrieren
       </RouterLink>
     </div>

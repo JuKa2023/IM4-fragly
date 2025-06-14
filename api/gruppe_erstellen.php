@@ -56,11 +56,11 @@ try {
     $pdo->commit();
 
     echo json_encode([
-        'success'     => true,
-        'message'     => 'Gruppe wurde erfolgreich erstellt.',
-        'kuerzel'     => $kuerzel,
-        'link'        => "http://localhost:5173/{$kuerzel}",
-        'group_name'  => $groupName
+        'success' => true,
+        'message' => 'Gruppe wurde erfolgreich erstellt.',
+        'kuerzel' => $kuerzel,
+        'link' => "http://localhost:5173/{$kuerzel}",
+        'group_name' => $groupName
     ]);
 
 } catch (PDOException $e) {

@@ -34,10 +34,10 @@ try {
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     $mimeType = $finfo->file($file['tmp_name']);
     $allowed = [
-        'jpg'  => 'image/jpeg',
+        'jpg' => 'image/jpeg',
         'jpeg' => 'image/jpeg',
-        'png'  => 'image/png',
-        'gif'  => 'image/gif',
+        'png' => 'image/png',
+        'gif' => 'image/gif',
         'webp' => 'image/webp',
     ];
 
@@ -68,7 +68,7 @@ try {
 
     $stmtUpdate = $pdo->prepare('UPDATE nutzer SET avatar_url = :pp WHERE user_id = :uid');
     $stmtUpdate->execute([
-        ':pp'  => $publicUrl,
+        ':pp' => $publicUrl,
         ':uid' => $this_user_id,
     ]);
 

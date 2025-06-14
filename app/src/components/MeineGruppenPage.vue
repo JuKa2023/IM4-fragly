@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import { ref, onMounted, } from "vue";
+<script lang="ts" setup>
+import {onMounted, ref,} from "vue";
 import CloseButton from "./CloseButton.vue";
-import { UserGroupIcon } from "@heroicons/vue/24/solid";
+import {UserGroupIcon} from "@heroicons/vue/24/solid";
 
 type Group = {
   name: string;
@@ -9,7 +9,7 @@ type Group = {
   kuerzel: string;
 };
 
-const groups  = ref<Group[]>([]);
+const groups = ref<Group[]>([]);
 const noGroups = ref(false);
 
 onMounted(async () => {
@@ -44,7 +44,7 @@ onMounted(async () => {
   <div class="card-default relative">
     <div class="flex items-baseline justify-between mb-6">
       <h1>Deine Gruppen</h1>
-      <CloseButton class="btn-close" :to="{ name: 'home' }" />
+      <CloseButton :to="{ name: 'home' }" class="btn-close"/>
     </div>
 
     <div class="flex-1">
@@ -60,17 +60,17 @@ onMounted(async () => {
             :to="{ name: 'GruppenMitglieder', params: { id: group.gruppe_id } }"
             class="bg-[#FFEFF6] flex items-center px-4 py-2 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"
         >
-          <UserGroupIcon class="w-6 h-6 text-[#7CA4A0] mr-3" />
+          <UserGroupIcon class="w-6 h-6 text-[#7CA4A0] mr-3"/>
           <span class="text-xl text-[#472402]">{{ group.name }}</span>
         </RouterLink>
       </div>
     </div>
 
     <div class="mt-8 flex flex-col items-center gap-y-6 mt-8">
-      <RouterLink class="btn btn-sm btn-primary" :to="{ name: 'joinGroupManual' }">
+      <RouterLink :to="{ name: 'joinGroupManual' }" class="btn btn-sm btn-primary">
         Gruppe beitreten
       </RouterLink>
-      <RouterLink class="btn btn-sm btn-secondary" :to="{ name: 'createGroup' }">
+      <RouterLink :to="{ name: 'createGroup' }" class="btn btn-sm btn-secondary">
         Gruppe erstellen
       </RouterLink>
     </div>

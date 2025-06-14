@@ -1,8 +1,8 @@
-<script setup lang="ts">
-import { ref } from "vue";
-import { toast } from "vue-sonner";
+<script lang="ts" setup>
+import {ref} from "vue";
+import {toast} from "vue-sonner";
 import BaseInput from "./BaseInput.vue";
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 
 // Reactive input fields
 const username = ref("");
@@ -46,22 +46,22 @@ const login = async () => {
 
       <form id="loginForm" @submit.prevent="login">
         <BaseInput
-          label="Benutzername eingeben"
-          v-model="username"
-          id="username"
-          type="text"
-          placeholder="JuKa365"
+            id="username"
+            v-model="username"
+            label="Benutzername eingeben"
+            placeholder="JuKa365"
+            type="text"
         />
 
         <BaseInput
-          label="Passwort eingeben"
-          v-model="password"
-          id="password"
-          type="password"
-          placeholder="*****"
+            id="password"
+            v-model="password"
+            label="Passwort eingeben"
+            placeholder="*****"
+            type="password"
         />
 
-        <button type="submit" class="btn btn-lg btn-primary mt-8">Anmelden</button>
+        <button class="btn btn-lg btn-primary mt-8" type="submit">Anmelden</button>
       </form>
     </div>
   </div>

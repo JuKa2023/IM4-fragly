@@ -2,7 +2,7 @@
 require_once('db.php');
 
 $username = $_POST['username'] ?? '';
-$email    = $_POST['email'] ?? '';
+$email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
 if (empty($username) || empty($email) || empty($password)) {
@@ -30,9 +30,9 @@ if ($user) {
 } else {
     $insert = $pdo->prepare("INSERT INTO nutzer (nutzer, email, password, erstellt) VALUES (:user, :email, :pass, CURDATE())");
     $success = $insert->execute([
-        ':user'  => $username,
+        ':user' => $username,
         ':email' => $email,
-        ':pass'  => $hashedPassword
+        ':pass' => $hashedPassword
     ]);
 
     if ($success) {

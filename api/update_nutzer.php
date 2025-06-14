@@ -3,14 +3,14 @@ require_once('db.php');
 require_once('session_check.php');
 
 // JSON-Eingabe einlesen
-$raw  = file_get_contents('php://input');
+$raw = file_get_contents('php://input');
 $data = json_decode($raw, true);
 $userId = $_SESSION['ID'];
 
 // Felder auslesens
-$username    = trim($data['Benutzername']   ?? '');
-$email       = trim($data['email']          ?? '');
-$newPassword = trim($data['newPassword']    ?? '');
+$username = trim($data['Benutzername'] ?? '');
+$email = trim($data['email'] ?? '');
+$newPassword = trim($data['newPassword'] ?? '');
 
 // Validierung
 if ($username === '' || $email === '') {
@@ -26,14 +26,14 @@ if ($newPassword !== '' && strlen($newPassword) < 8) {
 $stmt = $pdo->prepare("
     SELECT user_id
     FROM nutzer
-    WHERE (Nutzer = :user OR email = :email)
+    WHERE (nutzer = :user OR email = :email)
       AND user_id <> :me
     LIMIT 1
 ");
 $stmt->execute([
-    ':user'  => $username,
+    ':user' => $username,
     ':email' => $email,
-    ':me'    => $userId
+    ':me' => $userId
 ]);
 if ($stmt->fetch()) {
     echo json_encode(['success' => false, 'error' => 'Benutzername oder E-Mail bereits vergeben.']);
@@ -43,9 +43,9 @@ if ($stmt->fetch()) {
 // Optionales Passwort-Update vorbereiten
 $passClause = '';
 $params = [
-    ':user'  => $username,
+    ':user' => $username,
     ':email' => $email,
-    ':me'    => $userId,
+    ':me' => $userId,
 ];
 if ($newPassword !== '') {
     $params[':pass'] = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -54,14 +54,14 @@ if ($newPassword !== '') {
 
 // Update ausführen
 $sql = "
-    UPDATE Nutzer
+    UPDATE nutzer
     SET nutzer = :user,
         email  = :email
         {$passClause}
     WHERE user_id = :me
 ";
 $upd = $pdo->prepare($sql);
-$ok  = $upd->execute($params);
+$ok = $upd->execute($params);
 
 if ($ok) {
     echo json_encode(['success' => true]);
