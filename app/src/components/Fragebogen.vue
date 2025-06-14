@@ -124,22 +124,20 @@ onMounted(async () => {
   <div
       class="p-8 max-w-2xl mx-auto bg-cream-light rounded-xl shadow-md text-brown"
   >
-    <h1 class="text-3xl font-bold mb-6">Dein Steckbrief</h1>
+    <h1 class="mb-6">Dein Steckbrief</h1>
 
     <ProfilePicture
         :editable="false"
         :initial-url="avatar_url"
+        class="mx-auto"
     />
 
-    <!-- Loader -->
     <p v-if="loading" class="text-center">Lade …</p>
 
-    <!-- Keine Fragen definiert -->
     <p v-else-if="questions.length === 0" class="text-center">
       Keine Fragen vorhanden.
     </p>
 
-    <!-- Editierbares Formular -->
     <form v-else @submit.prevent="onSave">
       <div v-for="q in questions" :key="q.frage_id" class="mb-6 last:mb-0">
         <BaseInput
@@ -152,7 +150,7 @@ onMounted(async () => {
         />
       </div>
 
-      <div class="flex justify-end space-x-4 mt-8">
+      <div class="flex justify-between space-x-4 mt-8">
         <button
             class="btn btn-sm btn-secondary"
             type="button"

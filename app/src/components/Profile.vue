@@ -81,7 +81,7 @@ onMounted(fetchNutzer);
 <template>
   <div class="mt-40 mb-40 flex items-center justify-center">
     <div class="p-6 bg-[#FFF4EB] rounded-xl max-w-md mx-auto mt-8 shadow-md">
-      <h1 class="font-bold text-[#472402] mb-6">Ich</h1>
+      <h1>Ich</h1>
 
       <p v-if="loading" class="text-sm text-gray-600">Lade Nutzerdaten…</p>
       <p v-if="error" class="text-sm text-red-500">{{ error }}</p>

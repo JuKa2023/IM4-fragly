@@ -49,9 +49,9 @@ const register = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center w-md">
-    <div class="p-8 w-full">
-      <h1 class="font-bold text-[#472402] mb-6">Registrieren</h1>
+  <div class="page-default flex items-center justify-center">
+    <div class="w-full">
+      <h1 class="mb-8">Registrieren</h1>
 
       <form @submit.prevent="register" id="registerForm">
         <BaseInput
@@ -63,11 +63,11 @@ const register = async () => {
         />
 
         <BaseInput
-          label="email"
+          label="Email"
           v-model="email"
           id="email"
           type="email"
-          placeholder="Gib deine email ein"
+          placeholder="Gib deine Email ein"
         />
 
         <BaseInput
@@ -86,7 +86,7 @@ const register = async () => {
           placeholder="Gib dein Passwort erneut ein"
         />
 
-        <button type="submit" class="btn btn-lg btn-primary">
+        <button type="submit" class="btn btn-lg btn-primary mt-8">
           Konto erstellen
         </button>
       </form>

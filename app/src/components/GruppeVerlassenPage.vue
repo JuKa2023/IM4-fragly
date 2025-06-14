@@ -3,6 +3,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from "vue-sonner";
 
+import BaseInput from './BaseInput.vue'
+
 const route = useRoute()
 const router = useRouter()
 const groupId = Number(route.params.id)
@@ -61,36 +63,45 @@ async function onLeave() {
 </script>
 
 <template>
-  <div class="card-default relative">
+  <div class="card-default">
+    <form @submit.prevent="onLeave" class="flex flex-col gap-4">
 
-    <div>
-      <h1>
+      <h1 class="mb-1">
         Bist du sicher, dass du die Gruppe verlassen möchtest?
       </h1>
-      <p>
-        Bestätige, dass du die Gruppe verlassen möchtest durch die Eingabe der Gruppenbezeichnung <span class="font-medium">{{ groupName }}</span>.
+
+      <p class="mb-6">
+        Bestätige, dass du die Gruppe verlassen möchtest, durch die Eingabe
+        der Gruppenbezeichnung
+        <span class="font-medium">{{ groupName }}</span>.
       </p>
-      <input
-        v-model="inputName"
-        type="text"
-        placeholder="Gruppenbezeichnung"
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 mb-4"
+
+      <BaseInput
+          v-model="inputName"
+          id="confirm-group-name"
+          label="Gruppenbezeichnung"
+          placeholder="Gruppenbezeichnung"
+          type="text"
+          required
       />
-      <div class="flex gap-4">
+
+      <div class="flex justify-between space-x-4 mt-4">
         <button
-          @click="$router.back()"
-          class="btn btn-sm btn-primary"
+            type="button"
+            @click="$router.back()"
+            class="btn btn-sm btn-primary"
         >
           Abbrechen
         </button>
+
         <button
-          :disabled="!isMatch"
-          @click="onLeave"
-          class="btn btn-sm btn-secondary"
+            type="submit"
+            :disabled="!isMatch"
+            class="btn btn-sm btn-secondary"
         >
           Gruppe verlassen
         </button>
       </div>
-    </div>
+    </form>
   </div>
 </template>

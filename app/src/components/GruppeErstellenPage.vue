@@ -1,22 +1,25 @@
 <script lang="ts" setup>
-import {ref} from "vue";
+import { ref } from "vue";
+import { RouterLink } from "vue-router";
+import { useRouter } from "vue-router";
 import BaseInput from "./BaseInput.vue";
-import {RouterLink} from "vue-router";
-import {toast} from "vue-sonner";
+import { toast } from "vue-sonner";
 import GroupLinkDisplay from "./GroupLinkDisplay.vue";
 
-const groupName = ref("");
+const router = useRouter();
+
+const groupName   = ref("");
 const loeschdatum = ref("");
-const message = ref("");
-const success = ref(false);
-const kuerzel = ref("");
+const message     = ref("");
+const success     = ref(false);
+const kuerzel     = ref("");
 
 async function submitGroup() {
-  message.value = "";
-  success.value = false
+  message.value  = "";
+  success.value  = false;
 
   const formData = new FormData();
-  formData.append("name", groupName.value);
+  formData.append("name",        groupName.value);
   formData.append("loeschdatum", loeschdatum.value || "");
 
   try {
@@ -32,7 +35,6 @@ async function submitGroup() {
     }
 
     const data = await res.json();
-
     message.value = data.message;
 
     if (res.ok && data.success) {
@@ -40,9 +42,7 @@ async function submitGroup() {
       kuerzel.value = data.kuerzel;
     } else {
       success.value = false;
-      if (message.value) {
-        toast.error(message.value);
-      }
+      if (message.value) toast.error(message.value);
     }
   } catch (err) {
     message.value = "Verbindungsfehler.";
@@ -50,17 +50,19 @@ async function submitGroup() {
     toast.error(message.value);
   }
 }
+
+function cancelGroup() {
+  router.push({ name: "groups" });
+}
 </script>
 
 <template>
   <div class="page-default">
-    <h1>
-      {{ success ? "Hier dein Link" : "Gebe folgende Angaben an" }}
-    </h1>
+    <h1>{{ success ? "Hier dein Link" : "Gebe folgende Angaben an" }}</h1>
 
     <!-- Success View -->
     <div v-if="success" class="text-center space-y-6">
-      <GroupLinkDisplay :kuerzel="kuerzel"/>
+      <GroupLinkDisplay :kuerzel="kuerzel" />
 
       <RouterLink class="btn btn-lg btn-primary mt-6" to="/gruppen">
         Meine Gruppen
@@ -83,9 +85,19 @@ async function submitGroup() {
           label="Löschdatum"
           type="date"
       />
-      <button class="btn btn-lg btn-primary w-full mt-6" type="submit">
-        Gruppe erstellen
-      </button>
+
+      <div class="flex flex-col items-center gap-y-6 w-full max-w-xs mt-8 mx-auto">
+        <button class="btn btn-lg btn-primary" type="submit">
+          Gruppe erstellen
+        </button>
+        <button
+            type="reset"
+            class="btn btn-lg btn-secondary"
+            @click="cancelGroup"
+        >
+          Abbrechen
+        </button>
+      </div>
     </form>
   </div>
 </template>

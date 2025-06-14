@@ -65,11 +65,8 @@ function decline () {
 </script>
 
 <template>
-  <div class="p-10 max-w-xs mx-auto text-brown">
-
-    <!-- ---------- headline ---------- -->
-    <h1 v-if="!groupCode"
-        class="text-3xl font-bold leading-tight text-center mb-8">
+  <div class="page-default">
+    <h1 v-if="!groupCode">
       Gib bitte ein, wie die&nbsp;Gruppe heisst.
     </h1>
 
@@ -86,7 +83,7 @@ function decline () {
     </p>
 
     <form v-if="!groupCode"
-          class="flex flex-col gap-6"
+          class="flex flex-col gap-8"
           @submit.prevent="join">
       <BaseInput id="groupName"
                  v-model="groupName"
@@ -94,12 +91,12 @@ function decline () {
                  placeholder="Familie Mustermann"/>
       <button :disabled="busy"
               type="submit"
-              class="btn btn-lg btn-primary mt-4">
+              class="btn btn-lg btn-primary self-center">
         Gruppe beitreten
       </button>
     </form>
 
-    <div v-else class="flex flex-col gap-4">
+    <div v-else class="flex flex-col items-center gap-8">
       <button :disabled="busy"
               class="btn btn-lg btn-secondary"
               @click="decline">
@@ -114,7 +111,3 @@ function decline () {
     </div>
   </div>
 </template>
-
-<style scoped>
-.text-brown { color:#5c2e00; }
-</style>

@@ -10,12 +10,13 @@
            hover:shadow-none transition duration-200 ease-in-out;
   }
 
-  .card-default {
-    @apply p-8 max-w-2xl mx-auto bg-[#ffebd2] rounded-xl shadow-md;
-  }
+    .card-default {
+      @apply p-4 sm:p-8 max-w-2xl mx-auto bg-[#ffebd2] rounded-xl shadow-md;
+    }
+
 
   .page-default {
-    @apply p-8 max-w-2xl mx-auto;
+    @apply p-4 sm:p-8 max-w-2xl mx-auto;
   }
 
   .page-wrapper {

@@ -40,8 +40,8 @@ const login = async () => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center">
-    <div class="p-8 w-full">
+  <div class="page-default flex items-center justify-center">
+    <div class="w-full">
       <h1 class="font-bold text-[#472402] mb-6">Melde dich an</h1>
 
       <form id="loginForm" @submit.prevent="login">
@@ -61,7 +61,7 @@ const login = async () => {
           placeholder="*****"
         />
 
-        <button type="submit" class="btn btn-lg btn-primary">Anmelden</button>
+        <button type="submit" class="btn btn-lg btn-primary mt-8">Anmelden</button>
       </form>
     </div>
   </div>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, } from "vue";
 import CloseButton from "./CloseButton.vue";
-
 import { UserGroupIcon } from "@heroicons/vue/24/solid";
 
 type Group = {
@@ -10,7 +9,7 @@ type Group = {
   kuerzel: string;
 };
 
-const groups = ref<Group[]>([]);
+const groups  = ref<Group[]>([]);
 const noGroups = ref(false);
 
 onMounted(async () => {
@@ -42,50 +41,38 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="card-default relative">
-
-      <div class="flex items-baseline justify-between mb-6">
+  <div class="card-default relative">
+    <div class="flex items-baseline justify-between mb-6">
       <h1>Deine Gruppen</h1>
-      <CloseButton class="btn-close"/>
+      <CloseButton class="btn-close" :to="{ name: 'home' }" />
+    </div>
 
+    <div class="flex-1">
+      <div v-if="noGroups" class="text-center text-brown p-6">
+        <p>Du bist noch in keiner Gruppe.</p>
+        <p>Möchtest du einer Gruppe beitreten?</p>
       </div>
 
-      <!-- Conditional content -->
-      <div class="flex-1">
-        <!-- No groups message -->
-        <div v-if="noGroups" class="text-center text-brown p-6">
-          <p>
-            Du bist noch in keiner Gruppe.
-          </p>
-          <p>Möchtest du einer Gruppe beitreten?</p>
-        </div>
-
-        <!-- Group list -->
-        <div v-else class="space-y-6">
-          <RouterLink
+      <div v-else class="space-y-6">
+        <RouterLink
             v-for="group in groups"
             :key="group.gruppe_id"
             :to="{ name: 'GruppenMitglieder', params: { id: group.gruppe_id } }"
             class="bg-[#FFEFF6] flex items-center px-4 py-2 rounded-md shadow-md cursor-pointer hover:shadow-none transition duration-200 ease-in-out"
-          >
-            <UserGroupIcon class="w-6 h-6 text-[#7CA4A0] mr-3" />
-            <span class="text-xl text-[#472402]">{{ group.name }}</span>
-          </RouterLink>
-        </div>
-      </div>
-
-      <!-- Bottom Button -->
-      <div class="mt-8 flex flex-col items-center gap-y-2">
-        <RouterLink class="btn btn-sm btn-primary" :to="{name: 'joinGroupManual'}">
-          Gruppe beitreten
-        </RouterLink>
-        <RouterLink :to="{name: 'createGroup'}" class="btn btn-sm btn-secondary">
-          Gruppe erstellen
+        >
+          <UserGroupIcon class="w-6 h-6 text-[#7CA4A0] mr-3" />
+          <span class="text-xl text-[#472402]">{{ group.name }}</span>
         </RouterLink>
       </div>
     </div>
-</template>
 
-<style scoped>
-/* Optional styles */
-</style>
+    <div class="mt-8 flex flex-col items-center gap-y-6 mt-8">
+      <RouterLink class="btn btn-sm btn-primary" :to="{ name: 'joinGroupManual' }">
+        Gruppe beitreten
+      </RouterLink>
+      <RouterLink class="btn btn-sm btn-secondary" :to="{ name: 'createGroup' }">
+        Gruppe erstellen
+      </RouterLink>
+    </div>
+  </div>
+</template>
