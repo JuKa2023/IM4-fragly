@@ -2,17 +2,14 @@
 require_once('db.php');
 require_once('session_check.php');
 
-// JSON-Eingabe einlesen
 $raw = file_get_contents('php://input');
 $data = json_decode($raw, true);
 $userId = $_SESSION['ID'];
 
-// Felder auslesens
 $username = trim($data['Benutzername'] ?? '');
 $email = trim($data['email'] ?? '');
 $newPassword = trim($data['newPassword'] ?? '');
 
-// Validierung
 if ($username === '' || $email === '') {
     echo json_encode(['success' => false, 'error' => 'Benutzername und E-Mail dürfen nicht leer sein.']);
     exit;
@@ -22,7 +19,6 @@ if ($newPassword !== '' && strlen($newPassword) < 8) {
     exit;
 }
 
-// Dubletten-Check
 $stmt = $pdo->prepare("
     SELECT user_id
     FROM nutzer
@@ -40,7 +36,6 @@ if ($stmt->fetch()) {
     exit;
 }
 
-// Optionales Passwort-Update vorbereiten
 $passClause = '';
 $params = [
     ':user' => $username,
@@ -52,7 +47,6 @@ if ($newPassword !== '') {
     $passClause = ", password = :pass";
 }
 
-// Update ausführen
 $sql = "
     UPDATE nutzer
     SET nutzer = :user,
