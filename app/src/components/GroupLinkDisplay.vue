@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import {toast} from "vue-sonner";
+import {computed} from "vue";
 
 const props = defineProps<{
   kuerzel: string;
 }>();
 
-
-// get kuerzel prop
-const gruppeLink = `${window.location.origin}/beitreten/${props.kuerzel}`;
+const gruppeLink = computed(() => `${window.location.origin}/beitreten/${props.kuerzel}`);
 
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text).then(() => {
@@ -18,14 +17,12 @@ function copyToClipboard(text: string) {
 
 <template>
   <div class="space-y-4 mt-16">
-    <!-- Link Label -->
     <div class="mb-1 text-left">
       <span class="text-bm text-[#472402] font-bold">Gruppenlink</span>
     </div>
-    <!-- Link -->
     <div
         class="flex items-center px-4 py-3 rounded-md border border-[#FFD6EC] bg-[#FFEFF6]/60 cursor-pointer transition duration-200 group text-left"
-        @click="copyToClipboard(gruppeLink)"
+        @click="copyToClipboard(gruppeLink.value)"
     >
       <span class="text-[#7CA4A0] mr-2">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -39,4 +36,4 @@ function copyToClipboard(text: string) {
       </span>
     </div>
   </div>
-</template> 
+</template>
