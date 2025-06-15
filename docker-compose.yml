@@ -11,6 +11,8 @@ services:
       - mariadb_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
     command: --default-authentication-plugin=mysql_native_password --event-scheduler=ON
+    networks:
+      - app_network
 
   app:
     build: .
@@ -22,6 +24,12 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - mariadb
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
 
 volumes:
   mariadb_data:

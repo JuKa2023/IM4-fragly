@@ -135,3 +135,4 @@ Die aktuelle Version von Fragly konzentriert sich auf das Ausfüllen eines pers�
   Optional könnten spontane, wechselnde Fragen eingebaut werden, um auch aktuelle Gedanken oder Gefühle sichtbar zu machen.
 ### Bugs
 - Die Seite scheint nicht auf Safari zu funktionieren. Wir haben es mit Chrome und Firefox getestet, dort funktioniert es einwandfrei.
+- Change Username, und Email überprüft nicht ob der Username oder die Email bereits vergeben ist. Das heisst nach änderung können namen Doppelt vorkommen
