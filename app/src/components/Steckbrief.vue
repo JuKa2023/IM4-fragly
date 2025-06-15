@@ -73,10 +73,10 @@ onMounted(async () => {
     <RouterLink
         v-if="!userId"
         :to="{ name: 'fragebogen' }"
+        class="btn btn-sm btn-primary mt-8"
         replace
-    class="btn btn-sm btn-primary mt-8"
     >
-    Bearbeiten
+      Bearbeiten
     </RouterLink>
   </div>
 </template>
