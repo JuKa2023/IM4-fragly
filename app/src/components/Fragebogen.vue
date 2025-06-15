@@ -53,7 +53,7 @@ function onCancel() {
   Object.keys(answers).forEach((key) => {
     answers[+key] = originalAnswers[+key] || "";
   });
-  router.push(redirectRoute);
+  router.replace(redirectRoute);
 }
 
 async function onSave() {
@@ -66,7 +66,7 @@ async function onSave() {
       .filter((item) => item.neu !== item.alt);
 
   if (diff.length === 0) {
-    return router.push(redirectRoute);
+    return router.replace(redirectRoute);
   }
 
   const toUpdate = diff
@@ -94,7 +94,7 @@ async function onSave() {
     });
 
     toast.success("Deine Antworten wurden gespeichert.");
-    await router.push(redirectRoute);
+    await router.replace(redirectRoute);
   } catch (err: any) {
     toast.error("Fehler beim Speichern: " + err.message);
   }
